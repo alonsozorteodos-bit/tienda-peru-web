@@ -272,6 +272,39 @@ footer{background:#080808;padding:60px 50px 30px;}
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(90px);z-index:900;background:var(--dark);color:#fff;padding:12px 24px;border-radius:30px;font-size:0.8rem;font-weight:600;opacity:0;transition:all 0.35s;pointer-events:none;white-space:nowrap;box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,0.07);}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
 
+
+/* ── PRECIO VARIABLE (range) ── */
+.price-range{display:flex;flex-direction:column;}
+.price-range .range-label{font-size:0.58rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px;}
+.price-range .range-val{font-size:1.1rem;font-weight:800;color:var(--dark);font-family:"Playfair Display",serif;}
+.price-range .cur{font-family:"Poppins",sans-serif;font-size:0.7rem;font-weight:600;color:var(--red);}
+.price-range .range-max{font-size:0.65rem;color:var(--text3);font-family:"Poppins",sans-serif;font-weight:400;}
+
+/* ── PRODUCTO PERSONALIZADO (consulta) ── */
+.price-consult{font-size:0.74rem;color:var(--red);font-weight:600;line-height:1.4;}
+.btn-consult{background:linear-gradient(135deg,#25D366,#1da851);color:#fff;border:none;
+  padding:9px 14px;border-radius:30px;font-family:"Poppins",sans-serif;font-size:0.68rem;
+  font-weight:700;cursor:pointer;transition:all 0.25s;display:flex;align-items:center;
+  gap:6px;white-space:nowrap;box-shadow:0 3px 10px rgba(37,211,102,0.28);}
+.btn-consult:hover{transform:scale(1.04);box-shadow:0 5px 16px rgba(37,211,102,0.42);}
+
+/* ── FILTRO DE PRECIO ── */
+.price-filter-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:4px 0;}
+.price-filter-row label{font-size:0.7rem;color:var(--text2);font-weight:600;white-space:nowrap;}
+.price-input{width:96px;padding:7px 10px;border:1.5px solid var(--gray2);border-radius:8px;
+  font-family:"Poppins",sans-serif;font-size:0.74rem;color:var(--text);outline:none;
+  transition:border-color 0.2s;background:#fff;}
+.price-input:focus{border-color:var(--red);}
+.price-filter-sep{font-size:0.8rem;color:var(--text3);}
+.btn-price-filter{background:var(--red);color:#fff;border:none;padding:7px 14px;border-radius:8px;
+  font-family:"Poppins",sans-serif;font-size:0.72rem;font-weight:600;cursor:pointer;
+  transition:all 0.2s;white-space:nowrap;}
+.btn-price-filter:hover{background:var(--red-dark);}
+.btn-price-reset{background:none;border:1.5px solid var(--gray3);color:var(--text3);
+  padding:7px 12px;border-radius:8px;font-family:"Poppins",sans-serif;font-size:0.72rem;
+  cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.btn-price-reset:hover{border-color:var(--red);color:var(--red);}
+
 /* ══ ANIMATIONS ══ */
 @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -318,7 +351,7 @@ footer{background:#080808;padding:60px 50px 30px;}
     <span class="nav-top-text">📍 Calle Luperón, Constanza · Al frente de EDENORTE</span>
     <div class="nav-top-contact">
       <a href="https://wa.me/18098502066" target="_blank">📲 +1 (809) 850-2066</a>
-      <a href="mailto:tiendaperuconstanza@gmail.com">📧 tiendaperuconstanza@gmail.com</a>
+      <a href="/cdn-cgi/l/email-protection#413528242f252031243334222e2f3235202f3b2001262c20282d6f222e2c">📧 <span class="__cf_email__" data-cfemail="add9c4c8c3c9ccddc8dfd8cec2c3ded9ccc3d7ccedcac0ccc4c183cec2c0">[email&#160;protected]</span></a>
       <a href="https://www.facebook.com/share/1DjGsE4Ppz/" target="_blank">📘 Facebook</a>
     </div>
   </div>
@@ -436,6 +469,17 @@ footer{background:#080808;padding:60px 50px 30px;}
     <div class="filter-pills" id="filterPills"></div>
     <span class="prod-count-label" id="prodCountLabel"></span>
   </div>
+  <!-- Filtro de precio -->
+  <div class="filter-wrap" style="margin-top:-18px;margin-bottom:28px;">
+    <div class="price-filter-row">
+      <label>💰 Precio:</label>
+      <input class="price-input" type="number" id="priceMin" placeholder="Mín RD$" min="0"/>
+      <span class="price-filter-sep">—</span>
+      <input class="price-input" type="number" id="priceMax" placeholder="Máx RD$" min="0"/>
+      <button class="btn-price-filter" id="btnPriceFilter">Filtrar</button>
+      <button class="btn-price-reset"  id="btnPriceReset">✕ Limpiar</button>
+    </div>
+  </div>
   <div class="products-grid" id="productsGrid"></div>
 </section>
 
@@ -486,7 +530,7 @@ footer{background:#080808;padding:60px 50px 30px;}
       <h3>📍 Encuéntranos</h3>
       <div class="ci-row"><span class="ci-icon">📍</span><div><strong>Dirección</strong><p>Calle Luperón, Constanza<br/>Al frente de EDENORTE, RD</p></div></div>
       <div class="ci-row"><span class="ci-icon">📲</span><div><strong>WhatsApp</strong><p>+1 (809) 850-2066<br/>Reservas y consultas</p></div></div>
-      <div class="ci-row"><span class="ci-icon">📧</span><div><strong>Email</strong><p>tiendaperuconstanza@gmail.com</p></div></div>
+      <div class="ci-row"><span class="ci-icon">📧</span><div><strong>Email</strong><p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5d29343833393c2d382f283e32332e293c33273c1d3a303c3431733e3230">[email&#160;protected]</a></p></div></div>
       <div class="ci-row"><span class="ci-icon">📘</span><div><strong>Facebook</strong><p>Tienda Perú — El Arte de los Andes</p></div></div>
       <div class="ci-row"><span class="ci-icon">⚠️</span><div><strong>Importante</strong><p>No hacemos domicilio. Los productos se retiran en nuestra tienda física.</p></div></div>
     </div>
@@ -512,7 +556,7 @@ footer{background:#080808;padding:60px 50px 30px;}
       <div class="f-socials">
         <a class="f-social" href="https://wa.me/18098502066" target="_blank">📲</a>
         <a class="f-social" href="https://www.facebook.com/share/1DjGsE4Ppz/" target="_blank">📘</a>
-        <a class="f-social" href="mailto:tiendaperuconstanza@gmail.com">📧</a>
+        <a class="f-social" href="/cdn-cgi/l/email-protection#5d29343833393c2d382f283e32332e293c33273c1d3a303c3431733e3230">📧</a>
       </div>
     </div>
     <div class="f-col">
@@ -539,13 +583,13 @@ footer{background:#080808;padding:60px 50px 30px;}
   </div>
   <div class="f-bottom">
     <p>© 2026 Tienda Perú · El Arte de los Andes · Constanza, República Dominicana 🇩🇴</p>
-    <p>📲 +1 (809) 850-2066 · tiendaperuconstanza@gmail.com</p>
+    <p>📲 +1 (809) 850-2066 · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8cf8e5e9e2e8edfce9fef9efe3e2fff8ede2f6edccebe1ede5e0a2efe3e1">[email&#160;protected]</a></p>
   </div>
 </footer>
 
 <div class="toast" id="toast"></div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const WHATSAPP = "18098502066";
 const EMAIL = "tiendaperuconstanza@gmail.com";
 const IMGS = {
@@ -628,60 +672,60 @@ function filterBycat(cat) {
 // ── PRODUCTS ──
 const PRODUCTS = [
   // JOYERÍA PERSONALIZADA
-  { id:1,  name:"Collar Corazón con Alas + Foto",      price:950,  cat:"joyeria",    badges:["hot"],  img:"p1",  desc:"Medallón corazón con alas. Tu foto personalizada. 2 colores." },
-  { id:2,  name:"Colgante con Foto + Nombre Dorado",   price:1200, cat:"joyeria",    badges:["new"],  img:"p2",  desc:"Tu foto y nombre en letras doradas. Cadena incluida." },
-  { id:4,  name:"Collar Corazón Forever Loved",        price:1100, cat:"joyeria",    badges:["hot"],  img:"p4",  desc:"Collar dorado con foto y mensaje Forever Loved." },
-  { id:8,  name:"Collar Dog Tag con Foto",             price:900,  cat:"joyeria",    badges:[],       img:"p8",  desc:"Estilo militar con tu foto en alta definición." },
-  { id:14, name:"Set Argollas + Collar con Nombre",    price:1400, cat:"joyeria",    badges:["hot"],  img:"p14", desc:"Set completo: aretes argolla y collar con nombre dorado." },
-  { id:15, name:"Collar Nombre en Cursiva",            price:850,  cat:"joyeria",    badges:[],       img:"p15", desc:"Delicado collar dorado con tu nombre en cursiva." },
-  { id:18, name:"Cadenas de Mujer Variadas",           price:350,  cat:"joyeria",    badges:["new"],  img:"cadenas_mujer",  desc:"Hermosas cadenas variadas para mujer. Diseños modernos y elegantes." },
-  { id:19, name:"Cadenas Variadas de Hombre",          price:400,  cat:"joyeria",    badges:["hot"],  img:"cadenas_hombre", desc:"Cadenas de hombre: cruces, medallones y más. Dorado y plateado." },
-  { id:20, name:"Hermosa Cadena de Mujer",             price:500,  cat:"joyeria",    badges:[],       img:"collar_mujer",   desc:"Cadena brillante con cristales. Ideal para ocasiones especiales." },
-  { id:21, name:"Hermoso Collar de Mujer",             price:650,  cat:"joyeria",    badges:["new"],  img:"collar_hermoso", desc:"Collar artesanal con cristales únicos. Un lujo accesible." },
-  { id:3,  name:"Toalla Personalizada Bordada",        price:800,  cat:"joyeria",    badges:[],       img:"p3",  desc:"Toalla premium con tu nombre bordado. 4 colores." },
+  { id:1,  name:"Collar Corazón con Alas + Foto",      price:0,  cat:"joyeria",    badges:["hot"],  img:"p1",  desc:"Medallón corazón con alas. Tu foto personalizada. 2 colores." },
+  { id:2,  name:"Colgante con Foto + Nombre Dorado",   price:0, cat:"joyeria",    badges:["new"],  img:"p2",  desc:"Tu foto y nombre en letras doradas. Cadena incluida." },
+  { id:4,  name:"Collar Corazón Forever Loved",        price:0, cat:"joyeria",    badges:["hot"],  img:"p4",  desc:"Collar dorado con foto y mensaje Forever Loved." },
+  { id:8,  name:"Collar Dog Tag con Foto",             price:0,  cat:"joyeria",    badges:[],       img:"p8",  desc:"Estilo militar con tu foto en alta definición." },
+  { id:14, name:"Set Argollas + Collar con Nombre",    price:0, cat:"joyeria",    badges:["hot"],  img:"p14", desc:"Set completo: aretes argolla y collar con nombre dorado." },
+  { id:15, name:"Collar Nombre en Cursiva",            price:0,  cat:"joyeria",    badges:[],       img:"p15", desc:"Delicado collar dorado con tu nombre en cursiva." },
+  { id:18, name:"Cadenas de Mujer Variadas",           price:145,  cat:"joyeria",    badges:["new"],  img:"cadenas_mujer",  desc:"Hermosas cadenas variadas para mujer. Diseños modernos y elegantes." },
+  { id:19, name:"Cadenas Variadas de Hombre",          price:280,  cat:"joyeria",    badges:["hot"],  img:"cadenas_hombre", desc:"Cadenas de hombre: cruces, medallones y más. Dorado y plateado." },
+  { id:20, name:"Hermosa Cadena de Mujer",             price:480,  cat:"joyeria",    badges:[],       img:"collar_mujer",   desc:"Cadena brillante con cristales. Ideal para ocasiones especiales." },
+  { id:21, name:"Hermoso Collar de Mujer",             price:380,  cat:"joyeria",    badges:["new"],  img:"collar_hermoso", desc:"Collar artesanal con cristales únicos. Un lujo accesible." },
+  { id:3,  name:"Toalla Personalizada Bordada",        price:0,  cat:"joyeria",    badges:[],       img:"p3",  desc:"Toalla premium con tu nombre bordado. 4 colores." },
   // ARETES
-  { id:33, name:"Aretes y Argollas Variados",          price:250,  cat:"aretes",     badges:["new"],  img:"aretes",  desc:"Gran variedad de aretes dorados y plateados. Diseños elegantes para toda ocasión." },
-  { id:12, name:"Aretes Trepadores con Nombre",        price:600,  cat:"aretes",     badges:["new"],  img:"p12",     desc:"Aretes trepadores 3D con tu nombre. Plateado." },
-  { id:13, name:"Aretes Mariposa con Nombre",          price:700,  cat:"aretes",     badges:[],       img:"p13",     desc:"Mariposa de oro con nombre personalizado." },
+  { id:33, name:"Aretes y Argollas Variados",          price:85,  cat:"aretes",     badges:["new"],  img:"aretes",  desc:"Gran variedad de aretes dorados y plateados. Diseños elegantes para toda ocasión." },
+  { id:12, name:"Aretes Trepadores con Nombre",        price:0,  cat:"aretes",     badges:["new"],  img:"p12",     desc:"Aretes trepadores 3D con tu nombre. Plateado." },
+  { id:13, name:"Aretes Mariposa con Nombre",          price:0,  cat:"aretes",     badges:[],       img:"p13",     desc:"Mariposa de oro con nombre personalizado." },
   // RELOJES
-  { id:22, name:"Set de Reloj + Pulseras Dorado",      price:1800, cat:"relojes",    badges:["hot"],  img:"reloj_pulseras",   desc:"Set premium: reloj dorado + 2 pulseras. El regalo perfecto." },
-  { id:23, name:"Relojes Variados",                    price:1200, cat:"relojes",    badges:["new"],  img:"relojes",          desc:"Gran variedad de relojes para hombre y mujer." },
-  { id:24, name:"Set de Reloj con Pulseras — Caja",    price:2200, cat:"relojes",    badges:["sale"], img:"relojes_pulseras", desc:"Set de lujo en caja de regalo. Reloj + pulseras + collar." },
+  { id:22, name:"Set de Reloj + Pulseras Dorado",      price:580, cat:"relojes",    badges:["hot"],  img:"reloj_pulseras",   desc:"Set premium: reloj dorado + 2 pulseras. El regalo perfecto." },
+  { id:23, name:"Relojes Variados",                    price:380, cat:"relojes",    badges:["new"],  img:"relojes",          desc:"Gran variedad de relojes para hombre y mujer." },
+  { id:24, name:"Set de Reloj con Pulseras — Caja",    price:580, cat:"relojes",    badges:["sale"], img:"relojes_pulseras", desc:"Set de lujo en caja de regalo. Reloj + pulseras + collar." },
   // PULSERAS
-  { id:5,  name:"Pulsera Redonda con Foto",            price:750,  cat:"pulseras",   badges:[],       img:"p5",          desc:"Pulsera plateada con dije circular y tu foto." },
-  { id:6,  name:"Pulsera Bebé Cruz con Nombre",        price:850,  cat:"pulseras",   badges:["new"],  img:"p6",          desc:"Para bebé: cruz con nombre grabado. 3 colores." },
-  { id:7,  name:"Pulsera Ajustable Nombre + Corazón",  price:700,  cat:"pulseras",   badges:[],       img:"p7",          desc:"Nombre en cursiva con corazón. Dorado y plateado." },
-  { id:10, name:"Brazalete Rígido con Nombre",         price:900,  cat:"pulseras",   badges:["hot"],  img:"p10",         desc:"Brazalete dorado con tu nombre en letras grandes." },
-  { id:11, name:"Brazalete Doble Nombre",              price:1000, cat:"pulseras",   badges:[],       img:"p11",         desc:"Dos nombres. Ideal para parejas o mamás." },
+  { id:5,  name:"Pulsera Redonda con Foto",            price:0,  cat:"pulseras",   badges:[],       img:"p5",          desc:"Pulsera plateada con dije circular y tu foto." },
+  { id:6,  name:"Pulsera Bebé Cruz con Nombre",        price:0,  cat:"pulseras",   badges:["new"],  img:"p6",          desc:"Para bebé: cruz con nombre grabado. 3 colores." },
+  { id:7,  name:"Pulsera Ajustable Nombre + Corazón",  price:0,  cat:"pulseras",   badges:[],       img:"p7",          desc:"Nombre en cursiva con corazón. Dorado y plateado." },
+  { id:10, name:"Brazalete Rígido con Nombre",         price:0,  cat:"pulseras",   badges:["hot"],  img:"p10",         desc:"Brazalete dorado con tu nombre en letras grandes." },
+  { id:11, name:"Brazalete Doble Nombre",              price:0, cat:"pulseras",   badges:[],       img:"p11",         desc:"Dos nombres. Ideal para parejas o mamás." },
   { id:28, name:"Set de Pulseras Variadas",            price:450,  cat:"pulseras",   badges:["sale"], img:"pulseras_set",    desc:"Hermoso set de pulseras combinadas para regalar." },
-  { id:29, name:"Pulseras de Hilo Coloridas",          price:100,  cat:"pulseras",   badges:["sale"], img:"pulseras_hilo",   desc:"Pulseras de hilo en 12+ colores disponibles." },
-  { id:16, name:"Anillo Infinito con Nombre",          price:600,  cat:"pulseras",   badges:["new"],  img:"p16",         desc:"Anillo dorado con símbolo infinito y nombre grabado." },
+  { id:29, name:"Pulseras de Hilo Coloridas",          price:50,  cat:"pulseras",   badges:["sale"],  img:"pulseras_hilo",   desc:"Pulseras de hilo en 12+ colores disponibles. (Cada una)" },
+  { id:16, name:"Anillo Infinito con Nombre",          price:0,  cat:"pulseras",   badges:["new"],  img:"p16",         desc:"Anillo dorado con símbolo infinito y nombre grabado." },
   // MODA
-  { id:25, name:"Gafas de Sol Variadas",               price:350,  cat:"moda",       badges:["hot"],  img:"gafas",        desc:"Más de 20 estilos. Para él, para ella, para todos." },
-  { id:26, name:"Gorras de Pico Aquatic Sports",       price:300,  cat:"moda",       badges:["new"],  img:"gorras",       desc:"Gorras deportivas Aquatic Sports. Negra y blanca." },
-  { id:27, name:"Sombreros Variados",                  price:500,  cat:"moda",       badges:[],       img:"sombreros",    desc:"Sombrero panamá y estilo cowboy. Con mucho estilo." },
-  { id:34, name:"Boina Francesa Estilo Vintage",       price:400,  cat:"moda",       badges:["new"],  img:"boina_frances", desc:"Boina negra estilo francés. Elegante y moderna. Talla única." },
-  { id:35, name:"Boinas para el Frío",                 price:450,  cat:"moda",       badges:["new"],  img:"boinas_frio",  desc:"Boinas tejidas con pompón. 3 colores: blanco, azul y rosa." },
+  { id:25, name:"Gafas de Sol Variadas",               price:130,  cat:"moda",       badges:["hot"],  img:"gafas",        desc:"Más de 20 estilos. Para él, para ella, para todos." },
+  { id:26, name:"Gorras de Pico Aquatic Sports",       price:280,  cat:"moda",       badges:["new"],  img:"gorras",       desc:"Gorras deportivas Aquatic Sports. Negra y blanca." },
+  { id:27, name:"Sombreros Variados",                  price:380,  cat:"moda",       badges:[],       img:"sombreros",    desc:"Sombrero panamá y estilo cowboy. Con mucho estilo." },
+  { id:34, name:"Boina Francesa Estilo Vintage",       price:280,  cat:"moda",       badges:["new"],  img:"boina_frances", desc:"Boina negra estilo francés. Elegante y moderna. Talla única." },
+  { id:35, name:"Boinas para el Frío",                 price:250,  cat:"moda",       badges:["new"],  img:"boinas_frio",  desc:"Boinas tejidas con pompón. 3 colores: blanco, azul y rosa." },
   // BOLSOS
-  { id:36, name:"Bulto Deportivo Grande Nike",         price:1500, cat:"bolsos",     badges:["new"],  img:"bulto_grande",  desc:"Bolso deportivo grande con doble bolsillo. Correa ajustable incluida." },
-  { id:37, name:"Bulto Pequeño Nike",                  price:1100, cat:"bolsos",     badges:["hot"],  img:"bulto_pequeno", desc:"Bolso pequeño resistente. Compacto, ligero y con estilo." },
+  { id:36, name:"Bulto Deportivo Grande Nike",         price:580, cat:"bolsos",     badges:["new"],  img:"bulto_grande",  desc:"Bolso deportivo grande con doble bolsillo. Correa ajustable incluida." },
+  { id:37, name:"Bulto Pequeño Nike",                  price:480, cat:"bolsos",     badges:["hot"],  img:"bulto_pequeno", desc:"Bolso pequeño resistente. Compacto, ligero y con estilo." },
   // TECNOLOGÍA
-  { id:30, name:"Cargador Rápido Tipo A — 2.4A",       price:300,  cat:"tecnologia", badges:["new"],  img:"cargador_a",   desc:"Cargador Meidou 2.4A con cable. Compatible con Android." },
-  { id:31, name:"Cargador 2 en 1 Tipo C — 2.1A",       price:350,  cat:"tecnologia", badges:[],       img:"cargador_c",   desc:"Cargador de viaje 2 en 1. Rápido, compacto y confiable." },
-  { id:38, name:"Audífonos Estéreo con Cable",         price:200,  cat:"tecnologia", badges:["sale"], img:"audifonos",    desc:"Audífonos estéreo M-914 con micrófono. Alta calidad de sonido." },
+  { id:30, name:"Cargador Rápido Tipo A — 2.4A",       price:240,  cat:"tecnologia", badges:["new"],  img:"cargador_a",   desc:"Cargador Meidou 2.4A con cable. Compatible con Android." },
+  { id:31, name:"Cargador 2 en 1 Tipo C — 2.1A",       price:240,  cat:"tecnologia", badges:[],       img:"cargador_c",   desc:"Cargador de viaje 2 en 1. Rápido, compacto y confiable." },
+  { id:38, name:"Audífonos Estéreo con Cable",         price:145,  cat:"tecnologia", badges:["sale"], img:"audifonos",    desc:"Audífonos estéreo M-914 con micrófono. Alta calidad de sonido." },
   // CUTE/OTROS
-  { id:32, name:"Set de Esmaltes & Labiales",          price:200,  cat:"joyeria",    badges:["sale"], img:"cute",         desc:"Set colorido de esmaltes y labiales variados." },
+  { id:32, name:"Set de Esmaltes & Labiales",          price:35,  cat:"joyeria",    badges:["sale"], img:"cute",         desc:"Set colorido de esmaltes y labiales variados." },
 ];
 
 const DEALS = [
-  { id:201, name:"Pulseras de Hilo",        price:100,  img:"pulseras_hilo",  badge:"Desde RD$100", desc:"12+ colores" },
-  { id:202, name:"Audífonos Estéreo",       price:200,  img:"audifonos",      badge:"Tecnología",   desc:"Con micrófono" },
-  { id:203, name:"Set Esmaltes & Labiales", price:200,  img:"cute",           badge:"Belleza",      desc:"Set colorido" },
-  { id:204, name:"Cargador Tipo A 2.4A",    price:300,  img:"cargador_a",     badge:"Nuevo",        desc:"Con cable USB" },
-  { id:205, name:"Gorras Deportivas",       price:300,  img:"gorras",         badge:"Moda",         desc:"2 colores" },
-  { id:206, name:"Aretes Variados",         price:250,  img:"aretes",         badge:"Popular",      desc:"Dorado y plateado" },
-  { id:207, name:"Gafas de Sol",            price:350,  img:"gafas",          badge:"Oferta",       desc:"20+ estilos" },
-  { id:208, name:"Boina Francesa",          price:400,  img:"boina_frances",  badge:"Nuevo",        desc:"Estilo vintage" },
+  { id:201, name:"Pulseras de Hilo",        price:50,  img:"pulseras_hilo",  badge:"Desde RD$100", desc:"12+ colores" },
+  { id:202, name:"Audífonos Estéreo",       price:145,  img:"audifonos",      badge:"Tecnología",   desc:"Con micrófono" },
+  { id:203, name:"Set Esmaltes & Labiales", price:35,  img:"cute",           badge:"Belleza",      desc:"Set colorido" },
+  { id:204, name:"Cargador Tipo A 2.4A",    price:240,  img:"cargador_a",     badge:"Nuevo",        desc:"Con cable USB" },
+  { id:205, name:"Gorras Deportivas",       price:280,  img:"gorras",         badge:"Moda",         desc:"2 colores" },
+  { id:206, name:"Aretes Variados",         price:35,  img:"aretes",         badge:"Popular",      desc:"Dorado y plateado" },
+  { id:207, name:"Gafas de Sol",            price:145,  img:"gafas",          badge:"Oferta",       desc:"20+ estilos" },
+  { id:208, name:"Boina Francesa",          price:280,  img:"boina_frances",  badge:"Nuevo",        desc:"Estilo vintage" },
 ];
 
 // ── FILTER PILLS ──
@@ -710,10 +754,21 @@ function renderFilters() {
   });
 }
 
+// ── applyFilter: categoría + filtro de precio opcional ──
 function applyFilter(cat) {
+  const minVal = parseFloat(document.getElementById("priceMin")?.value) || null;
+  const maxVal = parseFloat(document.getElementById("priceMax")?.value) || null;
   let count = 0;
   document.querySelectorAll(".product-card").forEach(card => {
-    const show = cat === "todos" || card.dataset.cat === cat;
+    const catOk = cat === "todos" || card.dataset.cat === cat;
+    // data-price="" en consultas (price===0) → NaN → omitir del filtro precio
+    const ep = parseFloat(card.dataset.price);
+    let priceOk = true;
+    if (!isNaN(ep) && ep > 0 && (minVal !== null || maxVal !== null)) {
+      if (minVal !== null && ep < minVal) priceOk = false;
+      if (maxVal !== null && ep > maxVal) priceOk = false;
+    }
+    const show = catOk && priceOk;
     card.classList.toggle("hidden", !show);
     if (show) count++;
   });
@@ -723,38 +778,79 @@ function applyFilter(cat) {
 // ── RENDER PRODUCTS ──
 const BADGE_MAP = { new:["badge-new","Nuevo"], hot:["badge-hot","🔥 Popular"], sale:["badge-sale","Oferta"] };
 
+/* Precio efectivo para filtrado:
+   - priceType "range" → minPrice
+   - price === 0 (consulta) → "" (se excluye del filtro)
+   - normal → price */
+function effectivePrice(p) {
+  if (p.priceType === "range") return p.minPrice;
+  if (p.price === 0) return "";
+  return p.price;
+}
+
+/* Bloque HTML de precio + botón según tipo de producto */
+function buildPriceBlock(p) {
+  // CASO 2: Producto personalizado — solo consulta por WhatsApp
+  if (p.price === 0) {
+    return `
+      <div class="product-price">
+        <span class="price-consult">👉 Consultar por WhatsApp</span>
+      </div>
+      <button class="btn-consult" data-wa-name="${p.name.replace(/"/g,"&quot;")}">
+        📲 Consultar
+      </button>`;
+  }
+  // CASO 3: Precio variable (range)
+  if (p.priceType === "range") {
+    return `
+      <div class="price-range">
+        <span class="range-label">Desde</span>
+        <span class="range-val"><span class="cur">RD$</span> ${p.minPrice.toLocaleString()} <span class="range-max">– ${p.maxPrice.toLocaleString()}</span></span>
+      </div>
+      <button class="add-btn" data-id="${p.id}" data-name="${p.name}" data-price="${p.minPrice}" data-img="${p.img}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        Reservar
+      </button>`;
+  }
+  // CASO 1: Precio normal
+  return `
+    <div class="product-price">
+      <span class="price-label">Precio</span>
+      <span class="price-value"><span class="cur">RD$</span> ${p.price.toLocaleString()}</span>
+    </div>
+    <button class="add-btn" data-id="${p.id}" data-name="${p.name}" data-price="${p.price}" data-img="${p.img}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      Reservar
+    </button>`;
+}
+
 function renderProducts() {
-  document.getElementById("productsGrid").innerHTML = PRODUCTS.map(p => `
-    <div class="product-card" data-cat="${p.cat}" data-id="${p.id}">
+  document.getElementById("productsGrid").innerHTML = PRODUCTS.map(p => {
+    const ep = effectivePrice(p);
+    // Quick overlay: consulta en price===0; carrito normal en los demás
+    const quickInner = p.price === 0
+      ? `<button class="btn-consult" data-wa-name="${p.name.replace(/"/g,"&quot;")}">📲 Consultar por WhatsApp</button>`
+      : `<button class="prod-quick-btn" data-id="${p.id}" data-name="${p.name}" data-price="${p.priceType==="range"?p.minPrice:p.price}" data-img="${p.img}">🛒 Agregar al carrito</button>`;
+    return `
+    <div class="product-card" data-cat="${p.cat}" data-id="${p.id}" data-price="${ep}">
       <div class="product-img-wrap">
         <img src="${IMGS[p.img]}" alt="${p.name}" loading="lazy"/>
         <div class="product-badges">
           ${p.badges.map(b => `<span class="badge ${BADGE_MAP[b][0]}">${BADGE_MAP[b][1]}</span>`).join("")}
         </div>
         <button class="prod-wish" title="Guardar">🤍</button>
-        <div class="prod-quick">
-          <button class="prod-quick-btn" data-id="${p.id}" data-name="${p.name}" data-price="${p.price}" data-img="${p.img}">
-            🛒 Agregar al carrito
-          </button>
-        </div>
+        <div class="prod-quick">${quickInner}</div>
       </div>
       <div class="product-info">
         <div class="product-cat">${p.cat}</div>
         <div class="product-name">${p.name}</div>
         <div class="product-desc">${p.desc}</div>
         <div class="product-footer">
-          <div class="product-price">
-            <span class="price-label">Precio</span>
-            <span class="price-value"><span class="cur">RD$</span> ${p.price.toLocaleString()}</span>
-          </div>
-          <button class="add-btn" data-id="${p.id}" data-name="${p.name}" data-price="${p.price}" data-img="${p.img}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-            Reservar
-          </button>
+          ${buildPriceBlock(p)}
         </div>
       </div>
-    </div>
-  `).join("");
+    </div>`;
+  }).join("");
 
   document.getElementById("prodCountLabel").textContent = `${PRODUCTS.length} productos`;
   attachCardEvents();
@@ -789,6 +885,7 @@ function renderDeals() {
 }
 
 function attachCardEvents() {
+  // Reservar (precio fijo y range)
   document.querySelectorAll(".add-btn, .prod-quick-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       addToCart({ id:parseInt(btn.dataset.id), name:btn.dataset.name, price:parseFloat(btn.dataset.price), img:btn.dataset.img });
@@ -803,6 +900,16 @@ function attachCardEvents() {
       }
     });
   });
+
+  // Consultar por WhatsApp (productos personalizados, price === 0)
+  document.querySelectorAll(".btn-consult").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const nombre = btn.dataset.waName || btn.dataset.name || "este producto";
+      const msg = `Hola, quiero información sobre: ${nombre}`;
+      window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank");
+    });
+  });
+
   document.querySelectorAll(".prod-wish").forEach(btn => {
     btn.addEventListener("click", () => { btn.textContent = btn.textContent === "🤍" ? "❤️" : "🤍"; });
   });
@@ -919,17 +1026,9 @@ function animateCards() {
   }, { threshold:0.06 });
   document.querySelectorAll(".product-card, .deal-card, .cat-pill").forEach(el => {
     el.style.opacity = "0"; el.style.transform = "translateY(20px)";
-    el.style.transition = "opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s, border-color 0.25s";
+    el.style.transition = "opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s";
     obs.observe(el);
   });
-}
-
-// ── TOAST ──
-function showToast(msg) {
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 3000);
 }
 
 // ── CONTACT FORM ──
@@ -939,11 +1038,37 @@ document.getElementById("contactForm").addEventListener("submit", e => {
   e.target.reset();
 });
 
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 3000);
+}
+
 // ── INIT ──
 renderCats();
 renderFilters();
 renderProducts();
 renderDeals();
+
+// ── LISTENERS FILTRO DE PRECIO ──
+function getCurrentCat() {
+  return document.querySelector(".fpill.active")?.dataset.cat ?? "todos";
+}
+document.getElementById("btnPriceFilter").addEventListener("click", () => {
+  applyFilter(getCurrentCat());
+});
+document.getElementById("btnPriceReset").addEventListener("click", () => {
+  document.getElementById("priceMin").value = "";
+  document.getElementById("priceMax").value = "";
+  applyFilter(getCurrentCat());
+});
+["priceMin","priceMax"].forEach(id => {
+  document.getElementById(id).addEventListener("keydown", e => {
+    if (e.key === "Enter") applyFilter(getCurrentCat());
+  });
+});
 </script>
 </body>
 </html>

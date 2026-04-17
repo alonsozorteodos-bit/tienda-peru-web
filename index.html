@@ -679,7 +679,7 @@ const PRODUCTS = [
   { id:14, name:"Set Argollas + Collar con Nombre",    price:0, cat:"joyeria",    badges:["hot"],  img:"p14", desc:"Set completo: aretes argolla y collar con nombre dorado." },
   { id:15, name:"Collar Nombre en Cursiva",            price:0,  cat:"joyeria",    badges:[],       img:"p15", desc:"Delicado collar dorado con tu nombre en cursiva." },
   { id:18, name:"Cadenas de Mujer Variadas",           price:145,  cat:"joyeria",    badges:["new"],  img:"cadenas_mujer",  desc:"Hermosas cadenas variadas para mujer. Diseños modernos y elegantes." },
-  { id:19, name:"Cadenas Variadas de Hombre",          price:280,  cat:"joyeria",    badges:["hot"],  img:"cadenas_hombre", desc:"Cadenas de hombre: cruces, medallones y más. Dorado y plateado." },
+  { id:19, name:"Cadenas Variadas de Hombre",          price:145,  priceType:"range", priceMin:145, priceMax:480, cat:"joyeria",    badges:["hot"],  img:"cadenas_hombre", desc:"Cadenas de hombre: cruces, medallones y más. Dorado y plateado." },
   { id:20, name:"Hermosa Cadena de Mujer",             price:480,  cat:"joyeria",    badges:[],       img:"collar_mujer",   desc:"Cadena brillante con cristales. Ideal para ocasiones especiales." },
   { id:21, name:"Hermoso Collar de Mujer",             price:380,  cat:"joyeria",    badges:["new"],  img:"collar_hermoso", desc:"Collar artesanal con cristales únicos. Un lujo accesible." },
   { id:3,  name:"Toalla Personalizada Bordada",        price:0,  cat:"joyeria",    badges:[],       img:"p3",  desc:"Toalla premium con tu nombre bordado. 4 colores." },
@@ -701,7 +701,7 @@ const PRODUCTS = [
   { id:29, name:"Pulseras de Hilo Coloridas",          price:50,  cat:"pulseras",   badges:["sale"],  img:"pulseras_hilo",   desc:"Pulseras de hilo en 12+ colores disponibles. (Cada una)" },
   { id:16, name:"Anillo Infinito con Nombre",          price:0,  cat:"pulseras",   badges:["new"],  img:"p16",         desc:"Anillo dorado con símbolo infinito y nombre grabado." },
   // MODA
-  { id:25, name:"Gafas de Sol Variadas",               price:130,  cat:"moda",       badges:["hot"],  img:"gafas",        desc:"Más de 20 estilos. Para él, para ella, para todos." },
+  { id:25, name:"Gafas de Sol Variadas",               price:130,  priceType:"range", priceMin:130, priceMax:380, cat:"moda",       badges:["hot"],  img:"gafas",        desc:"Más de 20 estilos. Para él, para ella, para todos." },
   { id:26, name:"Gorras de Pico Aquatic Sports",       price:280,  cat:"moda",       badges:["new"],  img:"gorras",       desc:"Gorras deportivas Aquatic Sports. Negra y blanca." },
   { id:27, name:"Sombreros Variados",                  price:380,  cat:"moda",       badges:[],       img:"sombreros",    desc:"Sombrero panamá y estilo cowboy. Con mucho estilo." },
   { id:34, name:"Boina Francesa Estilo Vintage",       price:280,  cat:"moda",       badges:["new"],  img:"boina_frances", desc:"Boina negra estilo francés. Elegante y moderna. Talla única." },
@@ -783,7 +783,8 @@ const BADGE_MAP = { new:["badge-new","Nuevo"], hot:["badge-hot","🔥 Popular"],
    - price === 0 (consulta) → "" (se excluye del filtro)
    - normal → price */
 function effectivePrice(p) {
-  if (p.priceType === "range") return p.minPrice;
+  // soporta priceType:"range" con minPrice, y también priceMin/priceMax directo
+  if (p.priceType === "range" || (p.priceMin != null && p.priceMax != null)) return p.priceMin ?? p.minPrice;
   if (p.price === 0) return "";
   return p.price;
 }
@@ -800,14 +801,14 @@ function buildPriceBlock(p) {
         📲 Consultar
       </button>`;
   }
-  // CASO 3: Precio variable (range)
-  if (p.priceType === "range") {
+  // CASO 3: Precio variable — soporta priceType:"range" O priceMin/priceMax directo
+  if (p.priceType === "range" || (p.priceMin != null && p.priceMax != null)) {
     return `
       <div class="price-range">
-        <span class="range-label">Desde</span>
-        <span class="range-val"><span class="cur">RD$</span> ${p.minPrice.toLocaleString()} <span class="range-max">– ${p.maxPrice.toLocaleString()}</span></span>
+        <span class="range-label">Precio</span>
+        <span class="range-val"><span class="cur">RD$</span> ${(p.priceMin??p.minPrice).toLocaleString()} <span class="range-max">— ${(p.priceMax??p.maxPrice).toLocaleString()}</span></span>
       </div>
-      <button class="add-btn" data-id="${p.id}" data-name="${p.name}" data-price="${p.minPrice}" data-img="${p.img}">
+      <button class="add-btn" data-id="${p.id}" data-name="${p.name}" data-price="${p.priceMin??p.minPrice}" data-img="${p.img}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
         Reservar
       </button>`;
@@ -830,7 +831,7 @@ function renderProducts() {
     // Quick overlay: consulta en price===0; carrito normal en los demás
     const quickInner = p.price === 0
       ? `<button class="btn-consult" data-wa-name="${p.name.replace(/"/g,"&quot;")}">📲 Consultar por WhatsApp</button>`
-      : `<button class="prod-quick-btn" data-id="${p.id}" data-name="${p.name}" data-price="${p.priceType==="range"?p.minPrice:p.price}" data-img="${p.img}">🛒 Agregar al carrito</button>`;
+      : `<button class="prod-quick-btn" data-id="${p.id}" data-name="${p.name}" data-price="${(p.priceType==="range"||(p.priceMin!=null&&p.priceMax!=null))?(p.priceMin??p.minPrice):p.price}" data-img="${p.img}">🛒 Agregar al carrito</button>`;
     return `
     <div class="product-card" data-cat="${p.cat}" data-id="${p.id}" data-price="${ep}">
       <div class="product-img-wrap">

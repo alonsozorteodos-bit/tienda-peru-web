@@ -641,7 +641,27 @@ const IMGS = {
   boina_frances: "img/boina_frances.jpg",
   boinas_frio: "img/boinas_frio.jpg",
   bulto_grande: "img/bulto_grande.jpg",
-  bulto_pequeno: "img/bulto_pequeno.jpg"
+  bulto_pequeno: "img/bulto_pequeno.jpg",
+  rosario: "img/rosario.jpg",
+  // ── Nuevos productos 2025 ──
+  aretesacero:        "img/aretesacero.jpg",
+  argolla_de_cruz:    "img/argolla_de_cruz.jpg",
+  boina_francesa_mujer: "img/boina_francesa-mujer.jpg",
+  bolsa_mujer:        "img/bolsa_mujer.jpg",
+  brilla_labios:      "img/brilla_labios.jpg",
+  cadena_grande:      "img/cadena_grande.jpg",
+  cadenas_380:        "img/cadenas_380.jpg",
+  cartapasio:         "img/cartapasio.jpg",
+  cuarzo:             "img/cuarzo.jpg",
+  guantes_adulto:     "img/guantes_adulto.jpg",
+  guantes_bebe:       "img/guantes_bebe.jpg",
+  guantes_nino:       "img/guantes_nino.jpg",
+  mochila_de_tiros:   "img/mochila_de_tiros.jpg",
+  mochilas:           "img/mochilas.jpg",
+  panuelos:           "img/pañuelos.jpg",
+  pasa_mont_barato:   "img/pasa_mont_barato.jpg",
+  pasa_montanas:      "img/pasa_montañas.jpg",
+  poncho_peruano:     "img/poncho_peruano.jpg",
 };
 
 // Hero & About images
@@ -658,6 +678,7 @@ const CATS = [
   { id:"moda",       name:"Moda",         img:"gorras",           icon:null },
   { id:"bolsos",     name:"Bolsos",       img:"bulto_grande",     icon:null },
   { id:"tecnologia", name:"Tecnología",   img:"audifonos",        icon:null },
+  { id:"ropa",       name:"Ropa & Frío",  img:"poncho_peruano",   icon:null },
 ];
 
 function renderCats() {
@@ -692,6 +713,8 @@ const PRODUCTS = [
   { id:20, name:"Hermosa Cadena de Mujer",             price:480,  cat:"joyeria",    badges:[],       img:"collar_mujer",   desc:"Cadena brillante con cristales. Ideal para ocasiones especiales." },
   { id:21, name:"Hermoso Collar de Mujer",             price:380,  cat:"joyeria",    badges:["new"],  img:"collar_hermoso", desc:"Collar artesanal con cristales únicos. Un lujo accesible." },
   { id:3,  name:"Toalla Personalizada Bordada",        price:0,  cat:"joyeria",    badges:[],       img:"p3",  desc:"Toalla premium con tu nombre bordado. 4 colores." },
+  { id:3,  name:"rosario",                             price:120,  cat:"joyeria",    badges:[],       img:"rosario",  desc:"Este rosario artesanal combina la calidez del Ojo de Tigre con el brillo profundo de la Hematita." },
+
   // ARETES
   { id:33, name:"Aretes y Argollas Variados",          price:85,  cat:"aretes",     badges:["new"],  img:"aretes",  desc:"Gran variedad de aretes dorados y plateados. Diseños elegantes para toda ocasión." },
   { id:12, name:"Aretes Trepadores con Nombre",        price:0,  cat:"aretes",     badges:["new"],  img:"p12",     desc:"Aretes trepadores 3D con tu nombre. Plateado." },
@@ -724,6 +747,36 @@ const PRODUCTS = [
   { id:38, name:"Audífonos Estéreo con Cable",         price:145,  cat:"tecnologia", badges:["sale"], img:"audifonos",    desc:"Audífonos estéreo M-914 con micrófono. Alta calidad de sonido." },
   // CUTE/OTROS
   { id:32, name:"Set de Esmaltes & Labiales",          price:35,  cat:"joyeria",    badges:["sale"], img:"cute",         desc:"Set colorido de esmaltes y labiales variados." },
+
+  // ── NUEVOS PRODUCTOS ──
+
+  // ARETES NUEVOS
+  { id:40, name:"Aretes de Acero Variados",            price:85,  cat:"aretes",     badges:["new"],  img:"aretesacero",        desc:"Set de aretes de acero inoxidable: triángulos, anclas, flores y más. Dorado y plateado." },
+  { id:41, name:"Argollas de Cruz Negras",             price:120, cat:"aretes",     badges:["new"],  img:"argolla_de_cruz",    desc:"Argollas con colgante de cruz en negro mate. Set x18 pares. Estilo urbano y elegante." },
+
+  // JOYERÍA NUEVA
+  { id:42, name:"Cadena Grande con Dije",              price:480, cat:"joyeria",    badges:["hot"],  img:"cadena_grande",      desc:"Cadena cubana gruesa con dije premium. Diseño exclusivo para hombre." },
+  { id:43, name:"Cadenas Variadas RD$380",             price:380, cat:"joyeria",    badges:["sale"], img:"cadenas_380",        desc:"Variedad de cadenas con dijes: calaveras, corazones y cruces. Dorado y plateado." },
+  { id:44, name:"Collar de Cuarzo Azul D'Jessy",      price:450, cat:"joyeria",    badges:["new"],  img:"cuarzo",             desc:"Collar de cuarzo lapis lazuli con aretes de regalo. Joyería D'Jessy Perú." },
+  { id:45, name:"Brillo de Labios Chap·Lip",          price:60,  cat:"joyeria",    badges:["sale"], img:"brilla_labios",      desc:"Set de brillos labiales hidratantes Chap·Lip. 12 sabores y colores disponibles." },
+
+  // BOLSOS NUEVOS
+  { id:46, name:"Bolsa de Mujer Decorada",             price:480, cat:"bolsos",     badges:["new"],  img:"bolsa_mujer",        desc:"Bolsa tote estampada con lentejuelas y diseño artístico. Ideal para salidas diarias." },
+  { id:47, name:"Cartapacio / Maletín de Trabajo",     price:680, cat:"bolsos",     badges:["new"],  img:"cartapasio",         desc:"Maletín ejecutivo resistente. Compartimento para laptop. Correa cruzada incluida." },
+  { id:48, name:"Mochila de Tiros (Drawstring)",       price:280, cat:"bolsos",     badges:["new"],  img:"mochila_de_tiros",   desc:"Mochila de cuerdas ligera con estampado anime. Perfecta para el día a día." },
+  { id:49, name:"Mochilas Escolares Variadas",         price:480, cat:"bolsos",     badges:["hot"],  img:"mochilas",           desc:"Mochilas escolares resistentes para niños y adultos. Varios colores y tamaños." },
+
+  // MODA NUEVA
+  { id:50, name:"Boina Francesa para Mujer",           price:280, cat:"moda",       badges:["new"],  img:"boina_francesa_mujer", desc:"Boina tejida de mujer en negro y rojo. Elegante y abrigadora." },
+
+  // ROPA & FRÍO
+  { id:51, name:"Pasamontañas Air Flow",               price:320, cat:"ropa",       badges:["new"],  img:"pasa_montanas",      desc:"Pasamontañas deportivo Air Flow con ventilación. Ideal para motociclistas y montañismo." },
+  { id:52, name:"Pasamontañas Económico",              price:120, cat:"ropa",       badges:["sale"], img:"pasa_mont_barato",   desc:"Pasamontañas tejido, abrigador y económico. 3 colores disponibles: beige, rojo y negro." },
+  { id:53, name:"Guantes para Adulto",                 price:120, cat:"ropa",       badges:["new"],  img:"guantes_adulto",     desc:"Guantes tejidos para adulto. Suaves, elásticos y cálidos. Color negro." },
+  { id:54, name:"Guantes para Niño",                   price:80,  cat:"ropa",       badges:["new"],  img:"guantes_nino",       desc:"Guantes tejidos para niño. Talla infantil, suaves y abrigadores. Color gris." },
+  { id:55, name:"Guantes para Bebé",                   price:60,  cat:"ropa",       badges:["new"],  img:"guantes_bebe",       desc:"Guantes pequeños para bebé. Ultra suaves y cálidos. Color oscuro." },
+  { id:56, name:"Pañuelos / Bandanas Variados",        price:85,  cat:"ropa",       badges:["sale"], img:"panuelos",           desc:"Pañuelos y bandanas estampados. Varios colores: amarillo, azul, rojo y blanco." },
+  { id:57, name:"Poncho Peruano Tejido",               price:0,   cat:"ropa",       badges:["hot"],  img:"poncho_peruano",     desc:"Poncho peruano tejido con diseños andinos. 100% artesanal. Consultar colores disponibles." },
 ];
 
 const DEALS = [
@@ -747,6 +800,7 @@ const FILTER_CATS = [
   { id:"moda",       label:"👒 Moda" },
   { id:"bolsos",     label:"👜 Bolsos" },
   { id:"tecnologia", label:"🔌 Tecnología" },
+  { id:"ropa",       label:"🧥 Ropa & Frío" },
 ];
 
 function renderFilters() {

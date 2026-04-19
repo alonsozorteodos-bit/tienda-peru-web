@@ -701,82 +701,95 @@ function filterBycat(cat) {
 
 // ── PRODUCTS ──
 const PRODUCTS = [
-  // JOYERÍA PERSONALIZADA
-  { id:1,  name:"Collar Corazón con Alas + Foto",      price:0,  cat:"joyeria",    badges:["hot"],  img:"p1",  desc:"Medallón corazón con alas. Tu foto personalizada. 2 colores." },
-  { id:2,  name:"Colgante con Foto + Nombre Dorado",   price:0, cat:"joyeria",    badges:["new"],  img:"p2",  desc:"Tu foto y nombre en letras doradas. Cadena incluida." },
-  { id:4,  name:"Collar Corazón Forever Loved",        price:0, cat:"joyeria",    badges:["hot"],  img:"p4",  desc:"Collar dorado con foto y mensaje Forever Loved." },
-  { id:8,  name:"Collar Dog Tag con Foto",             price:0,  cat:"joyeria",    badges:[],       img:"p8",  desc:"Estilo militar con tu foto en alta definición." },
-  { id:14, name:"Set Argollas + Collar con Nombre",    price:0, cat:"joyeria",    badges:["hot"],  img:"p14", desc:"Set completo: aretes argolla y collar con nombre dorado." },
-  { id:15, name:"Collar Nombre en Cursiva",            price:0,  cat:"joyeria",    badges:[],       img:"p15", desc:"Delicado collar dorado con tu nombre en cursiva." },
-  { id:18, name:"Cadenas de Mujer Variadas",           price:145,  cat:"joyeria",    badges:["new"],  img:"cadenas_mujer",  desc:"Hermosas cadenas variadas para mujer. Diseños modernos y elegantes." },
-  { id:19, name:"Cadenas Variadas de Hombre",          price:145,  priceType:"range", priceMin:145, priceMax:480, cat:"joyeria",    badges:["hot"],  img:"cadenas_hombre", desc:"Cadenas de hombre: cruces, medallones y más. Dorado y plateado." },
-  { id:20, name:"Hermosa Cadena de Mujer",             price:480,  cat:"joyeria",    badges:[],       img:"collar_mujer",   desc:"Cadena brillante con cristales. Ideal para ocasiones especiales." },
-  { id:21, name:"Hermoso Collar de Mujer",             price:380,  cat:"joyeria",    badges:["new"],  img:"collar_hermoso", desc:"Collar artesanal con cristales únicos. Un lujo accesible." },
-  { id:3,  name:"Toalla Personalizada Bordada",        price:0,  cat:"joyeria",    badges:[],       img:"p3",  desc:"Toalla premium con tu nombre bordado. 4 colores." },
-  { id:3,  name:"rosario",                             price:120,  cat:"joyeria",    badges:[],       img:"rosario",  desc:"Este rosario artesanal combina la calidez del Ojo de Tigre con el brillo profundo de la Hematita." },
 
-  // ARETES
-  { id:33, name:"Aretes y Argollas Variados",          price:85,  cat:"aretes",     badges:["new"],  img:"aretes",  desc:"Gran variedad de aretes dorados y plateados. Diseños elegantes para toda ocasión." },
-  { id:12, name:"Aretes Trepadores con Nombre",        price:0,  cat:"aretes",     badges:["new"],  img:"p12",     desc:"Aretes trepadores 3D con tu nombre. Plateado." },
-  { id:13, name:"Aretes Mariposa con Nombre",          price:0,  cat:"aretes",     badges:[],       img:"p13",     desc:"Mariposa de oro con nombre personalizado." },
-  // RELOJES
-  { id:22, name:"Set de Reloj + Pulseras Dorado",      price:580, cat:"relojes",    badges:["hot"],  img:"reloj_pulseras",   desc:"Set premium: reloj dorado + 2 pulseras. El regalo perfecto." },
-  { id:23, name:"Relojes Variados",                    price:380, cat:"relojes",    badges:["new"],  img:"relojes",          desc:"Gran variedad de relojes para hombre y mujer." },
-  { id:24, name:"Set de Reloj con Pulseras — Caja",    price:580, cat:"relojes",    badges:["sale"], img:"relojes_pulseras", desc:"Set de lujo en caja de regalo. Reloj + pulseras + collar." },
-  // PULSERAS
-  { id:5,  name:"Pulsera Redonda con Foto",            price:0,  cat:"pulseras",   badges:[],       img:"p5",          desc:"Pulsera plateada con dije circular y tu foto." },
-  { id:6,  name:"Pulsera Bebé Cruz con Nombre",        price:0,  cat:"pulseras",   badges:["new"],  img:"p6",          desc:"Para bebé: cruz con nombre grabado. 3 colores." },
-  { id:7,  name:"Pulsera Ajustable Nombre + Corazón",  price:0,  cat:"pulseras",   badges:[],       img:"p7",          desc:"Nombre en cursiva con corazón. Dorado y plateado." },
-  { id:10, name:"Brazalete Rígido con Nombre",         price:0,  cat:"pulseras",   badges:["hot"],  img:"p10",         desc:"Brazalete dorado con tu nombre en letras grandes." },
-  { id:11, name:"Brazalete Doble Nombre",              price:0, cat:"pulseras",   badges:[],       img:"p11",         desc:"Dos nombres. Ideal para parejas o mamás." },
-  { id:28, name:"Set de Pulseras Variadas",            price:100,  cat:"pulseras",   badges:["sale"], img:"pulseras_set",    desc:"Hermoso set de pulseras combinadas para regalar.(Cada paquete)" },
-  { id:29, name:"Pulseras de Hilo Coloridas",          price:50,  cat:"pulseras",   badges:["sale"],  img:"pulseras_hilo",   desc:"Pulseras de hilo en 12+ colores disponibles. (Cada una)" },
-  { id:16, name:"Anillo Infinito con Nombre",          price:0,  cat:"pulseras",   badges:["new"],  img:"p16",         desc:"Anillo dorado con símbolo infinito y nombre grabado." },
-  // MODA
-  { id:25, name:"Gafas de Sol Variadas",               price:130,  priceType:"range", priceMin:130, priceMax:380, cat:"moda",       badges:["hot"],  img:"gafas",        desc:"Más de 20 estilos. Para él, para ella, para todos." },
-  { id:26, name:"Gorras de Pico Aquatic Sports",       price:280,  cat:"moda",       badges:["new"],  img:"gorras",       desc:"Gorras deportivas Aquatic Sports. Negra y blanca." },
-  { id:27, name:"Sombreros Variados",                  price:380,  cat:"moda",       badges:[],       img:"sombreros",    desc:"Sombrero panamá y estilo cowboy. Con mucho estilo." },
-  { id:34, name:"Boina Francesa Estilo Vintage",       price:280,  cat:"moda",       badges:["new"],  img:"boina_frances", desc:"Boina negra estilo francés. Elegante y moderna. Talla única." },
-  { id:35, name:"Boinas para el Frío",                 price:250,  cat:"moda",       badges:["new"],  img:"boinas_frio",  desc:"Boinas tejidas con pompón. 3 colores: blanco, azul y rosa." },
-  // BOLSOS
-  { id:36, name:"Bulto Deportivo Grande Nike",         price:580, cat:"bolsos",     badges:["new"],  img:"bulto_grande",  desc:"Bolso deportivo grande con doble bolsillo. Correa ajustable incluida." },
-  { id:37, name:"Bulto Pequeño Nike",                  price:480, cat:"bolsos",     badges:["hot"],  img:"bulto_pequeno", desc:"Bolso pequeño resistente. Compacto, ligero y con estilo." },
-  // TECNOLOGÍA
-  { id:30, name:"Cargador Rápido Tipo A — 2.4A",       price:240,  cat:"tecnologia", badges:["new"],  img:"cargador_a",   desc:"Cargador Meidou 2.4A con cable. Compatible con Android." },
-  { id:31, name:"Cargador 2 en 1 Tipo C — 2.1A",       price:240,  cat:"tecnologia", badges:[],       img:"cargador_c",   desc:"Cargador de viaje 2 en 1. Rápido, compacto y confiable." },
-  { id:38, name:"Audífonos Estéreo con Cable",         price:145,  cat:"tecnologia", badges:["sale"], img:"audifonos",    desc:"Audífonos estéreo M-914 con micrófono. Alta calidad de sonido." },
-  // CUTE/OTROS
-  { id:32, name:"Set de Esmaltes & Labiales",          price:35,  cat:"joyeria",    badges:["sale"], img:"cute",         desc:"Set colorido de esmaltes y labiales variados." },
+  // ════════════════════════════════
+  // 💎 JOYERÍA — Personalizadas (consulta)
+  // ════════════════════════════════
+  { id:1,  name:"Collar Corazón con Alas + Foto",      price:0,   cat:"joyeria",  badges:["hot"],  img:"p1",   desc:"Medallón corazón con alas. Tu foto personalizada. 2 colores." },
+  { id:2,  name:"Colgante con Foto + Nombre Dorado",   price:0,   cat:"joyeria",  badges:["new"],  img:"p2",   desc:"Tu foto y nombre en letras doradas. Cadena incluida." },
+  { id:3,  name:"Toalla Personalizada Bordada",        price:0,   cat:"joyeria",  badges:[],       img:"p3",   desc:"Toalla premium con tu nombre bordado. 4 colores." },
+  { id:4,  name:"Collar Corazón Forever Loved",        price:0,   cat:"joyeria",  badges:["hot"],  img:"p4",   desc:"Collar dorado con foto y mensaje Forever Loved." },
+  { id:8,  name:"Collar Dog Tag con Foto",             price:0,   cat:"joyeria",  badges:[],       img:"p8",   desc:"Estilo militar con tu foto en alta definición." },
+  { id:14, name:"Set Argollas + Collar con Nombre",    price:0,   cat:"joyeria",  badges:["hot"],  img:"p14",  desc:"Set completo: aretes argolla y collar con nombre dorado." },
+  { id:15, name:"Collar Nombre en Cursiva",            price:0,   cat:"joyeria",  badges:[],       img:"p15",  desc:"Delicado collar dorado con tu nombre en cursiva." },
 
-  // ── NUEVOS PRODUCTOS ──
+  // 💎 JOYERÍA — Precio fijo
+  { id:18, name:"Cadenas de Mujer Variadas",           price:145, cat:"joyeria",  badges:["new"],  img:"cadenas_mujer",   desc:"Hermosas cadenas variadas para mujer. Diseños modernos y elegantes." },
+  { id:19, name:"Cadenas Variadas de Hombre",          price:145, priceType:"range", priceMin:145, priceMax:480, cat:"joyeria", badges:["hot"], img:"cadenas_hombre", desc:"Cadenas de hombre: cruces, medallones y más. Dorado y plateado." },
+  { id:20, name:"Hermosa Cadena de Mujer",             price:480, cat:"joyeria",  badges:[],       img:"collar_mujer",    desc:"Cadena brillante con cristales. Ideal para ocasiones especiales." },
+  { id:21, name:"Hermoso Collar de Mujer",             price:380, cat:"joyeria",  badges:["new"],  img:"collar_hermoso",  desc:"Collar artesanal con cristales únicos. Un lujo accesible." },
+  { id:32, name:"Set de Esmaltes & Labiales",          price:35,  cat:"joyeria",  badges:["sale"], img:"cute",            desc:"Set colorido de esmaltes y labiales variados." },
+  { id:39, name:"Rosario Artesanal",                   price:120, cat:"joyeria",  badges:[],       img:"rosario",         desc:"Este rosario artesanal combina la calidez del Ojo de Tigre con el brillo profundo de la Hematita." },
+  { id:42, name:"Cadena Grande con Dije",              price:1550,cat:"joyeria",  badges:["hot"],  img:"cadena_grande",   desc:"Cadena cubana gruesa con dije premium. Diseño exclusivo para hombre." },
+  { id:43, name:"Cadenas Variadas",                    price:380, cat:"joyeria",  badges:["sale"], img:"cadenas_380",     desc:"Variedad de cadenas con dijes: calaveras, corazones y cruces. Dorado y plateado." },
+  { id:44, name:"Collar de Cuarzo Azul",               price:145, cat:"joyeria",  badges:["new"],  img:"cuarzo",          desc:"Collar de cuarzo lapis lazuli con aretes de regalo. Joyería D'Jessy Perú." },
+  { id:45, name:"Brillo de Labios Chap·Lip",           price:60,  cat:"joyeria",  badges:["sale"], img:"brilla_labios",   desc:"Set de brillos labiales hidratantes Chap·Lip. 12 sabores y colores disponibles." },
 
-  // ARETES NUEVOS
-  { id:40, name:"Aretes de Acero Variados",            price:95,  cat:"aretes",     badges:["new"],  img:"aretesacero",        desc:"Set de aretes de acero inoxidable: triángulos, anclas, flores y más. Dorado y plateado." },
-  { id:41, name:"Argollas de Cruz Negras",             price:120, cat:"aretes",     badges:["new"],  img:"argolla_de_cruz",    desc:"Argollas con colgante de cruz en negro mate. Set x18 pares. Estilo urbano y elegante." },
+  // ════════════════════════════════
+  // 👂 ARETES
+  // ════════════════════════════════
+  { id:12, name:"Aretes Trepadores con Nombre",        price:0,   cat:"aretes",   badges:["new"],  img:"p12",             desc:"Aretes trepadores 3D con tu nombre. Plateado." },
+  { id:13, name:"Aretes Mariposa con Nombre",          price:0,   cat:"aretes",   badges:[],       img:"p13",             desc:"Mariposa de oro con nombre personalizado." },
+  { id:33, name:"Aretes y Argollas Variados",          price:85,  cat:"aretes",   badges:["new"],  img:"aretes",          desc:"Gran variedad de aretes dorados y plateados. Diseños elegantes para toda ocasión." },
+  { id:40, name:"Aretes de Acero Variados",            price:95,  cat:"aretes",   badges:["new"],  img:"aretesacero",     desc:"Set de aretes de acero inoxidable: triángulos, anclas, flores y más. Dorado y plateado." },
+  { id:41, name:"Argollas de Cruz Negras",             price:120, cat:"aretes",   badges:["new"],  img:"argolla_de_cruz", desc:"Argollas con colgante de cruz en negro mate. Set x18 pares. Estilo urbano y elegante." },
 
-  // JOYERÍA NUEVA
-  { id:42, name:"Cadena Grande con Dije",              price:1550, cat:"joyeria",    badges:["original"],  img:"cadena_grande",      desc:"Cadena cubana gruesa con dije premium. Diseño exclusivo para hombre." },
-  { id:43, name:"Cadenas Variadas",                   price:380, cat:"joyeria",    badges:["sale"], img:"cadenas_380",        desc:"Variedad de cadenas con dijes: calaveras, corazones y cruces. Dorado y plateado." },
-  { id:44, name:"Collar de Cuarzo Azul",              price:145, cat:"joyeria",    badges:["new"],  img:"cuarzo",             desc:"Collar de cuarzo lapis lazuli con aretes de regalo. Joyería D'Jessy Perú." },
-  { id:45, name:"Brillo de Labios Chap·Lip",          price:60,  cat:"joyeria",    badges:["sale"], img:"brilla_labios",      desc:"Set de brillos labiales hidratantes Chap·Lip. 12 sabores y colores disponibles." },
+  // ════════════════════════════════
+  // ⌚ RELOJES
+  // ════════════════════════════════
+  { id:22, name:"Set de Reloj + Pulseras Dorado",      price:580, cat:"relojes",  badges:["hot"],  img:"reloj_pulseras",  desc:"Set premium: reloj dorado + 2 pulseras. El regalo perfecto." },
+  { id:23, name:"Relojes Variados",                    price:380, cat:"relojes",  badges:["new"],  img:"relojes",         desc:"Gran variedad de relojes para hombre y mujer." },
+  { id:24, name:"Set de Reloj con Pulseras — Caja",    price:580, cat:"relojes",  badges:["sale"], img:"relojes_pulseras",desc:"Set de lujo en caja de regalo. Reloj + pulseras + collar." },
 
-  // BOLSOS NUEVOS
-  { id:46, name:"Bolsa de Mujer Decorada",             price:380, cat:"bolsos",     badges:["new"],  img:"bolsa_mujer",        desc:"Bolsa tote estampada con lentejuelas y diseño artístico. Ideal para salidas diarias." },
-  { id:47, name:"Cartapacio / Maletín de Trabajo",     price:680, cat:"bolsos",     badges:["new"],  img:"cartapasio",         desc:"Maletín ejecutivo resistente. Compartimento para laptop. Correa cruzada incluida." },
-  { id:48, name:"Mochila de Tiros (Drawstring)",       price:150, cat:"bolsos",     badges:["new"],  img:"mochila_de_tiros",   desc:"Mochila de cuerdas ligera con estampado anime. Perfecta para el día a día." },
-  { id:49, name:"Mochilas Escolares Variadas",         price:680, cat:"bolsos",     badges:["hot"],  img:"mochilas",           desc:"Mochilas escolares resistentes para niños y adultos. Varios colores y tamaños." },
+  // ════════════════════════════════
+  // 💫 PULSERAS & ANILLOS
+  // ════════════════════════════════
+  { id:5,  name:"Pulsera Redonda con Foto",            price:0,   cat:"pulseras", badges:[],       img:"p5",              desc:"Pulsera plateada con dije circular y tu foto." },
+  { id:6,  name:"Pulsera Bebé Cruz con Nombre",        price:0,   cat:"pulseras", badges:["new"],  img:"p6",              desc:"Para bebé: cruz con nombre grabado. 3 colores." },
+  { id:7,  name:"Pulsera Ajustable Nombre + Corazón",  price:0,   cat:"pulseras", badges:[],       img:"p7",              desc:"Nombre en cursiva con corazón. Dorado y plateado." },
+  { id:10, name:"Brazalete Rígido con Nombre",         price:0,   cat:"pulseras", badges:["hot"],  img:"p10",             desc:"Brazalete dorado con tu nombre en letras grandes." },
+  { id:11, name:"Brazalete Doble Nombre",              price:0,   cat:"pulseras", badges:[],       img:"p11",             desc:"Dos nombres. Ideal para parejas o mamás." },
+  { id:16, name:"Anillo Infinito con Nombre",          price:0,   cat:"pulseras", badges:["new"],  img:"p16",             desc:"Anillo dorado con símbolo infinito y nombre grabado." },
+  { id:28, name:"Set de Pulseras Variadas",            price:100, cat:"pulseras", badges:["sale"], img:"pulseras_set",    desc:"Hermoso set de pulseras combinadas para regalar. (Cada paquete)" },
+  { id:29, name:"Pulseras de Hilo Coloridas",          price:50,  cat:"pulseras", badges:["sale"], img:"pulseras_hilo",   desc:"Pulseras de hilo en 12+ colores disponibles. (Cada una)" },
 
-  // MODA NUEVA
-  { id:50, name:"Boina Francesa para Mujer",           price:280, cat:"moda",       badges:["new"],  img:"boina_francesa_mujer", desc:"Boina tejida de mujer en negro y rojo. Elegante y abrigadora." },
+  // ════════════════════════════════
+  // 👒 MODA & ACCESORIOS
+  // ════════════════════════════════
+  { id:25, name:"Gafas de Sol Variadas",               price:130, priceType:"range", priceMin:130, priceMax:380, cat:"moda", badges:["hot"], img:"gafas", desc:"Más de 20 estilos. Para él, para ella, para todos." },
+  { id:26, name:"Gorras de Pico Aquatic Sports",       price:280, cat:"moda",     badges:["new"],  img:"gorras",          desc:"Gorras deportivas Aquatic Sports. Negra y blanca." },
+  { id:27, name:"Sombreros Variados",                  price:380, cat:"moda",     badges:[],       img:"sombreros",       desc:"Sombrero panamá y estilo cowboy. Con mucho estilo." },
+  { id:34, name:"Boina Francesa Estilo Vintage",       price:280, cat:"moda",     badges:["new"],  img:"boina_frances",   desc:"Boina negra estilo francés. Elegante y moderna. Talla única." },
+  { id:35, name:"Boinas para el Frío",                 price:250, cat:"moda",     badges:["new"],  img:"boinas_frio",     desc:"Boinas tejidas con pompón. 3 colores: blanco, azul y rosa." },
+  { id:50, name:"Boina Francesa para Mujer",           price:280, cat:"moda",     badges:["new"],  img:"boina_francesa_mujer", desc:"Boina tejida de mujer en negro y rojo. Elegante y abrigadora." },
 
-  // ROPA & FRÍO
-  { id:51, name:"Pasamontañas Air Flow",               price:380, cat:"ropa",       badges:["new"],  img:"pasa_montanas",      desc:"Pasamontañas deportivo Air Flow con ventilación. Ideal para motociclistas y montañismo." },
-  { id:52, name:"Pasamontañas para Moto",              price:145, cat:"ropa",       badges:["sale"], img:"pasa_mont_barato",   desc:"Pasamontañas tejido, abrigador y económico. 3 colores disponibles: beige, rojo y negro." },
-  { id:53, name:"Guantes para Adulto",                 price:195, cat:"ropa",       badges:["new"],  img:"guantes_adulto",     desc:"Guantes tejidos para adulto. Suaves, elásticos y cálidos. Color negro." },
-  { id:54, name:"Guantes para Niño",                   price:180,  cat:"ropa",       badges:["new"],  img:"guantes_nino",       desc:"Guantes tejidos para niño. Talla infantil, suaves y abrigadores. Color gris." },
-  { id:55, name:"Guantes para Bebé",                   price:160,  cat:"ropa",       badges:["new"],  img:"guantes_bebe",       desc:"Guantes pequeños para bebé. Ultra suaves y cálidos. Color oscuro." },
-  { id:56, name:"Pañuelos / Bandanas Variados",        price:85,  cat:"ropa",       badges:["sale"], img:"panuelos",           desc:"Pañuelos y bandanas estampados. Varios colores: amarillo, azul, rojo y blanco." },
-  { id:57, name:"Poncho Peruano Tejido",               price:0,   cat:"ropa",       badges:["hot"],  img:"poncho_peruano",     desc:"Poncho peruano tejido con diseños andinos. 100% artesanal. Consultar colores disponibles." },
+  // ════════════════════════════════
+  // 👜 BOLSOS & MOCHILAS
+  // ════════════════════════════════
+  { id:36, name:"Bulto Deportivo Grande Nike",         price:580, cat:"bolsos",   badges:["new"],  img:"bulto_grande",    desc:"Bolso deportivo grande con doble bolsillo. Correa ajustable incluida." },
+  { id:37, name:"Bulto Pequeño Nike",                  price:480, cat:"bolsos",   badges:["hot"],  img:"bulto_pequeno",   desc:"Bolso pequeño resistente. Compacto, ligero y con estilo." },
+  { id:46, name:"Bolsa de Mujer Decorada",             price:380, cat:"bolsos",   badges:["new"],  img:"bolsa_mujer",     desc:"Bolsa tote estampada con lentejuelas y diseño artístico. Ideal para salidas diarias." },
+  { id:47, name:"Cartapacio / Maletín de Trabajo",     price:680, cat:"bolsos",   badges:["new"],  img:"cartapasio",      desc:"Maletín ejecutivo resistente. Compartimento para laptop. Correa cruzada incluida." },
+  { id:48, name:"Mochila de Tiros (Drawstring)",       price:150, cat:"bolsos",   badges:["new"],  img:"mochila_de_tiros",desc:"Mochila de cuerdas ligera con estampado anime. Perfecta para el día a día." },
+  { id:49, name:"Mochilas Escolares Variadas",         price:680, cat:"bolsos",   badges:["hot"],  img:"mochilas",        desc:"Mochilas escolares resistentes para niños y adultos. Varios colores y tamaños." },
+
+  // ════════════════════════════════
+  // 🧥 ROPA & FRÍO
+  // ════════════════════════════════
+  { id:51, name:"Pasamontañas Air Flow",               price:380, cat:"ropa",     badges:["new"],  img:"pasa_montanas",   desc:"Pasamontañas deportivo Air Flow con ventilación. Ideal para motociclistas y montañismo." },
+  { id:52, name:"Pasamontañas para Moto",              price:145, cat:"ropa",     badges:["sale"], img:"pasa_mont_barato",desc:"Pasamontañas tejido, abrigador y económico. 3 colores disponibles: beige, rojo y negro." },
+  { id:53, name:"Guantes para Adulto",                 price:195, cat:"ropa",     badges:["new"],  img:"guantes_adulto",  desc:"Guantes tejidos para adulto. Suaves, elásticos y cálidos. Color negro." },
+  { id:54, name:"Guantes para Niño",                   price:180, cat:"ropa",     badges:["new"],  img:"guantes_nino",    desc:"Guantes tejidos para niño. Talla infantil, suaves y abrigadores. Color gris." },
+  { id:55, name:"Guantes para Bebé",                   price:160, cat:"ropa",     badges:["new"],  img:"guantes_bebe",    desc:"Guantes pequeños para bebé. Ultra suaves y cálidos. Color oscuro." },
+  { id:56, name:"Pañuelos / Bandanas Variados",        price:85,  cat:"ropa",     badges:["sale"], img:"panuelos",        desc:"Pañuelos y bandanas estampados. Varios colores: amarillo, azul, rojo y blanco." },
+  { id:57, name:"Poncho Peruano Tejido",               price:0,   cat:"ropa",     badges:["hot"],  img:"poncho_peruano",  desc:"Poncho peruano tejido con diseños andinos. 100% artesanal. Consultar colores disponibles." },
+
+  // ════════════════════════════════
+  // 🔌 TECNOLOGÍA
+  // ════════════════════════════════
+  { id:30, name:"Cargador Rápido Tipo A — 2.4A",       price:240, cat:"tecnologia",badges:["new"],  img:"cargador_a",      desc:"Cargador Meidou 2.4A con cable. Compatible con Android." },
+  { id:31, name:"Cargador 2 en 1 Tipo C — 2.1A",       price:240, cat:"tecnologia",badges:[],       img:"cargador_c",      desc:"Cargador de viaje 2 en 1. Rápido, compacto y confiable." },
+  { id:38, name:"Audífonos Estéreo con Cable",          price:145, cat:"tecnologia",badges:["sale"], img:"audifonos",       desc:"Audífonos estéreo M-914 con micrófono. Alta calidad de sonido." },
 ];
 
 const DEALS = [

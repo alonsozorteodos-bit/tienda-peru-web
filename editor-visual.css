@@ -1,0 +1,213 @@
+/* ══════════════════════════════════════════════════════════════
+   EDITOR VISUAL · Tienda Perú — estilos NUEVOS y exclusivos
+   ══════════════════════════════════════════════════════════════
+   Todo lo que ya existía en index.html (variables, navbar, grid,
+   .product-card) vive en el <style> de editor-visual.html y NO se
+   toca aquí. Este archivo solo cubre lo que el editor agrega:
+     1. Estados de los campos contenteditable (hover/focus/dirty)
+     2. Resaltado de tarjetas con cambios sin guardar
+     3. Barra flotante de guardado
+     4. Estados de carga / vacío / toast (pulido visual)
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 1. CAMPOS EDITABLES ── */
+.editable-field{
+  border-radius:6px;
+  padding:2px 6px;
+  margin:-2px -6px;
+  transition:background 0.15s, box-shadow 0.15s;
+}
+.editable-field:hover{
+  background:rgba(212,160,23,0.08);
+  box-shadow:0 0 0 1px rgba(212,160,23,0.25);
+}
+.editable-field:focus{
+  background:rgba(212,160,23,0.12);
+  box-shadow:0 0 0 2px var(--gold);
+}
+
+/* Pequeño lápiz que aparece al pasar el mouse sobre la tarjeta,
+   como pista visual de que el contenido es editable */
+.product-card{position:relative;}
+.product-card::before{
+  content:"✏️ Editable";
+  position:absolute;
+  top:12px;right:12px;
+  background:rgba(15,15,15,0.75);
+  color:#fff;
+  font-size:0.6rem;
+  font-weight:600;
+  letter-spacing:0.5px;
+  padding:4px 9px;
+  border-radius:20px;
+  opacity:0;
+  transform:translateY(-4px);
+  transition:opacity 0.2s, transform 0.2s;
+  pointer-events:none;
+  z-index:3;
+}
+.product-card:hover::before{opacity:1;transform:translateY(0);}
+
+.price-editable{
+  display:inline-block;
+  min-width:28px;
+}
+
+/* Campo modificado (aún sin guardar): puntito dorado a la izquierda */
+.field-dirty{
+  background:rgba(212,160,23,0.14);
+  box-shadow:0 0 0 1px rgba(212,160,23,0.4);
+  position:relative;
+}
+.field-dirty::after{
+  content:"";
+  position:absolute;
+  left:-11px;top:50%;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--gold);
+  transform:translateY(-50%);
+}
+.product-name.field-dirty::after,
+.product-desc.field-dirty::after{left:-9px;}
+
+/* ── 2. TARJETA CON CAMBIOS PENDIENTES ── */
+.product-card.is-dirty{
+  box-shadow:0 0 0 2px var(--gold), var(--shadow-lg);
+}
+.product-card.is-dirty::before{
+  content:"● Modificado";
+  opacity:1;
+  transform:translateY(0);
+  background:var(--gold);
+  color:#2b2200;
+}
+.product-card.is-dirty:hover::before{content:"● Modificado";}
+
+/* ── 3. ESTADOS DE CARGA / VACÍO ── */
+#loadingState{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  font-weight:500;
+}
+#loadingState::before{
+  content:"";
+  width:16px;height:16px;
+  border:2.5px solid var(--gray2);
+  border-top-color:var(--red);
+  border-radius:50%;
+  animation:efb-spin 0.8s linear infinite;
+}
+@keyframes efb-spin{to{transform:rotate(360deg);}}
+
+#emptyState{
+  background:var(--gray);
+  border-radius:var(--radius);
+  border:1.5px dashed var(--gray3);
+}
+
+/* ── 4. BARRA FLOTANTE DE GUARDADO ── */
+.editor-floatbar{
+  position:fixed;
+  left:50%;
+  bottom:18px;
+  transform:translateX(-50%);
+  z-index:800;
+  display:flex;
+  align-items:center;
+  gap:22px;
+  background:var(--dark);
+  color:#fff;
+  padding:14px 22px;
+  border-radius:60px;
+  box-shadow:var(--shadow-lg);
+  border:1px solid rgba(255,255,255,0.08);
+  min-width:min(560px,92vw);
+  transition:box-shadow 0.25s, border-color 0.25s;
+}
+.editor-floatbar.has-pending{
+  border-color:rgba(212,160,23,0.5);
+  box-shadow:0 0 0 3px rgba(212,160,23,0.18), var(--shadow-lg);
+}
+
+.efb-stat{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  line-height:1.2;
+  min-width:64px;
+}
+.efb-stat-num{
+  font-family:"Playfair Display",serif;
+  font-size:1.25rem;
+  font-weight:800;
+  color:var(--gold-light);
+}
+.editor-floatbar.has-pending .efb-stat-num#statPending{
+  color:var(--gold);
+}
+.efb-stat-label{
+  font-size:0.58rem;
+  color:rgba(255,255,255,0.5);
+  text-transform:uppercase;
+  letter-spacing:0.8px;
+  margin-top:2px;
+  white-space:nowrap;
+}
+
+.efb-divider{
+  width:1px;
+  align-self:stretch;
+  background:rgba(255,255,255,0.1);
+}
+
+.efb-spacer{flex:1;}
+
+.efb-save-btn{
+  background:linear-gradient(135deg,var(--red),var(--red-dark));
+  color:#fff;
+  border:none;
+  padding:12px 24px;
+  border-radius:30px;
+  font-family:"Poppins",sans-serif;
+  font-size:0.8rem;
+  font-weight:700;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all 0.2s;
+  box-shadow:0 4px 14px rgba(200,37,26,0.35);
+}
+.efb-save-btn:hover:not(:disabled){
+  transform:translateY(-1px);
+  box-shadow:0 6px 20px rgba(200,37,26,0.5);
+}
+.efb-save-btn:disabled{
+  background:rgba(255,255,255,0.08);
+  color:rgba(255,255,255,0.35);
+  box-shadow:none;
+  cursor:not-allowed;
+}
+
+/* ── 5. TOAST — pequeño pulido adicional sobre la barra ── */
+.toast.success{box-shadow:0 8px 24px rgba(13,140,105,0.35);}
+.toast.error{box-shadow:0 8px 24px rgba(155,27,18,0.35);}
+
+/* ── 6. RESPONSIVE ── */
+@media (max-width:640px){
+  .editor-floatbar{
+    flex-wrap:wrap;
+    gap:12px 18px;
+    padding:14px 18px;
+    border-radius:22px;
+    bottom:10px;
+  }
+  .efb-spacer{display:none;}
+  .efb-save-btn{flex:1 1 100%;order:3;}
+  .product-card::before{font-size:0.55rem;padding:3px 8px;}
+}
+
+@media (max-width:480px){
+  .efb-stat{min-width:auto;flex:1;}
+}

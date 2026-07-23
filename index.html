@@ -329,6 +329,12 @@ footer{background:#080808;padding:60px 50px 30px;}
   .mobile-menu{top:107px;}
   .cat-grid{grid-template-columns:repeat(3,1fr);}
 }
+/* ══ SPA VIEW SYSTEM ══ */
+.spa-view{display:none;}
+.spa-view.active{display:block;}
+#inicio.spa-view.active{display:flex;}
+#nosotros.spa-view.active{display:grid;}
+
 @media(max-width:600px){
   .hero h1{font-size:2.4rem;}
   .hero-ctas{flex-direction:column;}
@@ -418,7 +424,7 @@ footer{background:#080808;padding:60px 50px 30px;}
 </div>
 
 <!-- ══ HERO ══ -->
-<section class="hero" id="inicio" style="padding-top:107px;">
+<section class="hero spa-view" id="inicio" data-view="inicio" style="padding-top:107px;">
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-gradient"></div>
   <div class="hero-content">
@@ -439,7 +445,7 @@ footer{background:#080808;padding:60px 50px 30px;}
 </section>
 
 <!-- INFO BAR -->
-<div class="info-bar">
+<div class="info-bar spa-view" data-view="inicio">
   <div class="info-track">
     <span class="info-item">Reserva tu producto por WhatsApp</span>
     <span class="info-item">Retiro en tienda · Calle Luperón Constanza</span>
@@ -459,7 +465,7 @@ footer{background:#080808;padding:60px 50px 30px;}
 </div>
 
 <!-- ══ CATEGORÍAS ══ -->
-<section class="section" id="categorias">
+<section class="section spa-view" id="categorias" data-view="categorias">
   <div class="sec-head">
     <span class="sec-eye">Explora</span>
     <h2 class="sec-title">Nuestras <em>Categorías</em></h2>
@@ -470,7 +476,7 @@ footer{background:#080808;padding:60px 50px 30px;}
 </section>
 
 <!-- ══ PRODUCTOS ══ -->
-<section class="section section-alt" id="productos">
+<section class="section section-alt spa-view" id="productos" data-view="productos">
   <div class="sec-head">
     <span class="sec-eye">Catálogo Completo</span>
     <h2 class="sec-title">Todos los <em>Productos</em></h2>
@@ -495,7 +501,7 @@ footer{background:#080808;padding:60px 50px 30px;}
 </section>
 
 <!-- ══ OFERTAS ══ -->
-<div class="deals-section" id="ofertas">
+<div class="deals-section spa-view" id="ofertas" data-view="ofertas">
   <div class="deals-head">
     <div class="deals-label">🔥 Compra impulsiva</div>
     <h2 class="deals-title">⚡ Detallitos desde <em>RD$ 50</em></h2>
@@ -505,7 +511,7 @@ footer{background:#080808;padding:60px 50px 30px;}
 </div>
 
 <!-- ══ NOSOTROS ══ -->
-<div class="about-split" id="nosotros">
+<div class="about-split spa-view" id="nosotros" data-view="nosotros">
   <div class="about-visual">
     <img id="aboutImg" alt="Tienda Perú"/>
     <div class="about-visual-overlay"></div>
@@ -525,12 +531,12 @@ footer{background:#080808;padding:60px 50px 30px;}
 </div>
 
 <!-- ══ UBICACIÓN ══ -->
-<div class="map-wrap" id="ubicacion">
+<div class="map-wrap spa-view" id="ubicacion" data-view="ubicacion">
   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.5!2d-70.7489!3d18.9077!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8eb1d3b1b1b1b1b1%3A0x1!2sCalle%20Luper%C3%B3n%2C%20Constanza!5e0!3m2!1ses!2sdo!4v1" allowfullscreen loading="lazy"></iframe>
 </div>
 
 <!-- ══ CONTACTO ══ -->
-<section class="section contact-section" id="contacto">
+<section class="section contact-section spa-view" id="contacto" data-view="contacto">
   <div class="sec-head">
     <span class="sec-eye">Escríbenos</span>
     <h2 class="sec-title">¿Quieres <em>reservar</em> o tienes dudas?</h2>
@@ -738,7 +744,7 @@ footer{background:#080808;padding:60px 50px 30px;}
 }
 </style>
 
-<section id="literatura">
+<section id="literatura" class="spa-view" data-view="contacto">
 
   <!-- Encabezado -->
   <div class="lit-head">
@@ -981,7 +987,7 @@ function filterBycat(cat) {
   document.querySelectorAll(".cat-pill").forEach(p => p.classList.toggle("active", p.dataset.cat === cat));
   document.querySelectorAll(".fpill").forEach(p => p.classList.toggle("active", p.dataset.cat === cat));
   applyFilter(cat);
-  document.getElementById("productos").scrollIntoView({ behavior:"smooth" });
+  showView("productos");
 }
 
 // ── PRODUCTS ──
@@ -1365,19 +1371,65 @@ document.querySelectorAll(".mobile-menu a").forEach(a => {
   a.addEventListener("click", () => document.getElementById("mobileMenu").classList.remove("open"));
 });
 
-// ── ACTIVE NAV HIGHLIGHT ON SCROLL ──
-const sections = ["inicio","categorias","productos","ofertas","nosotros","ubicacion","contacto"];
+// ══════════════════════════════════════════
+// ── SISTEMA DE VISTAS SPA (sin recargar página) ──
+// ══════════════════════════════════════════
+const VIEWS = ["inicio","categorias","productos","ofertas","nosotros","ubicacion","contacto"];
+const viewEls = document.querySelectorAll(".spa-view");
 const navBtns = document.querySelectorAll(".qnav-btn");
-window.addEventListener("scroll", () => {
-  let current = "";
-  sections.forEach(id => {
-    const el = document.getElementById(id);
-    if (el && window.scrollY >= el.offsetTop - 100) current = id;
+
+function showView(viewId) {
+  if (!VIEWS.includes(viewId)) viewId = "inicio";
+
+  // Oculta todas las vistas y muestra únicamente la solicitada
+  viewEls.forEach(el => {
+    el.classList.toggle("active", el.dataset.view === viewId);
   });
+
+  // Resalta el botón de navegación correspondiente (Navbar / Quick Nav)
   navBtns.forEach(btn => {
-    btn.classList.toggle("active", btn.getAttribute("href") === `#${current}`);
+    btn.classList.toggle("active", btn.getAttribute("href") === `#${viewId}`);
   });
-}, { passive:true });
+
+  // Sincroniza el hash de la URL sin disparar un salto de scroll nativo
+  if (location.hash !== `#${viewId}`) {
+    history.replaceState(null, "", `#${viewId}`);
+  }
+
+  // Scroll instantáneo hacia arriba, simulando la carga de una página nueva
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+}
+
+function handleHashChange() {
+  const viewId = location.hash.replace("#", "") || "inicio";
+  showView(viewId);
+}
+
+// Intercepta clics en cualquier enlace interno (#vista) del Navbar, Quick Nav,
+// Mobile Menu, botones del Hero y del Footer. Los enlaces reales (como
+// "libros.html") no empiezan con "#" y por lo tanto navegan con normalidad.
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  const href = link.getAttribute("href");
+  if (!href || href === "#") return;
+  link.addEventListener("click", e => {
+    e.preventDefault();
+    const viewId = href.slice(1);
+    if (location.hash === href) {
+      // Mismo hash: forzamos el cambio de vista igualmente (p. ej. clic repetido)
+      showView(viewId);
+    } else {
+      location.hash = href; // dispara "hashchange" → handleHashChange()
+    }
+    document.getElementById("mobileMenu").classList.remove("open");
+  });
+});
+
+window.addEventListener("hashchange", handleHashChange);
+
+// ── VISTA INICIAL ──
+// Por defecto se muestra únicamente el Hero (Inicio), salvo que la URL
+// ya incluya un hash válido (enlace directo / recarga en una vista concreta).
+handleHashChange();
 
 // ── SCROLL ANIMATION ──
 function animateCards() {

@@ -148,7 +148,7 @@ body{font-family:"Poppins",sans-serif;color:var(--text);background:#fff;overflow
 /* ══ PRODUCT GRID ══ */
 .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px;max-width:1300px;margin:0 auto;}
 
-/* ══ PRODUCT CARD (NEW DESIGN) ══ */
+/* ══ PRODUCT CARD ══ */
 .product-card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:all 0.3s;position:relative;display:flex;flex-direction:column;}
 .product-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);}
 .product-card.hidden{display:none;}
@@ -184,7 +184,7 @@ body{font-family:"Poppins",sans-serif;color:var(--text);background:#fff;overflow
 .price-value{font-size:1.15rem;font-weight:800;color:var(--dark);font-family:"Playfair Display",serif;}
 .price-value .cur{font-family:"Poppins",sans-serif;font-size:0.72rem;font-weight:600;color:var(--red);}
 
-/* ADD BUTTON — NEW STYLE */
+/* ADD BUTTON */
 .add-btn{background:#fff;color:var(--dark);border:2px solid var(--dark);padding:9px 16px;border-radius:30px;font-family:"Poppins",sans-serif;font-size:0.7rem;font-weight:700;cursor:pointer;transition:all 0.25s;display:flex;align-items:center;gap:6px;white-space:nowrap;}
 .add-btn:hover{background:var(--red);color:#fff;border-color:var(--red);transform:scale(1.04);box-shadow:0 4px 14px rgba(200,37,26,0.3);}
 .add-btn svg{width:14px;height:14px;flex-shrink:0;}
@@ -272,37 +272,27 @@ footer{background:#080808;padding:60px 50px 30px;}
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(90px);z-index:900;background:var(--dark);color:#fff;padding:12px 24px;border-radius:30px;font-size:0.8rem;font-weight:600;opacity:0;transition:all 0.35s;pointer-events:none;white-space:nowrap;box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,0.07);}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
 
-
-/* ── PRECIO VARIABLE (range) ── */
+/* ── PRECIO VARIABLE ── */
 .price-range{display:flex;flex-direction:column;}
 .price-range .range-label{font-size:0.58rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px;}
 .price-range .range-val{font-size:1.1rem;font-weight:800;color:var(--dark);font-family:"Playfair Display",serif;}
 .price-range .cur{font-family:"Poppins",sans-serif;font-size:0.7rem;font-weight:600;color:var(--red);}
 .price-range .range-max{font-size:0.65rem;color:var(--text3);font-family:"Poppins",sans-serif;font-weight:400;}
 
-/* ── PRODUCTO PERSONALIZADO (consulta) ── */
+/* ── CONSULTA ── */
 .price-consult{font-size:0.74rem;color:var(--red);font-weight:600;line-height:1.4;}
-.btn-consult{background:linear-gradient(135deg,#25D366,#1da851);color:#fff;border:none;
-  padding:9px 14px;border-radius:30px;font-family:"Poppins",sans-serif;font-size:0.68rem;
-  font-weight:700;cursor:pointer;transition:all 0.25s;display:flex;align-items:center;
-  gap:6px;white-space:nowrap;box-shadow:0 3px 10px rgba(37,211,102,0.28);}
+.btn-consult{background:linear-gradient(135deg,#25D366,#1da851);color:#fff;border:none;padding:9px 14px;border-radius:30px;font-family:"Poppins",sans-serif;font-size:0.68rem;font-weight:700;cursor:pointer;transition:all 0.25s;display:flex;align-items:center;gap:6px;white-space:nowrap;box-shadow:0 3px 10px rgba(37,211,102,0.28);}
 .btn-consult:hover{transform:scale(1.04);box-shadow:0 5px 16px rgba(37,211,102,0.42);}
 
 /* ── FILTRO DE PRECIO ── */
 .price-filter-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:4px 0;}
 .price-filter-row label{font-size:0.7rem;color:var(--text2);font-weight:600;white-space:nowrap;}
-.price-input{width:96px;padding:7px 10px;border:1.5px solid var(--gray2);border-radius:8px;
-  font-family:"Poppins",sans-serif;font-size:0.74rem;color:var(--text);outline:none;
-  transition:border-color 0.2s;background:#fff;}
+.price-input{width:96px;padding:7px 10px;border:1.5px solid var(--gray2);border-radius:8px;font-family:"Poppins",sans-serif;font-size:0.74rem;color:var(--text);outline:none;transition:border-color 0.2s;background:#fff;}
 .price-input:focus{border-color:var(--red);}
 .price-filter-sep{font-size:0.8rem;color:var(--text3);}
-.btn-price-filter{background:var(--red);color:#fff;border:none;padding:7px 14px;border-radius:8px;
-  font-family:"Poppins",sans-serif;font-size:0.72rem;font-weight:600;cursor:pointer;
-  transition:all 0.2s;white-space:nowrap;}
+.btn-price-filter{background:var(--red);color:#fff;border:none;padding:7px 14px;border-radius:8px;font-family:"Poppins",sans-serif;font-size:0.72rem;font-weight:600;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
 .btn-price-filter:hover{background:var(--red-dark);}
-.btn-price-reset{background:none;border:1.5px solid var(--gray3);color:var(--text3);
-  padding:7px 12px;border-radius:8px;font-family:"Poppins",sans-serif;font-size:0.72rem;
-  cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.btn-price-reset{background:none;border:1.5px solid var(--gray3);color:var(--text3);padding:7px 12px;border-radius:8px;font-family:"Poppins",sans-serif;font-size:0.72rem;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
 .btn-price-reset:hover{border-color:var(--red);color:var(--red);}
 
 /* ══ ANIMATIONS ══ */
@@ -329,6 +319,7 @@ footer{background:#080808;padding:60px 50px 30px;}
   .mobile-menu{top:107px;}
   .cat-grid{grid-template-columns:repeat(3,1fr);}
 }
+
 /* ══ SPA VIEW SYSTEM ══ */
 .spa-view{display:none;}
 .spa-view.active{display:block;}
@@ -347,13 +338,11 @@ footer{background:#080808;padding:60px 50px 30px;}
   .deals-section{padding:60px 16px;}
 }
 </style>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VK1BYLVXPP"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-VK1BYLVXPP');
 </script>
 </head>
@@ -361,20 +350,16 @@ footer{background:#080808;padding:60px 50px 30px;}
 
 <!-- ══ NAVBAR ══ -->
 <nav id="navbar">
-  <!-- Top bar -->
   <div class="nav-top">
     <span class="nav-top-text">📍 Calle Luperón, Constanza · Al frente de EDENORTE</span>
     <div class="nav-top-contact">
       <a href="https://wa.me/18098502066" target="_blank">📲 +1 (809) 850-2066</a>
-      <a href="/cdn-cgi/l/email-protection#413528242f252031243334222e2f3235202f3b2001262c20282d6f222e2c">📧 <span class="__cf_email__" data-cfemail="add9c4c8c3c9ccddc8dfd8cec2c3ded9ccc3d7ccedcac0ccc4c183cec2c0">[email&#160;protected]</span></a>
+      <a href="mailto:tiendaperuconstanza@gmail.com">📧 tiendaperuconstanza@gmail.com</a>
       <a href="https://www.facebook.com/share/1DjGsE4Ppz/" target="_blank">📘 Facebook</a>
     </div>
   </div>
-  <!-- Main nav -->
   <div class="nav-main">
     <a class="nav-logo" href="#inicio">🇩🇴 Tienda <em class="accent">Perú</em></a>
-
-    <!-- QUICK NAV BUTTONS -->
     <div class="quick-nav">
       <a class="qnav-btn active" href="#inicio"><span class="qn-icon">🏠</span>Inicio</a>
       <a class="qnav-btn" href="#categorias"><span class="qn-icon">📦</span>Categorías</a>
@@ -385,7 +370,6 @@ footer{background:#080808;padding:60px 50px 30px;}
       <a class="qnav-btn" href="#ubicacion"><span class="qn-icon">📍</span>Ubicación</a>
       <a class="qnav-btn" href="#contacto"><span class="qn-icon">💬</span>Contacto</a>
     </div>
-
     <div class="nav-right">
       <button class="cart-btn" id="cartBtn">🛒 Carrito <span class="cart-count" id="cartCount">0</span></button>
       <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
@@ -438,7 +422,7 @@ footer{background:#080808;padding:60px 50px 30px;}
   </div>
   <div class="hero-bottom">
     <div class="hero-stat"><span class="sn">500+</span><span class="sl">Clientes felices</span></div>
-    <div class="hero-stat"><span class="sn">38+</span><span class="sl">Productos</span></div>
+    <div class="hero-stat"><span class="sn" id="statTotalProds">38+</span><span class="sl">Productos</span></div>
     <div class="hero-stat"><span class="sn">100%</span><span class="sl">Personalizable</span></div>
     <div class="hero-stat"><span class="sn">0 🚗</span><span class="sl">Retiro en tienda</span></div>
   </div>
@@ -447,13 +431,6 @@ footer{background:#080808;padding:60px 50px 30px;}
 <!-- INFO BAR -->
 <div class="info-bar spa-view" data-view="inicio">
   <div class="info-track">
-    <span class="info-item">Reserva tu producto por WhatsApp</span>
-    <span class="info-item">Retiro en tienda · Calle Luperón Constanza</span>
-    <span class="info-item">Joyería personalizada con tu foto</span>
-    <span class="info-item">Relojes & sets de regalo</span>
-    <span class="info-item">Gorras · Sombreros · Gafas</span>
-    <span class="info-item">Bolsos deportivos & pequeños</span>
-    <span class="info-item">Tecnología básica</span>
     <span class="info-item">Reserva tu producto por WhatsApp</span>
     <span class="info-item">Retiro en tienda · Calle Luperón Constanza</span>
     <span class="info-item">Joyería personalizada con tu foto</span>
@@ -486,7 +463,6 @@ footer{background:#080808;padding:60px 50px 30px;}
     <div class="filter-pills" id="filterPills"></div>
     <span class="prod-count-label" id="prodCountLabel"></span>
   </div>
-  <!-- Filtro de precio -->
   <div class="filter-wrap" style="margin-top:-18px;margin-bottom:28px;">
     <div class="price-filter-row">
       <label>💰 Precio:</label>
@@ -494,7 +470,7 @@ footer{background:#080808;padding:60px 50px 30px;}
       <span class="price-filter-sep">—</span>
       <input class="price-input" type="number" id="priceMax" placeholder="Máx RD$" min="0"/>
       <button class="btn-price-filter" id="btnPriceFilter">Filtrar</button>
-      <button class="btn-price-reset"  id="btnPriceReset">✕ Limpiar</button>
+      <button class="btn-price-reset" id="btnPriceReset">✕ Limpiar</button>
     </div>
   </div>
   <div class="products-grid" id="productsGrid"></div>
@@ -504,7 +480,7 @@ footer{background:#080808;padding:60px 50px 30px;}
 <div class="deals-section spa-view" id="ofertas" data-view="ofertas">
   <div class="deals-head">
     <div class="deals-label">🔥 Compra impulsiva</div>
-    <h2 class="deals-title">⚡ Detallitos desde <em>RD$ 50</em></h2>
+    <h2 class="deals-title">⚡ Ofertas Especiales</h2>
     <p class="deals-sub">Regalos rápidos, precios accesibles. Reserva por WhatsApp y retira en tienda.</p>
   </div>
   <div class="deals-grid" id="dealsGrid"></div>
@@ -520,7 +496,6 @@ footer{background:#080808;padding:60px 50px 30px;}
     <p class="about-eye">Quiénes somos</p>
     <h2 class="about-ttl">El Arte de <em>los Andes</em><br/>en Constanza</h2>
     <p class="about-p">Somos Tienda Perú, ubicados en Constanza, República Dominicana. Ofrecemos una amplia variedad de accesorios de moda, joyería personalizada, relojes, bolsos, gorras, gafas y tecnología básica.</p>
-    <p class="about-p">Llevamos años siendo el destino de confianza de la comunidad de Constanza para regalo y moda accesible.</p>
     <div class="about-perks">
       <div class="perk"><span class="perk-i">💎</span><div><strong>Joyería Premium</strong><span>Personalizada con tu foto</span></div></div>
       <div class="perk"><span class="perk-i">📲</span><div><strong>Reserva fácil</strong><span>Por WhatsApp al instante</span></div></div>
@@ -547,9 +522,7 @@ footer{background:#080808;padding:60px 50px 30px;}
       <h3>📍 Encuéntranos</h3>
       <div class="ci-row"><span class="ci-icon">📍</span><div><strong>Dirección</strong><p>Calle Luperón, Constanza<br/>Al frente de EDENORTE, RD</p></div></div>
       <div class="ci-row"><span class="ci-icon">📲</span><div><strong>WhatsApp</strong><p>+1 (809) 850-2066<br/>Reservas y consultas</p></div></div>
-      <div class="ci-row"><span class="ci-icon">📧</span><div><strong>Email</strong><p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5d29343833393c2d382f283e32332e293c33273c1d3a303c3431733e3230">[email&#160;protected]</a></p></div></div>
-      <div class="ci-row"><span class="ci-icon">📘</span><div><strong>Facebook</strong><p>Tienda Perú — El Arte de los Andes</p></div></div>
-      <div class="ci-row"><span class="ci-icon">⚠️</span><div><strong>Importante</strong><p>No hacemos domicilio. Los productos se retiran en nuestra tienda física.</p></div></div>
+      <div class="ci-row"><span class="ci-icon">📧</span><div><strong>Email</strong><p>tiendaperuconstanza@gmail.com</p></div></div>
     </div>
     <div class="contact-box">
       <h3>✉️ Envíanos un mensaje</h3>
@@ -557,318 +530,19 @@ footer{background:#080808;padding:60px 50px 30px;}
         <input type="text" placeholder="Tu nombre" required/>
         <input type="text" placeholder="Tu WhatsApp o teléfono" required/>
         <input type="text" placeholder="¿Qué producto te interesa?"/>
-        <textarea rows="4" placeholder="Cuéntanos qué necesitas o qué deseas reservar..." required></textarea>
+        <textarea rows="4" placeholder="Cuéntanos qué necesitas..." required></textarea>
         <button type="submit" class="cf-submit">Enviar mensaje ✉️</button>
       </form>
     </div>
   </div>
 </section>
 
-
-<!-- ══ LITERATURA CONSTANCERA ══ -->
-<style>
-/* ── Literatura Constancera — estilos auto-contenidos ── */
-#literatura{
-  padding:90px 50px;
-  background:linear-gradient(160deg,#0f0f0f 0%,#1a1a1a 60%,#0f0f0f 100%);
-  position:relative;
-  overflow:hidden;
-}
-#literatura::before{
-  content:"";position:absolute;top:-20%;right:-5%;
-  width:520px;height:520px;
-  background:radial-gradient(circle,rgba(212,160,23,0.08) 0%,transparent 65%);
-  pointer-events:none;
-}
-#literatura::after{
-  content:"";position:absolute;bottom:-15%;left:-5%;
-  width:380px;height:380px;
-  background:radial-gradient(circle,rgba(200,37,26,0.07) 0%,transparent 65%);
-  pointer-events:none;
-}
-
-/* — Encabezado de sección — */
-.lit-head{text-align:center;margin-bottom:56px;position:relative;z-index:1;}
-.lit-eye{
-  font-size:0.63rem;letter-spacing:4px;text-transform:uppercase;
-  color:var(--gold);font-weight:700;display:block;margin-bottom:10px;
-}
-.lit-title{
-  font-family:"Playfair Display",serif;
-  font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;
-  color:#fff;line-height:1.15;
-}
-.lit-title em{font-style:italic;color:var(--gold);}
-.lit-line{
-  width:48px;height:3px;
-  background:linear-gradient(90deg,var(--red),var(--gold));
-  margin:14px auto 0;border-radius:2px;
-}
-.lit-subtitle{
-  font-size:0.87rem;color:rgba(255,255,255,0.45);
-  margin-top:12px;max-width:500px;margin-left:auto;margin-right:auto;
-  line-height:1.65;
-}
-
-/* — Autor — */
-.lit-author-card{
-  display:flex;align-items:flex-start;gap:32px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(212,160,23,0.18);
-  border-radius:var(--radius);padding:34px 36px;
-  max-width:900px;margin:0 auto 64px;
-  position:relative;z-index:1;
-}
-.lit-author-avatar{
-  flex-shrink:0;width:80px;height:80px;
-  background:linear-gradient(135deg,var(--red),var(--gold));
-  border-radius:50%;display:flex;align-items:center;
-  justify-content:center;font-size:2rem;
-  box-shadow:0 4px 18px rgba(212,160,23,0.25);
-}
-.lit-author-body{}
-.lit-author-label{
-  font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;
-  color:var(--gold);font-weight:700;margin-bottom:6px;display:block;
-}
-.lit-author-name{
-  font-family:"Playfair Display",serif;
-  font-size:1.35rem;font-weight:700;color:#fff;margin-bottom:12px;
-}
-.lit-author-bio{
-  font-size:0.84rem;color:rgba(255,255,255,0.55);
-  line-height:1.75;
-}
-.lit-author-tags{
-  display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;
-}
-.lit-tag{
-  font-size:0.62rem;letter-spacing:1px;text-transform:uppercase;
-  font-weight:600;padding:4px 12px;border-radius:20px;
-  background:rgba(212,160,23,0.12);
-  border:1px solid rgba(212,160,23,0.28);
-  color:var(--gold-light);
-}
-
-/* — Grid de libros — */
-.lit-books-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:24px;
-  max-width:1100px;margin:0 auto;
-  position:relative;z-index:1;
-}
-.lit-book-card{
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.07);
-  border-radius:var(--radius);
-  overflow:hidden;
-  display:flex;flex-direction:column;
-  transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;
-}
-.lit-book-card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 16px 40px rgba(0,0,0,0.35);
-  border-color:rgba(212,160,23,0.3);
-}
-.lit-book-img-wrap{
-  position:relative;overflow:hidden;
-  aspect-ratio:2/3;background:#111;
-}
-.lit-book-img-wrap img{
-  width:100%;height:100%;object-fit:cover;
-  display:block;
-  transition:transform 0.45s;
-  filter:brightness(0.92);
-}
-.lit-book-card:hover .lit-book-img-wrap img{
-  transform:scale(1.05);filter:brightness(1);
-}
-.lit-book-badge{
-  position:absolute;top:12px;left:12px;
-  background:linear-gradient(135deg,var(--red),var(--red-dark));
-  color:#fff;font-size:0.56rem;font-weight:700;
-  padding:4px 10px;border-radius:20px;
-  text-transform:uppercase;letter-spacing:1px;
-  box-shadow:0 2px 8px rgba(200,37,26,0.4);
-}
-.lit-book-body{padding:20px;flex:1;display:flex;flex-direction:column;}
-.lit-book-series{
-  font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;
-  color:var(--gold);font-weight:700;margin-bottom:8px;
-}
-.lit-book-title{
-  font-family:"Playfair Display",serif;
-  font-size:1rem;font-weight:700;color:#fff;
-  line-height:1.3;margin-bottom:12px;
-}
-.lit-book-divider{
-  width:32px;height:2px;
-  background:linear-gradient(90deg,var(--red),var(--gold));
-  border-radius:2px;margin-bottom:12px;
-}
-.lit-book-synopsis{
-  font-size:0.77rem;color:rgba(255,255,255,0.48);
-  line-height:1.65;flex:1;
-}
-.lit-book-footer{
-  margin-top:18px;padding-top:16px;
-  border-top:1px solid rgba(255,255,255,0.06);
-  display:flex;align-items:center;justify-content:space-between;
-}
-.lit-book-author-mini{
-  font-size:0.65rem;color:rgba(255,255,255,0.35);
-  font-style:italic;
-}
-.lit-book-wa{
-  background:linear-gradient(135deg,#25D366,#1da851);
-  color:#fff;border:none;padding:7px 14px;border-radius:20px;
-  font-family:"Poppins",sans-serif;font-size:0.67rem;font-weight:700;
-  cursor:pointer;transition:all 0.2s;
-  display:flex;align-items:center;gap:5px;
-  box-shadow:0 3px 10px rgba(37,211,102,0.25);
-}
-.lit-book-wa:hover{transform:scale(1.05);box-shadow:0 5px 16px rgba(37,211,102,0.4);}
-
-/* — Responsive — */
-@media(max-width:900px){
-  #literatura{padding:60px 20px;}
-  .lit-author-card{flex-direction:column;align-items:center;text-align:center;padding:26px 20px;}
-  .lit-author-tags{justify-content:center;}
-  .lit-books-grid{grid-template-columns:1fr;}
-  .lit-book-img-wrap{aspect-ratio:3/2;}
-}
-@media(min-width:600px) and (max-width:900px){
-  .lit-books-grid{grid-template-columns:repeat(2,1fr);}
-  .lit-book-img-wrap{aspect-ratio:2/3;}
-}
-</style>
-
-<section id="literatura" class="spa-view" data-view="contacto">
-
-  <!-- Encabezado -->
-  <div class="lit-head">
-    <span class="lit-eye">Colección Especial</span>
-    <h2 class="lit-title">Literatura <em>Constancera</em></h2>
-    <div class="lit-line"></div>
-    <p class="lit-subtitle">Obras literarias que narran la realidad social, cultural y espiritual de nuestra República Dominicana.</p>
-  </div>
-
-  <!-- Biografía del autor -->
-  <div class="lit-author-card">
-    <div class="lit-author-avatar">✍️</div>
-    <div class="lit-author-body">
-      <span class="lit-author-label">Sobre el Autor</span>
-      <div class="lit-author-name">Johnny Martínez Quispe</div>
-      <p class="lit-author-bio">
-        Nacido el 02 de marzo de 1969 en Huancayo, Perú. Con estudios en Perú, Ecuador y República Dominicana, es Licenciado en Filosofía y Letras (UASD) y posee una Maestría en Gestión Académica (UCATECI). Se ha destacado como un valioso recurso educativo y cultural en el municipio de Constanza, desempeñándose como maestro de Lengua Española, fundador del grupo musical "Caribe Andino" y de "Constanza Cultural", además de productor de televisión y empresario.
-      </p>
-      <div class="lit-author-tags">
-        <span class="lit-tag">📚 Escritor</span>
-        <span class="lit-tag">🎓 Filosofía & Letras</span>
-        <span class="lit-tag">🎵 Caribe Andino</span>
-        <span class="lit-tag">🏛️ Constanza Cultural</span>
-        <span class="lit-tag">📺 Productor TV</span>
-        <span class="lit-tag">🇵🇪 🇩🇴 Perú–RD</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Catálogo de libros -->
-  <div class="lit-books-grid">
-
-    <!-- Libro 1 -->
-    <div class="lit-book-card">
-      <div class="lit-book-img-wrap">
-        <img src="img/maestro_espiritista.jpg" alt="De los Santos, el Maestro Espiritista Cibaeño" loading="lazy"/>
-        <span class="lit-book-badge">📖 Disponible</span>
-      </div>
-      <div class="lit-book-body">
-        <div class="lit-book-series">En las Arterias de la República II</div>
-        <div class="lit-book-title">De los Santos, el Maestro Espiritista Cibaeño</div>
-        <div class="lit-book-divider"></div>
-        <p class="lit-book-synopsis">
-          El autor conjuga lo sentimental con lo jocoso y lo subliminal con lo increíble. A través de relatos magistrales como "La Abuela" y "El Mercader de la Fe", nos sumerge en el panorama del espiritismo cibaeño, las creencias locales y ofrece una crítica a las realidades sociales y religiosas, demostrando que a veces la ficción parece ser realidad.
-        </p>
-        <div class="lit-book-footer">
-          <span class="lit-book-author-mini">Johnny Martínez Quispe</span>
-          <button class="lit-book-wa" onclick="window.open('https://wa.me/18098502066?text='+encodeURIComponent('Hola, quiero información sobre el libro: De los Santos, el Maestro Espiritista Cibaeño'),'_blank')">
-            📲 Consultar
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Libro 2 -->
-    <div class="lit-book-card">
-      <div class="lit-book-img-wrap">
-        <img src="img/tormentos_de_sandra.jpg" alt="Los Tormentos de Sandra" loading="lazy"/>
-        <span class="lit-book-badge">📖 Disponible</span>
-      </div>
-      <div class="lit-book-body">
-        <div class="lit-book-series">En las Arterias de la República</div>
-        <div class="lit-book-title">Los Tormentos de Sandra</div>
-        <div class="lit-book-divider"></div>
-        <p class="lit-book-synopsis">
-          Un profundo grito social que narra la cruda historia de Sandra, una joven de barrio marginado que anhela tener su propia familia en medio de la miseria. A través de sus vivencias, la obra expone realidades palpables de la sociedad: ayuntamientos, dueños de tierras, la prensa, la salud pública y la corrupción. Un relato realista que cautivará la atención.
-        </p>
-        <div class="lit-book-footer">
-          <span class="lit-book-author-mini">Johnny Martínez Quispe</span>
-          <button class="lit-book-wa" onclick="window.open('https://wa.me/18098502066?text='+encodeURIComponent('Hola, quiero información sobre el libro: Los Tormentos de Sandra'),'_blank')">
-            📲 Consultar
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Libro 3 -->
-    <div class="lit-book-card">
-      <div class="lit-book-img-wrap">
-        <img src="img/juana_del_valle.jpg" alt="Juana del Valle" loading="lazy"/>
-        <span class="lit-book-badge">📖 Disponible</span>
-      </div>
-      <div class="lit-book-body">
-        <div class="lit-book-series">En las Arterias de la República III</div>
-        <div class="lit-book-title">Juana del Valle</div>
-        <div class="lit-book-divider"></div>
-        <p class="lit-book-synopsis">
-          Una joya literaria que narra la gran realidad de cualquier jovencita en una comunidad rural. Incluye relatos impactantes como "El Crimen Perfecto" y "Crimen y Duelo con Machete", además de agudas reflexiones sobre la explotación social y la moralidad de la clase media en cuentos como "Lill en Europa" y "Hombres Ejecutivos".
-        </p>
-        <div class="lit-book-footer">
-          <span class="lit-book-author-mini">Johnny Martínez Quispe</span>
-          <button class="lit-book-wa" onclick="window.open('https://wa.me/18098502066?text='+encodeURIComponent('Hola, quiero información sobre el libro: Juana del Valle'),'_blank')">
-            📲 Consultar
-          </button>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /lit-books-grid -->
-</section>
-<!-- ══ /LITERATURA CONSTANCERA ══ -->
-
 <!-- ══ FOOTER ══ -->
 <footer>
   <div class="footer-grid">
     <div class="f-brand">
       <span class="logo">🇩🇴 Tienda <em>Perú</em></span>
-      <p>El Arte de los Andes · Accesorios, Moda & Más. Calle Luperón, Constanza, República Dominicana. Reserva tu producto y retíralo en tienda.</p>
-      <div class="f-socials">
-        <a class="f-social" href="https://wa.me/18098502066" target="_blank">📲</a>
-        <a class="f-social" href="https://www.facebook.com/share/1DjGsE4Ppz/" target="_blank">📘</a>
-        <a class="f-social" href="/cdn-cgi/l/email-protection#5d29343833393c2d382f283e32332e293c33273c1d3a303c3431733e3230">📧</a>
-      </div>
-    </div>
-    <div class="f-col">
-      <h4>Categorías</h4>
-      <ul>
-        <li><a href="#categorias">💎 Joyería & Bisutería</a></li>
-        <li><a href="#categorias">⌚ Relojes</a></li>
-        <li><a href="#categorias">👒 Moda & Accesorios</a></li>
-        <li><a href="#categorias">👜 Bolsos</a></li>
-        <li><a href="#categorias">🔌 Tecnología</a></li>
-        <li><a href="#ofertas">⚡ Ofertas del Día</a></li>
-      </ul>
+      <p>El Arte de los Andes · Accesorios, Moda & Más. Calle Luperón, Constanza, República Dominicana.</p>
     </div>
     <div class="f-col">
       <h4>Información</h4>
@@ -876,613 +550,434 @@ footer{background:#080808;padding:60px 50px 30px;}
         <li><a href="#nosotros">ℹ️ Quiénes somos</a></li>
         <li><a href="#ubicacion">📍 Ubicación</a></li>
         <li><a href="#contacto">💬 Contacto</a></li>
-        <li><a href="https://wa.me/18098502066">📲 Reservar por WhatsApp</a></li>
-        <li><a href="https://www.facebook.com/share/1DjGsE4Ppz/" target="_blank">📘 Síguenos en Facebook</a></li>
+        <li><a href="libros.html">📚 Libros y Recursos</a></li>
       </ul>
     </div>
   </div>
   <div class="f-bottom">
-    <p>© 2026 Tienda Perú · El Arte de los Andes · Constanza, República Dominicana 🇩🇴</p>
-    <p>📲 +1 (809) 850-2066 · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8cf8e5e9e2e8edfce9fef9efe3e2fff8ede2f6edccebe1ede5e0a2efe3e1">[email&#160;protected]</a></p>
+    <p>© 2026 Tienda Perú · Constanza, República Dominicana 🇩🇴</p>
   </div>
 </footer>
 
 <div class="toast" id="toast"></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const WHATSAPP = "18098502066";
-const EMAIL = "tiendaperuconstanza@gmail.com";
-const IMGS = {
-  local: "img/local.jpg",
-  p1: "img/p1.jpg",
-  p2: "img/p2.jpg",
-  p3: "img/p3.jpg",
-  p4: "img/p4.jpg",
-  p5: "img/p5.jpg",
-  p6: "img/p6.jpg",
-  p7: "img/p7.jpg",
-  p8: "img/p8.jpg",
-  p9: "img/p9.jpg",
-  p10: "img/p10.jpg",
-  p11: "img/p11.jpg",
-  p12: "img/p12.jpg",
-  p13: "img/p13.jpg",
-  p14: "img/p14.jpg",
-  p15: "img/p15.jpg",
-  p16: "img/p16.jpg",
-  p17: "img/p17.jpg",
+<!-- ══ SCRIPT PRINCIPAL CONECTADO A FIREBASE ══ -->
+<script type="module">
+  import { db } from "./firebase-config.js";
+  import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-  cadenas_mujer: "img/cadenas_mujer.jpg",
-  cadenas_hombre: "img/cadenas_hombre.jpg",
-  cargador_a: "img/cargador_a.jpg",
-  cargador_c: "img/cargador_c.jpg",
-  cute: "img/cute.jpg",
-  gafas: "img/gafas.jpg",
-  gorras: "img/gorras.jpg",
-  collar_mujer: "img/collar_mujer.jpg",
-  collar_hermoso: "img/collar_hermoso.jpg",
-  pulseras_set: "img/pulseras_set.jpg",
-  reloj_pulseras: "img/reloj_pulseras.jpg",   
-  pulseras_hilo: "img/pulseras_hilo.jpg",
-  relojes_pulseras: "img/relojes_pulseras.jpg",
-  relojes: "img/relojes.jpg",
-  sombreros: "img/sombreros.jpg",
-  aretes: "img/aretes.jpg",
-  audifonos: "img/audifonos.jpg",
-  boina_frances: "img/boina_frances.jpg",
-  boinas_frio: "img/boinas_frio.jpg",
-  bulto_grande: "img/bulto_grande.jpg",
-  bulto_pequeno: "img/bulto_pequeno.jpg",
-  rosario: "img/rosario.jpg",
-  // ── Nuevos productos 2025 ──
-  aretesacero:        "img/aretesacero.jpg",
-  argolla_de_cruz:    "img/argolla_de_cruz.jpg",
-  boina_francesa_mujer: "img/boina_francesa-mujer.jpg",
-  bolsa_mujer:        "img/bolsa_mujer.jpg",
-  brilla_labios:      "img/brilla_labios.jpg",
-  cadena_grande:      "img/cadena_grande.jpg",
-  cadenas_380:        "img/cadenas_380.jpg",
-  cartapasio:         "img/cartapasio.jpg",
-  cuarzo:             "img/cuarzo.jpg",
-  guantes_adulto:     "img/guantes_adulto.jpg",
-  guantes_bebe:       "img/guantes_bebe.jpg",
-  guantes_nino:       "img/guantes_nino.jpg",
-  mochila_de_tiros:   "img/mochila_de_tiros.jpg",
-  mochilas:           "img/mochilas.jpg",
-  panuelos:           "img/pañuelos.jpg",
-  pasa_mont_barato:   "img/pasa_mont_barato.jpg",
-  pasa_montanas:      "img/pasa_montañas.jpg",
-  poncho_peruano:     "img/poncho_peruano.jpg",
-};
+  const WHATSAPP = "18098502066";
+  const EMAIL = "tiendaperuconstanza@gmail.com";
 
-// Hero & About images
-document.getElementById("heroBg").style.backgroundImage = `url(${IMGS.local})`;
-document.getElementById("aboutImg").src = IMGS.local;
+  // Diccionario de respaldo local por si usabas imágenes estáticas antiguas
+  const IMGS = { local: "img/local.jpg", aretes: "img/aretes.jpg", relojes: "img/relojes.jpg", gorras: "img/gorras.jpg" };
 
-// ── CATEGORIES ──
-const CATS = [
-  { id:"todos",      name:"Todos",        icon:"✨",              img:null },
-  { id:"joyeria",    name:"Joyería",      img:"cadenas_mujer",    icon:null },
-  { id:"aretes",     name:"Aretes",       img:"aretes",           icon:null },
-  { id:"relojes",    name:"Relojes",      img:"relojes",          icon:null },
-  { id:"pulseras",   name:"Pulseras",     img:"pulseras_hilo",    icon:null },
-  { id:"moda",       name:"Moda",         img:"gorras",           icon:null },
-  { id:"bolsos",     name:"Bolsos",       img:"bulto_grande",     icon:null },
-  { id:"tecnologia", name:"Tecnología",   img:"audifonos",        icon:null },
-  { id:"ropa",       name:"Ropa & Frío",  img:"poncho_peruano",   icon:null },
-];
+  function getImgSrc(img) {
+    if (!img) return "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500";
+    if (img.startsWith("http")) return img;
+    return IMGS[img] || img;
+  }
 
-function renderCats() {
-  document.getElementById("catGrid").innerHTML = CATS.map(c => `
-    <div class="cat-pill ${c.id==="todos"?"active":""}" data-cat="${c.id}" onclick="filterBycat('${c.id}')">
-      ${c.img
-        ? `<img class="cat-pill-img" src="${IMGS[c.img]}" alt="${c.name}"/>`
-        : `<div class="cat-pill-icon">${c.icon}</div>`}
-      <div class="cat-pill-name">${c.name}</div>
-    </div>
-  `).join("");
-}
+  document.getElementById("heroBg").style.backgroundImage = `url(${getImgSrc('local')})`;
+  document.getElementById("aboutImg").src = getImgSrc('local');
 
-function filterBycat(cat) {
-  document.querySelectorAll(".cat-pill").forEach(p => p.classList.toggle("active", p.dataset.cat === cat));
-  document.querySelectorAll(".fpill").forEach(p => p.classList.toggle("active", p.dataset.cat === cat));
-  applyFilter(cat);
-  showView("productos");
-}
+  let CATS = [{ id: "todos", name: "Todos", icon: "✨", img: null }];
+  let PRODUCTS = [];
+  let DEALS = [];
+  let FILTER_CATS = [{ id: "todos", label: "✨ Todos" }];
 
-// ── PRODUCTS ──
-const PRODUCTS = [
+  // ── CARGAR DATOS DE FIREBASE ──
+  async function cargarTiendaFirebase() {
+    try {
+      // 1. Categorías
+      const catSnap = await getDocs(collection(db, "categorias"));
+      if (!catSnap.empty) {
+        CATS = [{ id: "todos", name: "Todos", icon: "✨", img: null }];
+        FILTER_CATS = [{ id: "todos", label: "✨ Todos" }];
+        catSnap.forEach(d => {
+          const c = d.data();
+          CATS.push({ id: d.id, name: c.name, icon: c.icon || "📦", img: c.img || null });
+          FILTER_CATS.push({ id: d.id, label: `${c.icon || "📦"} ${c.name}` });
+        });
+      }
 
-  // ════════════════════════════════
-  // 💎 JOYERÍA — Personalizadas (consulta)
-  // ════════════════════════════════
-  { id:1,  name:"Collar Corazón con Alas + Foto",      price:0,   cat:"joyeria",  badges:["hot"],  img:"p1",   desc:"Medallón corazón con alas. Tu foto personalizada. 2 colores." },
-  { id:2,  name:"Colgante con Foto + Nombre Dorado",   price:0,   cat:"joyeria",  badges:["new"],  img:"p2",   desc:"Tu foto y nombre en letras doradas. Cadena incluida." },
-  { id:3,  name:"Toalla Personalizada Bordada",        price:0,   cat:"joyeria",  badges:[],       img:"p3",   desc:"Toalla premium con tu nombre bordado. 4 colores." },
-  { id:4,  name:"Collar Corazón Forever Loved",        price:0,   cat:"joyeria",  badges:["hot"],  img:"p4",   desc:"Collar dorado con foto y mensaje Forever Loved." },
-  { id:8,  name:"Collar Dog Tag con Foto",             price:0,   cat:"joyeria",  badges:[],       img:"p8",   desc:"Estilo militar con tu foto en alta definición." },
-  { id:14, name:"Set Argollas + Collar con Nombre",    price:0,   cat:"joyeria",  badges:["hot"],  img:"p14",  desc:"Set completo: aretes argolla y collar con nombre dorado." },
-  { id:15, name:"Collar Nombre en Cursiva",            price:0,   cat:"joyeria",  badges:[],       img:"p15",  desc:"Delicado collar dorado con tu nombre en cursiva." },
+      // 2. Productos
+      const prodSnap = await getDocs(collection(db, "productos"));
+      if (!prodSnap.empty) {
+        PRODUCTS = [];
+        prodSnap.forEach(d => {
+          const p = d.data();
+          PRODUCTS.push({
+            id: d.id,
+            name: p.name,
+            desc: p.desc || "",
+            price: p.price ?? 0,
+            priceType: p.priceType || "fixed",
+            priceMin: p.priceMin || null,
+            priceMax: p.priceMax || null,
+            cat: p.cat || "todos",
+            badges: p.badges || [],
+            img: p.img || ""
+          });
+        });
+        const statEl = document.getElementById("statTotalProds");
+        if (statEl) statEl.textContent = PRODUCTS.length + "+";
+      }
 
-  // 💎 JOYERÍA — Precio fijo
-  { id:18, name:"Cadenas de Mujer Variadas",           price:145, cat:"joyeria",  badges:["new"],  img:"cadenas_mujer",   desc:"Hermosas cadenas variadas para mujer. Diseños modernos y elegantes." },
-  { id:19, name:"Cadenas Variadas de Hombre",          price:145, priceType:"range", priceMin:145, priceMax:480, cat:"joyeria", badges:["hot"], img:"cadenas_hombre", desc:"Cadenas de hombre: cruces, medallones y más. Dorado y plateado." },
-  { id:20, name:"Hermosa Cadena de Mujer",             price:480, cat:"joyeria",  badges:[],       img:"collar_mujer",    desc:"Cadena brillante con cristales. Ideal para ocasiones especiales." },
-  { id:21, name:"Hermoso Collar de Mujer",             price:380, cat:"joyeria",  badges:["new"],  img:"collar_hermoso",  desc:"Collar artesanal con cristales únicos. Un lujo accesible." },
-  { id:32, name:"Set de Esmaltes & Labiales",          price:35,  cat:"joyeria",  badges:["sale"], img:"cute",            desc:"Set colorido de esmaltes y labiales variados." },
-  { id:39, name:"Rosario Artesanal",                   price:120, cat:"joyeria",  badges:[],       img:"rosario",         desc:"Este rosario artesanal combina la calidez del Ojo de Tigre con el brillo profundo de la Hematita." },
-  { id:42, name:"Cadena Grande con Dije",              price:1550,cat:"joyeria",  badges:["hot"],  img:"cadena_grande",   desc:"Cadena cubana gruesa con dije premium. Diseño exclusivo para hombre." },
-  { id:43, name:"Cadenas Variadas",                    price:380, cat:"joyeria",  badges:["sale"], img:"cadenas_380",     desc:"Variedad de cadenas con dijes: calaveras, corazones y cruces. Dorado y plateado." },
-  { id:44, name:"Collar de Cuarzo Azul",               price:145, cat:"joyeria",  badges:["new"],  img:"cuarzo",          desc:"Collar de cuarzo lapis lazuli con aretes de regalo. Joyería D'Jessy Perú." },
-  { id:45, name:"Brillo de Labios Chap·Lip",           price:60,  cat:"joyeria",  badges:["sale"], img:"brilla_labios",   desc:"Set de brillos labiales hidratantes Chap·Lip. 12 sabores y colores disponibles." },
-
-  // ════════════════════════════════
-  // 👂 ARETES
-  // ════════════════════════════════
-  { id:12, name:"Aretes Trepadores con Nombre",        price:0,   cat:"aretes",   badges:["new"],  img:"p12",             desc:"Aretes trepadores 3D con tu nombre. Plateado." },
-  { id:13, name:"Aretes Mariposa con Nombre",          price:0,   cat:"aretes",   badges:[],       img:"p13",             desc:"Mariposa de oro con nombre personalizado." },
-  { id:33, name:"Aretes y Argollas Variados",          price:85,  cat:"aretes",   badges:["new"],  img:"aretes",          desc:"Gran variedad de aretes dorados y plateados. Diseños elegantes para toda ocasión." },
-  { id:40, name:"Aretes de Acero Variados",            price:95,  cat:"aretes",   badges:["new"],  img:"aretesacero",     desc:"Set de aretes de acero inoxidable: triángulos, anclas, flores y más. Dorado y plateado." },
-  { id:41, name:"Argollas de Cruz Negras",             price:120, cat:"aretes",   badges:["new"],  img:"argolla_de_cruz", desc:"Argollas con colgante de cruz en negro mate. Set x18 pares. Estilo urbano y elegante." },
-
-  // ════════════════════════════════
-  // ⌚ RELOJES
-  // ════════════════════════════════
-  { id:22, name:"Set de Reloj + Pulseras Dorado",      price:580, cat:"relojes",  badges:["hot"],  img:"reloj_pulseras",  desc:"Set premium: reloj dorado + 2 pulseras. El regalo perfecto." },
-  { id:23, name:"Relojes Variados",                    price:380, cat:"relojes",  badges:["new"],  img:"relojes",         desc:"Gran variedad de relojes para hombre y mujer." },
-  { id:24, name:"Set de Reloj con Pulseras — Caja",    price:580, cat:"relojes",  badges:["sale"], img:"relojes_pulseras",desc:"Set de lujo en caja de regalo. Reloj + pulseras + collar." },
-
-  // ════════════════════════════════
-  // 💫 PULSERAS & ANILLOS
-  // ════════════════════════════════
-  { id:5,  name:"Pulsera Redonda con Foto",            price:0,   cat:"pulseras", badges:[],       img:"p5",              desc:"Pulsera plateada con dije circular y tu foto." },
-  { id:6,  name:"Pulsera Bebé Cruz con Nombre",        price:0,   cat:"pulseras", badges:["new"],  img:"p6",              desc:"Para bebé: cruz con nombre grabado. 3 colores." },
-  { id:7,  name:"Pulsera Ajustable Nombre + Corazón",  price:0,   cat:"pulseras", badges:[],       img:"p7",              desc:"Nombre en cursiva con corazón. Dorado y plateado." },
-  { id:10, name:"Brazalete Rígido con Nombre",         price:0,   cat:"pulseras", badges:["hot"],  img:"p10",             desc:"Brazalete dorado con tu nombre en letras grandes." },
-  { id:11, name:"Brazalete Doble Nombre",              price:0,   cat:"pulseras", badges:[],       img:"p11",             desc:"Dos nombres. Ideal para parejas o mamás." },
-  { id:16, name:"Anillo Infinito con Nombre",          price:0,   cat:"pulseras", badges:["new"],  img:"p16",             desc:"Anillo dorado con símbolo infinito y nombre grabado." },
-  { id:28, name:"Set de Pulseras Variadas",            price:100, cat:"pulseras", badges:["sale"], img:"pulseras_set",    desc:"Hermoso set de pulseras combinadas para regalar. (Cada paquete)" },
-  { id:29, name:"Pulseras de Hilo Coloridas",          price:50,  cat:"pulseras", badges:["sale"], img:"pulseras_hilo",   desc:"Pulseras de hilo en 12+ colores disponibles. (Cada una)" },
-
-  // ════════════════════════════════
-  // 👒 MODA & ACCESORIOS
-  // ════════════════════════════════
-  { id:25, name:"Gafas de Sol Variadas",               price:130, priceType:"range", priceMin:130, priceMax:380, cat:"moda", badges:["hot"], img:"gafas", desc:"Más de 20 estilos. Para él, para ella, para todos." },
-  { id:26, name:"Gorras de Pico Aquatic Sports",       price:280, cat:"moda",     badges:["new"],  img:"gorras",          desc:"Gorras deportivas Aquatic Sports. Negra y blanca." },
-  { id:27, name:"Sombreros Variados",                  price:380, cat:"moda",     badges:[],       img:"sombreros",       desc:"Sombrero panamá y estilo cowboy. Con mucho estilo." },
-  { id:34, name:"Boina Francesa Estilo Vintage",       price:280, cat:"moda",     badges:["new"],  img:"boina_frances",   desc:"Boina negra estilo francés. Elegante y moderna. Talla única." },
-  { id:35, name:"Boinas para el Frío",                 price:250, cat:"moda",     badges:["new"],  img:"boinas_frio",     desc:"Boinas tejidas con pompón. 3 colores: blanco, azul y rosa." },
-  { id:50, name:"Boina Francesa para Mujer",           price:280, cat:"moda",     badges:["new"],  img:"boina_francesa_mujer", desc:"Boina tejida de mujer en negro y rojo. Elegante y abrigadora." },
-
-  // ════════════════════════════════
-  // 👜 BOLSOS & MOCHILAS
-  // ════════════════════════════════
-  { id:36, name:"Bulto Deportivo Grande Nike",         price:580, cat:"bolsos",   badges:["new"],  img:"bulto_grande",    desc:"Bolso deportivo grande con doble bolsillo. Correa ajustable incluida." },
-  { id:37, name:"Bulto Pequeño Nike",                  price:480, cat:"bolsos",   badges:["hot"],  img:"bulto_pequeno",   desc:"Bolso pequeño resistente. Compacto, ligero y con estilo." },
-  { id:46, name:"Bolsa de Mujer Decorada",             price:380, cat:"bolsos",   badges:["new"],  img:"bolsa_mujer",     desc:"Bolsa tote estampada con lentejuelas y diseño artístico. Ideal para salidas diarias." },
-  { id:47, name:"Cartapacio / Maletín de Trabajo",     price:680, cat:"bolsos",   badges:["new"],  img:"cartapasio",      desc:"Maletín ejecutivo resistente. Compartimento para laptop. Correa cruzada incluida." },
-  { id:48, name:"Mochila de Tiros (Drawstring)",       price:150, cat:"bolsos",   badges:["new"],  img:"mochila_de_tiros",desc:"Mochila de cuerdas ligera con estampado anime. Perfecta para el día a día." },
-  { id:49, name:"Mochilas Escolares Variadas",         price:680, cat:"bolsos",   badges:["hot"],  img:"mochilas",        desc:"Mochilas escolares resistentes para niños y adultos. Varios colores y tamaños." },
-
-  // ════════════════════════════════
-  // 🧥 ROPA & FRÍO
-  // ════════════════════════════════
-  { id:51, name:"Pasamontañas Air Flow",               price:380, cat:"ropa",     badges:["new"],  img:"pasa_montanas",   desc:"Pasamontañas deportivo Air Flow con ventilación. Ideal para motociclistas y montañismo." },
-  { id:52, name:"Pasamontañas para Moto",              price:145, cat:"ropa",     badges:["sale"], img:"pasa_mont_barato",desc:"Pasamontañas tejido, abrigador y económico. 3 colores disponibles: beige, rojo y negro." },
-  { id:53, name:"Guantes para Adulto",                 price:195, cat:"ropa",     badges:["new"],  img:"guantes_adulto",  desc:"Guantes tejidos para adulto. Suaves, elásticos y cálidos. Color negro." },
-  { id:54, name:"Guantes para Niño",                   price:180, cat:"ropa",     badges:["new"],  img:"guantes_nino",    desc:"Guantes tejidos para niño. Talla infantil, suaves y abrigadores. Color gris." },
-  { id:55, name:"Guantes para Bebé",                   price:160, cat:"ropa",     badges:["new"],  img:"guantes_bebe",    desc:"Guantes pequeños para bebé. Ultra suaves y cálidos. Color oscuro." },
-  { id:56, name:"Pañuelos / Bandanas Variados",        price:85,  cat:"ropa",     badges:["sale"], img:"panuelos",        desc:"Pañuelos y bandanas estampados. Varios colores: amarillo, azul, rojo y blanco." },
-  { id:57, name:"Poncho Peruano Tejido",               price:0,   cat:"ropa",     badges:["hot"],  img:"poncho_peruano",  desc:"Poncho peruano tejido con diseños andinos. 100% artesanal. Consultar colores disponibles." },
-
-  // ════════════════════════════════
-  // 🔌 TECNOLOGÍA
-  // ════════════════════════════════
-  { id:30, name:"Cargador Rápido Tipo A — 2.4A",       price:240, cat:"tecnologia",badges:["new"],  img:"cargador_a",      desc:"Cargador Meidou 2.4A con cable. Compatible con Android." },
-  { id:31, name:"Cargador 2 en 1 Tipo C — 2.1A",       price:240, cat:"tecnologia",badges:[],       img:"cargador_c",      desc:"Cargador de viaje 2 en 1. Rápido, compacto y confiable." },
-  { id:38, name:"Audífonos Estéreo con Cable",          price:145, cat:"tecnologia",badges:["sale"], img:"audifonos",       desc:"Audífonos estéreo M-914 con micrófono. Alta calidad de sonido." },
-];
-
-const DEALS = [
-  { id:201, name:"Pulseras de Hilo",        price:50,  img:"pulseras_hilo",  badge:"Desde RD$100", desc:"12+ colores" },
-  { id:202, name:"Audífonos Estéreo",       price:145,  img:"audifonos",      badge:"Tecnología",   desc:"Con micrófono" },
-  { id:203, name:"Set Esmaltes & Labiales", price:35,  img:"cute",           badge:"Belleza",      desc:"Set colorido" },
-  { id:204, name:"Cargador Tipo A 2.4A",    price:240,  img:"cargador_a",     badge:"Nuevo",        desc:"Con cable USB" },
-  { id:205, name:"Gorras Deportivas",       price:280,  img:"gorras",         badge:"Moda",         desc:"2 colores" },
-  { id:206, name:"Aretes Variados",         price:85,  img:"aretes",         badge:"Popular",      desc:"Dorado y plateado" },
-  { id:207, name:"Gafas de Sol",            price:145,  img:"gafas",          badge:"Oferta",       desc:"20+ estilos" },
-  { id:208, name:"Boina Francesa",          price:280,  img:"boina_frances",  badge:"Nuevo",        desc:"Estilo vintage" },
-];
-
-// ── FILTER PILLS ──
-const FILTER_CATS = [
-  { id:"todos",      label:"✨ Todos" },
-  { id:"joyeria",    label:"💎 Joyería" },
-  { id:"aretes",     label:"👂 Aretes" },
-  { id:"relojes",    label:"⌚ Relojes" },
-  { id:"pulseras",   label:"💫 Pulseras" },
-  { id:"moda",       label:"👒 Moda" },
-  { id:"bolsos",     label:"👜 Bolsos" },
-  { id:"tecnologia", label:"🔌 Tecnología" },
-  { id:"ropa",       label:"🧥 Ropa & Frío" },
-];
-
-function renderFilters() {
-  document.getElementById("filterPills").innerHTML = FILTER_CATS.map(c =>
-    `<button class="fpill ${c.id==="todos"?"active":""}" data-cat="${c.id}">${c.label}</button>`
-  ).join("");
-  document.querySelectorAll(".fpill").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".fpill").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      document.querySelectorAll(".cat-pill").forEach(p => p.classList.toggle("active", p.dataset.cat === btn.dataset.cat));
-      applyFilter(btn.dataset.cat);
-    });
-  });
-}
-
-// ── applyFilter: categoría + filtro de precio opcional ──
-function applyFilter(cat) {
-  const minVal = parseFloat(document.getElementById("priceMin")?.value) || null;
-  const maxVal = parseFloat(document.getElementById("priceMax")?.value) || null;
-  let count = 0;
-  document.querySelectorAll(".product-card").forEach(card => {
-    const catOk = cat === "todos" || card.dataset.cat === cat;
-    // data-price="" en consultas (price===0) → NaN → omitir del filtro precio
-    const ep = parseFloat(card.dataset.price);
-    let priceOk = true;
-    if (!isNaN(ep) && ep > 0 && (minVal !== null || maxVal !== null)) {
-      if (minVal !== null && ep < minVal) priceOk = false;
-      if (maxVal !== null && ep > maxVal) priceOk = false;
+      // 3. Ofertas
+      const dealSnap = await getDocs(collection(db, "ofertas"));
+      if (!dealSnap.empty) {
+        DEALS = [];
+        dealSnap.forEach(d => {
+          const o = d.data();
+          DEALS.push({
+            id: d.id,
+            name: o.name,
+            desc: o.desc || "",
+            price: o.price ?? 0,
+            badge: o.badge || "Oferta",
+            img: o.img || ""
+          });
+        });
+      }
+    } catch (e) {
+      console.log("Error conectando con Firestore:", e);
     }
-    const show = catOk && priceOk;
-    card.classList.toggle("hidden", !show);
-    if (show) count++;
-  });
-  document.getElementById("prodCountLabel").textContent = `${count} producto${count !== 1 ? "s" : ""}`;
-}
 
-// ── RENDER PRODUCTS ──
-const BADGE_MAP = { new:["badge-new","Nuevo"], hot:["badge-hot","🔥 Popular"], sale:["badge-sale","Oferta"] };
+    renderCats();
+    renderFilters();
+    renderProducts();
+    renderDeals();
+    handleHashChange();
+  }
 
-/* Precio efectivo para filtrado:
-   - priceType "range" → minPrice
-   - price === 0 (consulta) → "" (se excluye del filtro)
-   - normal → price */
-function effectivePrice(p) {
-  // soporta priceType:"range" con minPrice, y también priceMin/priceMax directo
-  if (p.priceType === "range" || (p.priceMin != null && p.priceMax != null)) return p.priceMin ?? p.minPrice;
-  if (p.price === 0) return "";
-  return p.price;
-}
+  // ── RENDERIZADOS ──
+  function renderCats() {
+    const grid = document.getElementById("catGrid");
+    if (!grid) return;
+    grid.innerHTML = CATS.map(c => `
+      <div class="cat-pill ${c.id==="todos"?"active":""}" data-cat="${c.id}" onclick="window.filterBycat('${c.id}')">
+        ${c.img 
+          ? `<img class="cat-pill-img" src="${getImgSrc(c.img)}" alt="${c.name}"/>` 
+          : `<div class="cat-pill-icon">${c.icon || "📦"}</div>`}
+        <div class="cat-pill-name">${c.name}</div>
+      </div>
+    `).join("");
+  }
 
-/* Bloque HTML de precio + botón según tipo de producto */
-function buildPriceBlock(p) {
-  // CASO 2: Producto personalizado — solo consulta por WhatsApp
-  if (p.price === 0) {
+  window.filterBycat = function(cat) {
+    document.querySelectorAll(".cat-pill").forEach(p => p.classList.toggle("active", p.dataset.cat === cat));
+    document.querySelectorAll(".fpill").forEach(p => p.classList.toggle("active", p.dataset.cat === cat));
+    applyFilter(cat);
+    showView("productos");
+  }
+
+  function renderFilters() {
+    const wrap = document.getElementById("filterPills");
+    if (!wrap) return;
+    wrap.innerHTML = FILTER_CATS.map(c => 
+      `<button class="fpill ${c.id==="todos"?"active":""}" data-cat="${c.id}">${c.label}</button>`
+    ).join("");
+    document.querySelectorAll(".fpill").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".fpill").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        document.querySelectorAll(".cat-pill").forEach(p => p.classList.toggle("active", p.dataset.cat === btn.dataset.cat));
+        applyFilter(btn.dataset.cat);
+      });
+    });
+  }
+
+  function applyFilter(cat) {
+    const minVal = parseFloat(document.getElementById("priceMin")?.value) || null;
+    const maxVal = parseFloat(document.getElementById("priceMax")?.value) || null;
+    let count = 0;
+    document.querySelectorAll(".product-card").forEach(card => {
+      const catOk = cat === "todos" || card.dataset.cat === cat;
+      const ep = parseFloat(card.dataset.price);
+      let priceOk = true;
+      if (!isNaN(ep) && ep > 0 && (minVal !== null || maxVal !== null)) {
+        if (minVal !== null && ep < minVal) priceOk = false;
+        if (maxVal !== null && ep > maxVal) priceOk = false;
+      }
+      const show = catOk && priceOk;
+      card.classList.toggle("hidden", !show);
+      if (show) count++;
+    });
+    const lbl = document.getElementById("prodCountLabel");
+    if (lbl) lbl.textContent = `${count} producto${count !== 1 ? "s" : ""}`;
+  }
+
+  const BADGE_MAP = { new:["badge-new","Nuevo"], hot:["badge-hot","🔥 Popular"], sale:["badge-sale","Oferta"] };
+
+  function effectivePrice(p) {
+    if (p.priceType === "range" || (p.priceMin != null && p.priceMax != null)) return p.priceMin;
+    if (p.price === 0) return "";
+    return p.price;
+  }
+
+  function buildPriceBlock(p) {
+    if (p.price === 0) {
+      return `
+        <div class="product-price"><span class="price-consult">👉 Consultar por WhatsApp</span></div>
+        <button class="btn-consult" data-wa-name="${p.name.replace(/"/g,"&quot;")}">📲 Consultar</button>`;
+    }
+    if (p.priceType === "range" || (p.priceMin != null && p.priceMax != null)) {
+      return `
+        <div class="price-range">
+          <span class="range-label">Precio</span>
+          <span class="range-val"><span class="cur">RD$</span> ${p.priceMin.toLocaleString()} <span class="range-max">— ${p.priceMax.toLocaleString()}</span></span>
+        </div>
+        <button class="add-btn" data-id="${p.id}" data-name="${p.name.replace(/"/g,"&quot;")}" data-price="${p.priceMin}" data-img="${p.img}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          Reservar
+        </button>`;
+    }
     return `
       <div class="product-price">
-        <span class="price-consult">👉 Consultar por WhatsApp</span>
+        <span class="price-label">Precio</span>
+        <span class="price-value"><span class="cur">RD$</span> ${p.price.toLocaleString()}</span>
       </div>
-      <button class="btn-consult" data-wa-name="${p.name.replace(/"/g,"&quot;")}">
-        📲 Consultar
-      </button>`;
-  }
-  // CASO 3: Precio variable — soporta priceType:"range" O priceMin/priceMax directo
-  if (p.priceType === "range" || (p.priceMin != null && p.priceMax != null)) {
-    return `
-      <div class="price-range">
-        <span class="range-label">Precio</span>
-        <span class="range-val"><span class="cur">RD$</span> ${(p.priceMin??p.minPrice).toLocaleString()} <span class="range-max">— ${(p.priceMax??p.maxPrice).toLocaleString()}</span></span>
-      </div>
-      <button class="add-btn" data-id="${p.id}" data-name="${p.name}" data-price="${p.priceMin??p.minPrice}" data-img="${p.img}">
+      <button class="add-btn" data-id="${p.id}" data-name="${p.name.replace(/"/g,"&quot;")}" data-price="${p.price}" data-img="${p.img}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
         Reservar
       </button>`;
   }
-  // CASO 1: Precio normal
-  return `
-    <div class="product-price">
-      <span class="price-label">Precio</span>
-      <span class="price-value"><span class="cur">RD$</span> ${p.price.toLocaleString()}</span>
-    </div>
-    <button class="add-btn" data-id="${p.id}" data-name="${p.name}" data-price="${p.price}" data-img="${p.img}">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-      Reservar
-    </button>`;
-}
 
-function renderProducts() {
-  document.getElementById("productsGrid").innerHTML = PRODUCTS.map(p => {
-    const ep = effectivePrice(p);
-    // Quick overlay: consulta en price===0; carrito normal en los demás
-    const quickInner = p.price === 0
-      ? `<button class="btn-consult" data-wa-name="${p.name.replace(/"/g,"&quot;")}">📲 Consultar por WhatsApp</button>`
-      : `<button class="prod-quick-btn" data-id="${p.id}" data-name="${p.name}" data-price="${(p.priceType==="range"||(p.priceMin!=null&&p.priceMax!=null))?(p.priceMin??p.minPrice):p.price}" data-img="${p.img}">🛒 Agregar al carrito</button>`;
-    return `
-    <div class="product-card" data-cat="${p.cat}" data-id="${p.id}" data-price="${ep}">
-      <div class="product-img-wrap">
-        <img src="${IMGS[p.img]}" alt="${p.name}" loading="lazy"/>
-        <div class="product-badges">
-          ${p.badges.map(b => `<span class="badge ${BADGE_MAP[b][0]}">${BADGE_MAP[b][1]}</span>`).join("")}
-        </div>
-        <button class="prod-wish" title="Guardar">🤍</button>
-        <div class="prod-quick">${quickInner}</div>
-      </div>
-      <div class="product-info">
-        <div class="product-cat">${p.cat}</div>
-        <div class="product-name">${p.name}</div>
-        <div class="product-desc">${p.desc}</div>
-        <div class="product-footer">
-          ${buildPriceBlock(p)}
-        </div>
-      </div>
-    </div>`;
-  }).join("");
-
-  document.getElementById("prodCountLabel").textContent = `${PRODUCTS.length} productos`;
-  attachCardEvents();
-  animateCards();
-}
-
-function renderDeals() {
-  document.getElementById("dealsGrid").innerHTML = DEALS.map(d => `
-    <div class="deal-card">
-      <div class="deal-img">
-        <img src="${IMGS[d.img]}" alt="${d.name}" loading="lazy"/>
-        <span class="deal-badge">${d.badge}</span>
-      </div>
-      <div class="deal-body">
-        <div class="deal-name">${d.name}</div>
-        <div class="deal-desc">${d.desc}</div>
-        <div class="deal-foot">
-          <div class="deal-price">RD$ ${d.price.toLocaleString()}</div>
-          <button class="deal-add" data-id="${d.id}" data-name="${d.name}" data-price="${d.price}" data-img="${d.img}">+ Reservar</button>
-        </div>
-      </div>
-    </div>
-  `).join("");
-  document.querySelectorAll(".deal-add").forEach(btn => {
-    btn.addEventListener("click", () => {
-      addToCart({ id:parseInt(btn.dataset.id), name:btn.dataset.name, price:parseFloat(btn.dataset.price), img:btn.dataset.img });
-      btn.textContent = "✓ Listo!";
-      btn.style.background = "#10B981";
-      setTimeout(() => { btn.textContent = "+ Reservar"; btn.style.background = ""; }, 1600);
-    });
-  });
-}
-
-function attachCardEvents() {
-  // Reservar (precio fijo y range)
-  document.querySelectorAll(".add-btn, .prod-quick-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      addToCart({ id:parseInt(btn.dataset.id), name:btn.dataset.name, price:parseFloat(btn.dataset.price), img:btn.dataset.img });
-      const isQuick = btn.classList.contains("prod-quick-btn");
-      if (!isQuick) {
-        btn.innerHTML = "✓ Reservado";
-        btn.style.background = "#10B981"; btn.style.color = "#fff"; btn.style.borderColor = "#10B981";
-        setTimeout(() => {
-          btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>Reservar`;
-          btn.style.background = ""; btn.style.color = ""; btn.style.borderColor = "";
-        }, 1600);
-      }
-    });
-  });
-
-  // Consultar por WhatsApp (productos personalizados, price === 0)
-  document.querySelectorAll(".btn-consult").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const nombre = btn.dataset.waName || btn.dataset.name || "este producto";
-      const msg = `Hola, quiero información sobre: ${nombre}`;
-      window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank");
-    });
-  });
-
-  document.querySelectorAll(".prod-wish").forEach(btn => {
-    btn.addEventListener("click", () => { btn.textContent = btn.textContent === "🤍" ? "❤️" : "🤍"; });
-  });
-}
-
-// ── CART ──
-let cart = [];
-
-function addToCart(item) {
-  const ex = cart.find(i => i.id === item.id);
-  if (ex) ex.qty++;
-  else cart.push({ ...item, qty:1 });
-  renderCart();
-  showToast(`✅ ${item.name} reservado`);
-  document.getElementById("cartDrawer").classList.add("open");
-  document.getElementById("cartOverlay").classList.add("open");
-}
-
-function renderCart() {
-  const body = document.getElementById("cartBody");
-  const count = document.getElementById("cartCount");
-  const total = document.getElementById("cartTotal");
-  if (!cart.length) {
-    body.innerHTML = `<div class="cart-empty"><span class="ei">🛍️</span>Tu carrito está vacío.<br/>¡Agrega algo increíble!</div>`;
-    count.textContent = "0"; total.textContent = "RD$ 0"; return;
-  }
-  let t = 0, q = 0;
-  body.innerHTML = cart.map((item, idx) => {
-    t += item.price * item.qty; q += item.qty;
-    return `<div class="cart-item">
-      <img src="${IMGS[item.img]}" alt="${item.name}"/>
-      <div class="cart-item-info">
-        <div class="cart-item-name">${item.name}</div>
-        <div class="cart-item-price">RD$ ${(item.price * item.qty).toLocaleString()}</div>
-      </div>
-      <div class="cart-item-controls">
-        <button class="qty-btn" data-idx="${idx}" data-a="dec">−</button>
-        <span class="cart-item-qty">${item.qty}</span>
-        <button class="qty-btn" data-idx="${idx}" data-a="inc">+</button>
-      </div>
-    </div>`;
-  }).join("");
-  count.textContent = q;
-  total.textContent = `RD$ ${t.toLocaleString()}`;
-  document.querySelectorAll(".qty-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const idx = parseInt(btn.dataset.idx);
-      btn.dataset.a === "inc" ? cart[idx].qty++ : cart[idx].qty--;
-      if (cart[idx].qty <= 0) cart.splice(idx, 1);
-      renderCart();
-    });
-  });
-}
-
-document.getElementById("cartBtn").addEventListener("click", () => {
-  document.getElementById("cartDrawer").classList.add("open");
-  document.getElementById("cartOverlay").classList.add("open");
-});
-document.getElementById("cartClose").addEventListener("click", closeCart);
-document.getElementById("cartOverlay").addEventListener("click", closeCart);
-function closeCart() {
-  document.getElementById("cartDrawer").classList.remove("open");
-  document.getElementById("cartOverlay").classList.remove("open");
-}
-
-document.getElementById("btnWa").addEventListener("click", () => {
-  if (!cart.length) { showToast("Carrito vacío"); return; }
-  let msg = "🛍️ *Hola Tienda Perú! Quiero reservar:*\n\n";
-  let t = 0;
-  cart.forEach(i => { msg += `• ${i.name} x${i.qty} — RD$ ${(i.price*i.qty).toLocaleString()}\n`; t += i.price*i.qty; });
-  msg += `\n*Total: RD$ ${t.toLocaleString()}*\n\n¿Me confirman disponibilidad? Paso a buscarlo en tienda 😊`;
-  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank");
-});
-document.getElementById("btnMail").addEventListener("click", () => {
-  if (!cart.length) { showToast("Carrito vacío"); return; }
-  let body = "Hola! Quiero reservar:\n\n";
-  let t = 0;
-  cart.forEach(i => { body += `- ${i.name} x${i.qty} — RD$ ${(i.price*i.qty).toLocaleString()}\n`; t += i.price*i.qty; });
-  body += `\nTotal: RD$ ${t.toLocaleString()}\n\nPasaré a recogerlo en tienda. Gracias!`;
-  window.location.href = `mailto:${EMAIL}?subject=Reserva - Tienda Perú&body=${encodeURIComponent(body)}`;
-});
-document.getElementById("btnClear").addEventListener("click", () => {
-  if (confirm("¿Vaciar el carrito?")) { cart = []; renderCart(); }
-});
-
-// ── HAMBURGER ──
-document.getElementById("hamburger").addEventListener("click", () => {
-  document.getElementById("mobileMenu").classList.toggle("open");
-});
-document.querySelectorAll(".mobile-menu a").forEach(a => {
-  a.addEventListener("click", () => document.getElementById("mobileMenu").classList.remove("open"));
-});
-
-// ══════════════════════════════════════════
-// ── SISTEMA DE VISTAS SPA (sin recargar página) ──
-// ══════════════════════════════════════════
-const VIEWS = ["inicio","categorias","productos","ofertas","nosotros","ubicacion","contacto"];
-const viewEls = document.querySelectorAll(".spa-view");
-const navBtns = document.querySelectorAll(".qnav-btn");
-
-function showView(viewId) {
-  if (!VIEWS.includes(viewId)) viewId = "inicio";
-
-  // Oculta todas las vistas y muestra únicamente la solicitada
-  viewEls.forEach(el => {
-    el.classList.toggle("active", el.dataset.view === viewId);
-  });
-
-  // Resalta el botón de navegación correspondiente (Navbar / Quick Nav)
-  navBtns.forEach(btn => {
-    btn.classList.toggle("active", btn.getAttribute("href") === `#${viewId}`);
-  });
-
-  // Sincroniza el hash de la URL sin disparar un salto de scroll nativo
-  if (location.hash !== `#${viewId}`) {
-    history.replaceState(null, "", `#${viewId}`);
-  }
-
-  // Scroll instantáneo hacia arriba, simulando la carga de una página nueva
-  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-}
-
-function handleHashChange() {
-  const viewId = location.hash.replace("#", "") || "inicio";
-  showView(viewId);
-}
-
-// Intercepta clics en cualquier enlace interno (#vista) del Navbar, Quick Nav,
-// Mobile Menu, botones del Hero y del Footer. Los enlaces reales (como
-// "libros.html") no empiezan con "#" y por lo tanto navegan con normalidad.
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  const href = link.getAttribute("href");
-  if (!href || href === "#") return;
-  link.addEventListener("click", e => {
-    e.preventDefault();
-    const viewId = href.slice(1);
-    if (location.hash === href) {
-      // Mismo hash: forzamos el cambio de vista igualmente (p. ej. clic repetido)
-      showView(viewId);
-    } else {
-      location.hash = href; // dispara "hashchange" → handleHashChange()
+  function renderProducts() {
+    const grid = document.getElementById("productsGrid");
+    if (!grid) return;
+    if (!PRODUCTS.length) {
+      grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:#777;">No hay productos cargados todavía en el panel. ¡Agrega el primero!</div>`;
+      return;
     }
-    document.getElementById("mobileMenu").classList.remove("open");
-  });
-});
+    grid.innerHTML = PRODUCTS.map(p => {
+      const ep = effectivePrice(p);
+      const quickInner = p.price === 0
+        ? `<button class="btn-consult" data-wa-name="${p.name.replace(/"/g,"&quot;")}">📲 Consultar por WhatsApp</button>`
+        : `<button class="prod-quick-btn" data-id="${p.id}" data-name="${p.name.replace(/"/g,"&quot;")}" data-price="${(p.priceType==="range"||(p.priceMin!=null&&p.priceMax!=null))?p.priceMin:p.price}" data-img="${p.img}">🛒 Agregar al carrito</button>`;
+      return `
+      <div class="product-card" data-cat="${p.cat}" data-id="${p.id}" data-price="${ep}">
+        <div class="product-img-wrap">
+          <img src="${getImgSrc(p.img)}" alt="${p.name}" loading="lazy"/>
+          <div class="product-badges">
+            ${(p.badges || []).map(b => `<span class="badge ${BADGE_MAP[b]?.[0] || 'badge-new'}">${BADGE_MAP[b]?.[1] || b}</span>`).join("")}
+          </div>
+          <button class="prod-wish" title="Guardar">🤍</button>
+          <div class="prod-quick">${quickInner}</div>
+        </div>
+        <div class="product-info">
+          <div class="product-cat">${p.cat}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-desc">${p.desc}</div>
+          <div class="product-footer">${buildPriceBlock(p)}</div>
+        </div>
+      </div>`;
+    }).join("");
 
-window.addEventListener("hashchange", handleHashChange);
+    const lbl = document.getElementById("prodCountLabel");
+    if (lbl) lbl.textContent = `${PRODUCTS.length} productos`;
+    attachCardEvents();
+  }
 
-// ── VISTA INICIAL ──
-// Por defecto se muestra únicamente el Hero (Inicio), salvo que la URL
-// ya incluya un hash válido (enlace directo / recarga en una vista concreta).
-handleHashChange();
+  function renderDeals() {
+    const grid = document.getElementById("dealsGrid");
+    if (!grid) return;
+    if (!DEALS.length) {
+      grid.innerHTML = `<div style="color:rgba(255,255,255,0.5); text-align:center; grid-column:1/-1;">No hay ofertas registradas.</div>`;
+      return;
+    }
+    grid.innerHTML = DEALS.map(d => `
+      <div class="deal-card">
+        <div class="deal-img">
+          <img src="${getImgSrc(d.img)}" alt="${d.name}" loading="lazy"/>
+          <span class="deal-badge">${d.badge}</span>
+        </div>
+        <div class="deal-body">
+          <div class="deal-name">${d.name}</div>
+          <div class="deal-desc">${d.desc}</div>
+          <div class="deal-foot">
+            <div class="deal-price">RD$ ${d.price.toLocaleString()}</div>
+            <button class="deal-add" data-id="${d.id}" data-name="${d.name.replace(/"/g,"&quot;")}" data-price="${d.price}" data-img="${d.img}">+ Reservar</button>
+          </div>
+        </div>
+      </div>
+    `).join("");
 
-// ── SCROLL ANIMATION ──
-function animateCards() {
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.style.opacity="1"; e.target.style.transform="translateY(0)"; }
+    document.querySelectorAll(".deal-add").forEach(btn => {
+      btn.addEventListener("click", () => {
+        addToCart({ id: btn.dataset.id, name: btn.dataset.name, price: parseFloat(btn.dataset.price), img: btn.dataset.img });
+        btn.textContent = "✓ Listo!";
+        btn.style.background = "#10B981";
+        setTimeout(() => { btn.textContent = "+ Reservar"; btn.style.background = ""; }, 1600);
+      });
     });
-  }, { threshold:0.06 });
-  document.querySelectorAll(".product-card, .deal-card, .cat-pill").forEach(el => {
-    el.style.opacity = "0"; el.style.transform = "translateY(20px)";
-    el.style.transition = "opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s";
-    obs.observe(el);
+  }
+
+  function attachCardEvents() {
+    document.querySelectorAll(".add-btn, .prod-quick-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        addToCart({ id: btn.dataset.id, name: btn.dataset.name, price: parseFloat(btn.dataset.price), img: btn.dataset.img });
+        const isQuick = btn.classList.contains("prod-quick-btn");
+        if (!isQuick) {
+          btn.innerHTML = "✓ Reservado";
+          btn.style.background = "#10B981"; btn.style.color = "#fff"; btn.style.borderColor = "#10B981";
+          setTimeout(() => {
+            btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>Reservar`;
+            btn.style.background = ""; btn.style.color = ""; btn.style.borderColor = "";
+          }, 1600);
+        }
+      });
+    });
+
+    document.querySelectorAll(".btn-consult").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const nombre = btn.dataset.waName || "este producto";
+        const msg = `Hola, quiero información sobre: ${nombre}`;
+        window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank");
+      });
+    });
+
+    document.querySelectorAll(".prod-wish").forEach(btn => {
+      btn.addEventListener("click", () => { btn.textContent = btn.textContent === "🤍" ? "❤️" : "🤍"; });
+    });
+  }
+
+  // ── CARRITO ──
+  let cart = [];
+  function addToCart(item) {
+    const ex = cart.find(i => i.id === item.id);
+    if (ex) ex.qty++;
+    else cart.push({ ...item, qty: 1 });
+    renderCart();
+    showToast(`✅ ${item.name} reservado`);
+    document.getElementById("cartDrawer").classList.add("open");
+    document.getElementById("cartOverlay").classList.add("open");
+  }
+
+  function renderCart() {
+    const body = document.getElementById("cartBody");
+    const count = document.getElementById("cartCount");
+    const total = document.getElementById("cartTotal");
+    if (!cart.length) {
+      body.innerHTML = `<div class="cart-empty"><span class="ei">🛍️</span>Tu carrito está vacío.<br/>¡Agrega algo increíble!</div>`;
+      count.textContent = "0"; total.textContent = "RD$ 0"; return;
+    }
+    let t = 0, q = 0;
+    body.innerHTML = cart.map((item, idx) => {
+      t += item.price * item.qty; q += item.qty;
+      return `<div class="cart-item">
+        <img src="${getImgSrc(item.img)}" alt="${item.name}"/>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-price">RD$ ${(item.price * item.qty).toLocaleString()}</div>
+        </div>
+        <div class="cart-item-controls">
+          <button class="qty-btn" data-idx="${idx}" data-a="dec">−</button>
+          <span class="cart-item-qty">${item.qty}</span>
+          <button class="qty-btn" data-idx="${idx}" data-a="inc">+</button>
+        </div>
+      </div>`;
+    }).join("");
+    count.textContent = q;
+    total.textContent = `RD$ ${t.toLocaleString()}`;
+    document.querySelectorAll(".qty-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const idx = parseInt(btn.dataset.idx);
+        btn.dataset.a === "inc" ? cart[idx].qty++ : cart[idx].qty--;
+        if (cart[idx].qty <= 0) cart.splice(idx, 1);
+        renderCart();
+      });
+    });
+  }
+
+  document.getElementById("cartBtn").addEventListener("click", () => {
+    document.getElementById("cartDrawer").classList.add("open");
+    document.getElementById("cartOverlay").classList.add("open");
   });
-}
+  document.getElementById("cartClose").addEventListener("click", closeCart);
+  document.getElementById("cartOverlay").addEventListener("click", closeCart);
+  function closeCart() {
+    document.getElementById("cartDrawer").classList.remove("open");
+    document.getElementById("cartOverlay").classList.remove("open");
+  }
 
-// ── CONTACT FORM ──
-document.getElementById("contactForm").addEventListener("submit", e => {
-  e.preventDefault();
-  showToast("✅ Mensaje enviado. Te contactamos pronto!");
-  e.target.reset();
-});
-
-// ── TOAST ──
-function showToast(msg) {
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 3000);
-}
-
-// ── INIT ──
-renderCats();
-renderFilters();
-renderProducts();
-renderDeals();
-
-// ── LISTENERS FILTRO DE PRECIO ──
-function getCurrentCat() {
-  return document.querySelector(".fpill.active")?.dataset.cat ?? "todos";
-}
-document.getElementById("btnPriceFilter").addEventListener("click", () => {
-  applyFilter(getCurrentCat());
-});
-document.getElementById("btnPriceReset").addEventListener("click", () => {
-  document.getElementById("priceMin").value = "";
-  document.getElementById("priceMax").value = "";
-  applyFilter(getCurrentCat());
-});
-["priceMin","priceMax"].forEach(id => {
-  document.getElementById(id).addEventListener("keydown", e => {
-    if (e.key === "Enter") applyFilter(getCurrentCat());
+  document.getElementById("btnWa").addEventListener("click", () => {
+    if (!cart.length) { showToast("Carrito vacío"); return; }
+    let msg = "🛍️ *Hola Tienda Perú! Quiero reservar:*\n\n";
+    let t = 0;
+    cart.forEach(i => { msg += `• ${i.name} x${i.qty} — RD$ ${(i.price*i.qty).toLocaleString()}\n`; t += i.price*i.qty; });
+    msg += `\n*Total: RD$ ${t.toLocaleString()}*\n\nPaso a buscarlo en tienda 😊`;
+    window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank");
   });
-});
+
+  document.getElementById("btnMail").addEventListener("click", () => {
+    if (!cart.length) { showToast("Carrito vacío"); return; }
+    let body = "Hola! Quiero reservar:\n\n";
+    let t = 0;
+    cart.forEach(i => { body += `- ${i.name} x${i.qty} — RD$ ${(i.price*i.qty).toLocaleString()}\n`; t += i.price*i.qty; });
+    window.location.href = `mailto:${EMAIL}?subject=Reserva - Tienda Perú&body=${encodeURIComponent(body)}`;
+  });
+
+  document.getElementById("btnClear").addEventListener("click", () => {
+    if (confirm("¿Vaciar el carrito?")) { cart = []; renderCart(); }
+  });
+
+  // ── SPA VISTAS ──
+  const VIEWS = ["inicio","categorias","productos","ofertas","nosotros","ubicacion","contacto"];
+  const viewEls = document.querySelectorAll(".spa-view");
+  const navBtns = document.querySelectorAll(".qnav-btn");
+
+  function showView(viewId) {
+    if (!VIEWS.includes(viewId)) viewId = "inicio";
+    viewEls.forEach(el => el.classList.toggle("active", el.dataset.view === viewId));
+    navBtns.forEach(btn => btn.classList.toggle("active", btn.getAttribute("href") === `#${viewId}`));
+    if (location.hash !== `#${viewId}`) history.replaceState(null, "", `#${viewId}`);
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }
+
+  function handleHashChange() {
+    const viewId = location.hash.replace("#", "") || "inicio";
+    showView(viewId);
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    const href = link.getAttribute("href");
+    if (!href || href === "#") return;
+    link.addEventListener("click", e => {
+      e.preventDefault();
+      const viewId = href.slice(1);
+      location.hash = href;
+      document.getElementById("mobileMenu").classList.remove("open");
+    });
+  });
+
+  window.addEventListener("hashchange", handleHashChange);
+  document.getElementById("hamburger").addEventListener("click", () => document.getElementById("mobileMenu").classList.toggle("open"));
+
+  document.getElementById("contactForm").addEventListener("submit", e => {
+    e.preventDefault();
+    showToast("✅ Mensaje enviado con éxito!");
+    e.target.reset();
+  });
+
+  function showToast(msg) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 3000);
+  }
+
+  // Filtros de precio
+  document.getElementById("btnPriceFilter").addEventListener("click", () => applyFilter(document.querySelector(".fpill.active")?.dataset.cat ?? "todos"));
+  document.getElementById("btnPriceReset").addEventListener("click", () => {
+    document.getElementById("priceMin").value = "";
+    document.getElementById("priceMax").value = "";
+    applyFilter(document.querySelector(".fpill.active")?.dataset.cat ?? "todos");
+  });
+
+  // Inicializar cargando desde Firebase
+  cargarTiendaFirebase();
 </script>
 </body>
 </html>

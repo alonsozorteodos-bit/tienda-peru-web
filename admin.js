@@ -203,7 +203,7 @@ function openProductModal(id) {
     <div class="form-group">
       <label>Imagen del producto</label>
       <div class="upload-area" id="uploadArea">
-        ${p && p.img ? `<img src="${p.img}" alt=""/>` : `<span class="upload-icon">📷</span><div class="upload-text">Haz clic para subir una imagen</div><div class="upload-hint">JPG, PNG · máx 5MB</div>`}
+        ${p && p.img ? `<img src="${p.img}" alt=""/>` : `<span class="upload-icon">📷</span><div class="upload-text">Haz clic para subir una imagen</div><div class="upload-hint">JPG, PNG · máx 20MB</div>`}
       </div>
       <input type="file" id="imgFile" accept="image/*" style="display:none;"/>
       <div class="upload-progress" id="uploadProgress"><div class="upload-progress-bar" id="uploadBar"></div></div>
@@ -280,7 +280,7 @@ function openProductModal(id) {
   if (p && p.price === 0) priceTypeSel.value = "consult";
   togglePriceRows();
 
-  // Upload de imagen (Límite 5 MB)
+  // Upload de imagen (Límite 20 MB)
   const uploadArea = $("uploadArea");
   const imgFile = $("imgFile");
   let uploadedUrl = p ? p.img : "";
@@ -289,7 +289,7 @@ function openProductModal(id) {
   imgFile.addEventListener("change", async e => {
     const file = e.target.files[0];
     if (!file) return;
-    if (file.size > 5 * 1024 * 1024) { showToast("La imagen pesa más de 5MB", "error"); return; }
+    if (file.size > 20 * 1024 * 1024) { showToast("La imagen pesa más de 20MB", "error"); return; }
     try {
       $("uploadProgress").classList.add("show");
       $("uploadBar").style.width = "30%";
@@ -403,14 +403,14 @@ function openCatModal(id) {
     <button class="btn-save" id="btnSaveCat">${c?"Guardar cambios":"Crear categoría"}</button>
   `;
 
-  // Upload (Límite 5 MB)
+  // Upload (Límite 20 MB)
   const uploadArea = $("uploadArea");
   const imgFile = $("imgFile");
   uploadArea.addEventListener("click", () => imgFile.click());
   imgFile.addEventListener("change", async e => {
     const file = e.target.files[0];
     if (!file) return;
-    if (file.size > 5 * 1024 * 1024) { showToast("La imagen pesa más de 5MB", "error"); return; }
+    if (file.size > 20 * 1024 * 1024) { showToast("La imagen pesa más de 20MB", "error"); return; }
     try {
       $("uploadProgress").classList.add("show");
       $("uploadBar").style.width = "30%";
@@ -509,14 +509,14 @@ function openDealModal(id) {
     <button class="btn-save" id="btnSaveDeal">${d?"Guardar cambios":"Crear oferta"}</button>
   `;
 
-  // Upload (Límite 5 MB)
+  // Upload (Límite 20 MB)
   const uploadArea = $("uploadArea");
   const imgFile = $("imgFile");
   uploadArea.addEventListener("click", () => imgFile.click());
   imgFile.addEventListener("change", async e => {
     const file = e.target.files[0];
     if (!file) return;
-    if (file.size > 5 * 1024 * 1024) { showToast("La imagen pesa más de 5MB", "error"); return; }
+    if (file.size > 20 * 1024 * 1024) { showToast("La imagen pesa más de 20MB", "error"); return; }
     try {
       $("uploadProgress").classList.add("show");
       $("uploadBar").style.width = "30%";

@@ -1,14 +1,24 @@
 // ════════════════════════════════════════════════════════════
-//  PANEL ADMIN · Tienda Perú
-//  Autenticación + CRUD + Subida de imágenes a Firebase Storage
+//  PANEL ADMIN · Tienda Perú (Versión Estable)
 // ════════════════════════════════════════════════════════════
-import {
-  db, auth,
-  collection, doc, getDocs, getDoc,
-  addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy,
-  signInWithEmailAndPassword, signOut, onAuthStateChanged,
-  storageRef, uploadBytes, getDownloadURL
-} from "./firebase-config.js";
+import { db, auth, storage } from "./firebase-config.js";
+
+import { 
+  signInWithEmailAndPassword, 
+  signOut, 
+  onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+import { 
+  collection, doc, getDocs, getDoc, 
+  addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy 
+} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+import { 
+  ref as storageRef, 
+  uploadBytes, 
+  getDownloadURL 
+} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js";
 
 // ── ESTADO ──
 let PRODUCTS = [];
@@ -47,12 +57,36 @@ onAuthStateChanged(auth, user => {
     dashboard.classList.add("show");
     $("userEmail").textContent = user.email;
     initSubscriptions();
+    verificarDatosIniciales(); // <-- Inyecta categorías automáticamente si está vacío
   } else {
     loginScreen.classList.remove("hidden");
     dashboard.classList.remove("show");
     $("loginForm").reset();
   }
 });
+
+// ════════════════════════════════════════════════════════════
+//  MIGRACIÓN / DATOS AUTOMÁTICOS
+// ════════════════════════════════════════════════════════════
+async function verificarDatosIniciales() {
+  try {
+    const snap = await getDocs(collection(db, "categorias"));
+    if (snap.empty) {
+      const catsIniciales = [
+        { id: "joyeria", name: "Joyería", icon: "💎", img: "" },
+        { id: "relojes", name: "Relojes", icon: "⌚", img: "" },
+        { id: "accesorios", name: "Accesorios", icon: "🕶️", img: "" },
+        { id: "libros", name: "Libros & Recursos", icon: "📚", img: "" }
+      ];
+      for (const c of catsIniciales) {
+        const { id, ...data } = c;
+        await setDoc(doc(db, "categorias", id), data);
+      }
+    }
+  } catch (e) {
+    console.error("Error en autoinyección:", e);
+  }
+}
 
 // ════════════════════════════════════════════════════════════
 //  SUSCRIPCIONES EN TIEMPO REAL
@@ -97,7 +131,6 @@ function switchTab(tab) {
   if (tab === "productos") renderProductsTable();
   if (tab === "categorias") renderCatsTable();
   if (tab === "ofertas") renderDealsTable();
-  // cerrar sidebar en móvil
   $("sidebar").classList.remove("open");
 }
 
@@ -181,7 +214,7 @@ $("btnNewCat").addEventListener("click", () => openCatModal(null));
 $("btnNewDeal").addEventListener("click", () => openDealModal(null));
 
 // ════════════════════════════════════════════════════════════
-//  MODAL: PRODUCTOS
+//  MODAL: PRODUCTOS (Límite 20MB)
 // ════════════════════════════════════════════════════════════
 function openProductModal(id) {
   const p = id ? PRODUCTS.find(x => x.id === id) : null;
@@ -193,7 +226,7 @@ function openProductModal(id) {
     <div class="form-group">
       <label>Imagen del producto</label>
       <div class="upload-area" id="uploadArea">
-        ${p && p.img ? `<img src="${p.img}" alt=""/>` : `<span class="upload-icon">📷</span><div class="upload-text">Haz clic para subir una imagen</div><div class="upload-hint">JPG, PNG · máx 2MB</div>`}
+        ${p && p.img ? `<img src="${p.img}" alt=""/>` : `<span class="upload-icon">📷</span><div class="upload-text">Haz clic para subir una imagen</div><div class="upload-hint">JPG, PNG · máx 20MB</div>`}
       </div>
       <input type="file" id="imgFile" accept="image/*" style="display:none;"/>
       <div class="upload-progress" id="uploadProgress"><div class="upload-progress-bar" id="uploadBar"></div></div>
@@ -258,7 +291,6 @@ function openProductModal(id) {
     <button class="btn-save" id="btnSaveProduct">${p?"Guardar cambios":"Crear producto"}</button>
   `;
 
-  // Lógica de tipo de precio
   const priceTypeSel = $("pPriceType");
   function togglePriceRows() {
     const v = priceTypeSel.value;
@@ -266,12 +298,10 @@ function openProductModal(id) {
     $("priceRangeRow").style.display = v === "range" ? "grid" : "none";
   }
   priceTypeSel.addEventListener("change", togglePriceRows);
-  // Inicializa estado correcto
   if (p && p.priceType === "range") priceTypeSel.value = "range";
   if (p && p.price === 0) priceTypeSel.value = "consult";
   togglePriceRows();
 
-  // Upload de imagen
   const uploadArea = $("uploadArea");
   const imgFile = $("imgFile");
   let uploadedUrl = p ? p.img : "";
@@ -280,7 +310,7 @@ function openProductModal(id) {
   imgFile.addEventListener("change", async e => {
     const file = e.target.files[0];
     if (!file) return;
-    if (file.size > 2 * 1024 * 1024) { showToast("La imagen pesa más de 2MB", "error"); return; }
+    if (file.size > 20 * 1024 * 1024) { showToast("La imagen pesa más de 20MB", "error"); return; }
     try {
       $("uploadProgress").classList.add("show");
       $("uploadBar").style.width = "30%";
@@ -321,7 +351,7 @@ async function saveProduct(id) {
       $("bHot").checked ? "hot" : null,
       $("bSale").checked ? "sale" : null
     ].filter(Boolean),
-    img: $("imgUrl").value.trim() || uploadedImgUrl()
+    img: $("imgUrl").value.trim() || ""
   };
 
   if (priceType === "consult") {
@@ -352,8 +382,6 @@ async function saveProduct(id) {
     $("btnSaveProduct").disabled = false;
   }
 }
-
-let uploadedImgUrl = () => "";
 
 // ════════════════════════════════════════════════════════════
 //  MODAL: CATEGORÍAS
@@ -394,14 +422,13 @@ function openCatModal(id) {
     <button class="btn-save" id="btnSaveCat">${c?"Guardar cambios":"Crear categoría"}</button>
   `;
 
-  // Upload
   const uploadArea = $("uploadArea");
   const imgFile = $("imgFile");
   uploadArea.addEventListener("click", () => imgFile.click());
   imgFile.addEventListener("change", async e => {
     const file = e.target.files[0];
     if (!file) return;
-    if (file.size > 2 * 1024 * 1024) { showToast("La imagen pesa más de 2MB", "error"); return; }
+    if (file.size > 20 * 1024 * 1024) { showToast("La imagen pesa más de 20MB", "error"); return; }
     try {
       $("uploadProgress").classList.add("show");
       $("uploadBar").style.width = "30%";
@@ -444,7 +471,6 @@ async function saveCat(id) {
       await updateDoc(doc(db, "categorias", id), data);
       showToast("Categoría actualizada", "success");
     } else {
-      // Verifica que no exista
       const existing = await getDoc(doc(db, "categorias", slug));
       if (existing.exists()) { showToast("Ya existe una categoría con ese ID", "error"); $("btnSaveCat").disabled = false; return; }
       await setDoc(doc(db, "categorias", slug), data);
@@ -501,14 +527,13 @@ function openDealModal(id) {
     <button class="btn-save" id="btnSaveDeal">${d?"Guardar cambios":"Crear oferta"}</button>
   `;
 
-  // Upload
   const uploadArea = $("uploadArea");
   const imgFile = $("imgFile");
   uploadArea.addEventListener("click", () => imgFile.click());
   imgFile.addEventListener("change", async e => {
     const file = e.target.files[0];
     if (!file) return;
-    if (file.size > 2 * 1024 * 1024) { showToast("La imagen pesa más de 2MB", "error"); return; }
+    if (file.size > 20 * 1024 * 1024) { showToast("La imagen pesa más de 20MB", "error"); return; }
     try {
       $("uploadProgress").classList.add("show");
       $("uploadBar").style.width = "30%";
@@ -564,7 +589,7 @@ async function saveDeal(id) {
 }
 
 // ════════════════════════════════════════════════════════════
-//  ELIMINAR
+//  ELIMINAR Y HELPERS
 // ════════════════════════════════════════════════════════════
 async function confirmDelete(coll, id, label) {
   if (!confirm(`¿Seguro que quieres eliminar ${label}? Esta acción no se puede deshacer.`)) return;
@@ -576,9 +601,6 @@ async function confirmDelete(coll, id, label) {
   }
 }
 
-// ════════════════════════════════════════════════════════════
-//  MODAL HELPERS
-// ════════════════════════════════════════════════════════════
 function openModal() {
   $("modalOverlay").classList.add("open");
 }
@@ -590,9 +612,6 @@ $("modalOverlay").addEventListener("click", e => {
   if (e.target === $("modalOverlay")) closeModal();
 });
 
-// ════════════════════════════════════════════════════════════
-//  TOAST
-// ════════════════════════════════════════════════════════════
 function showToast(msg, type = "") {
   const t = $("toast");
   t.textContent = msg;
@@ -600,14 +619,8 @@ function showToast(msg, type = "") {
   setTimeout(() => t.classList.remove("show"), 3000);
 }
 
-// ════════════════════════════════════════════════════════════
-//  MENU MOBILE
-// ════════════════════════════════════════════════════════════
 $("menuToggle").addEventListener("click", () => $("sidebar").classList.toggle("open"));
 
-// ════════════════════════════════════════════════════════════
-//  ESCAPE HTML
-// ════════════════════════════════════════════════════════════
 function esc(str) {
   return String(str ?? "")
     .replace(/&/g, "&amp;")

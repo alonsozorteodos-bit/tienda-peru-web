@@ -3,34 +3,9 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Editor Visual · Tienda Perú</title>
+<title>🛠️ Editor Visual — Tienda Perú</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap" rel="stylesheet"/>
-
-<!--
-  ══════════════════════════════════════════════════════════════════
-  EDITOR VISUAL · Tienda Perú
-  ══════════════════════════════════════════════════════════════════
-  Este archivo reutiliza las variables CSS, la tipografía, el navbar
-  y el diseño exacto de las tarjetas de producto (.product-card) de
-  index.html, para que la experiencia de edición sea visualmente
-  idéntica a la tienda pública.
-
-  Los productos NO están hardcodeados aquí: se cargan desde Firestore
-  (colección "productos"), igual que hace admin.js, mediante
-  editor-visual.js (se genera en el siguiente paso).
-
-  editor-visual.css (paso 4) contendrá únicamente los estilos NUEVOS
-  propios del editor (barra flotante, estados de edición, resaltado
-  de cambios pendientes, skeleton de carga) para no mezclar estilos
-  reutilizados con estilos nuevos.
-  ══════════════════════════════════════════════════════════════════
--->
-
 <style>
-/* ══════════════════════════════════════════════════════════════
-   REUTILIZADO DE index.html — variables, tipografía base, navbar
-   y tarjeta de producto (sin modificaciones de diseño)
-   ══════════════════════════════════════════════════════════════ */
 :root{
   --red:#C8251A; --red-dark:#9B1B12; --red-light:#E8342A;
   --gold:#D4A017; --gold-light:#F0C040;
@@ -45,13 +20,13 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{font-family:"Poppins",sans-serif;color:var(--text);background:#fff;overflow-x:hidden;padding-bottom:96px;}
+body{font-family:"Poppins",sans-serif;color:var(--text);background:#fff;overflow-x:hidden;}
 ::-webkit-scrollbar{width:5px;}
 ::-webkit-scrollbar-track{background:#f0f0f0;}
 ::-webkit-scrollbar-thumb{background:var(--red);border-radius:3px;}
 
-/* ══ NAV (idéntico a index.html, sin carrito/hamburguesa: no aplica al editor) ══ */
-#navbar{position:relative;z-index:500;}
+/* ══ NAV ══ */
+#navbar{position:fixed;top:0;left:0;right:0;z-index:500;transition:all 0.3s;}
 .nav-top{background:var(--red);padding:7px 50px;display:flex;justify-content:space-between;align-items:center;}
 .nav-top-text{font-size:0.68rem;color:rgba(255,255,255,0.9);letter-spacing:1px;}
 .nav-top-contact{display:flex;gap:20px;}
@@ -60,180 +35,960 @@ body{font-family:"Poppins",sans-serif;color:var(--text);background:#fff;overflow
 .nav-main{background:var(--dark);padding:0 50px;display:flex;align-items:center;justify-content:space-between;height:66px;border-bottom:1px solid rgba(255,255,255,0.06);}
 .nav-logo{font-family:"Playfair Display",serif;font-size:1.5rem;font-weight:900;color:#fff;text-decoration:none;display:flex;align-items:center;gap:9px;letter-spacing:-0.3px;}
 .nav-logo .accent{color:var(--gold);}
-.nav-right{display:flex;align-items:center;gap:14px;}
-.nav-back{color:rgba(255,255,255,0.7);text-decoration:none;font-size:0.75rem;font-weight:600;display:flex;align-items:center;gap:6px;padding:9px 16px;border-radius:30px;border:1px solid rgba(255,255,255,0.15);transition:all 0.2s;}
-.nav-back:hover{color:#fff;border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.06);}
-.editor-tag{display:flex;align-items:center;gap:7px;background:rgba(212,160,23,0.15);border:1px solid rgba(212,160,23,0.35);padding:8px 16px;border-radius:30px;color:var(--gold-light);font-size:0.65rem;letter-spacing:1px;text-transform:uppercase;font-weight:700;}
 
-/* ══ SECTION HEAD (idéntico a index.html) ══ */
-.section{padding:56px 50px 90px;}
-.sec-head{text-align:center;margin-bottom:40px;}
+/* QUICK NAV BUTTONS */
+.quick-nav{display:flex;gap:6px;align-items:center;}
+.qnav-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 14px;border-radius:10px;color:rgba(255,255,255,0.65);text-decoration:none;font-size:0.62rem;letter-spacing:0.5px;text-transform:uppercase;font-weight:500;transition:all 0.2s;border:1px solid transparent;cursor:pointer;background:none;}
+.qnav-btn .qn-icon{font-size:1.1rem;}
+.qnav-btn:hover{color:#fff;background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.1);}
+.qnav-btn.active{color:var(--gold);border-color:rgba(212,160,23,0.3);background:rgba(212,160,23,0.08);}
+
+.nav-right{display:flex;align-items:center;gap:10px;}
+.cart-btn{background:linear-gradient(135deg,var(--red),var(--red-dark));color:#fff;border:none;padding:10px 20px;border-radius:30px;font-family:"Poppins",sans-serif;font-size:0.75rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all 0.25s;box-shadow:0 4px 14px rgba(200,37,26,0.35);}
+.cart-btn:hover{transform:scale(1.05);box-shadow:0 6px 20px rgba(200,37,26,0.5);}
+.cart-count{background:#fff;color:var(--red);border-radius:50%;width:19px;height:19px;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:800;}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px;}
+.hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all 0.3s;}
+
+/* MOBILE MENU */
+.mobile-menu{display:none;position:fixed;top:112px;left:0;right:0;background:var(--dark2);z-index:499;padding:16px;border-top:1px solid rgba(255,255,255,0.06);box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+.mobile-menu.open{display:block;}
+.mobile-menu ul{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.mobile-menu a{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.8);text-decoration:none;padding:11px 14px;border-radius:10px;font-size:0.85rem;font-weight:500;transition:all 0.2s;}
+.mobile-menu a:hover{background:rgba(255,255,255,0.08);color:#fff;}
+
+/* ══ CART DRAWER ══ */
+.cart-overlay{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,0.6);opacity:0;pointer-events:none;transition:opacity 0.3s;}
+.cart-overlay.open{opacity:1;pointer-events:all;}
+.cart-drawer{position:fixed;top:0;right:-460px;z-index:700;width:440px;height:100vh;background:#fff;display:flex;flex-direction:column;transition:right 0.35s cubic-bezier(0.4,0,0.2,1);box-shadow:-8px 0 50px rgba(0,0,0,0.2);}
+.cart-drawer.open{right:0;}
+.cart-head{display:flex;justify-content:space-between;align-items:center;padding:22px 24px;background:var(--dark);flex-shrink:0;}
+.cart-head h3{font-size:1.05rem;color:#fff;font-weight:600;display:flex;align-items:center;gap:8px;}
+.cart-close{background:rgba(255,255,255,0.1);border:none;color:#fff;font-size:1rem;cursor:pointer;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.cart-close:hover{background:rgba(255,255,255,0.2);}
+.cart-body{flex:1;overflow-y:auto;padding:16px;}
+.cart-empty{text-align:center;color:var(--text3);font-size:0.88rem;margin-top:60px;}
+.cart-empty .ei{font-size:3.5rem;margin-bottom:14px;display:block;}
+.cart-item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--gray2);}
+.cart-item img{width:58px;height:58px;object-fit:cover;border-radius:10px;flex-shrink:0;}
+.cart-item-info{flex:1;}
+.cart-item-name{font-size:0.82rem;font-weight:600;margin-bottom:3px;line-height:1.3;}
+.cart-item-price{font-size:0.8rem;color:var(--red);font-weight:700;}
+.cart-item-controls{display:flex;align-items:center;gap:7px;}
+.qty-btn{width:28px;height:28px;border:1.5px solid var(--gray2);background:#fff;border-radius:8px;cursor:pointer;font-size:1rem;color:var(--text);display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-weight:700;}
+.qty-btn:hover{background:var(--red);color:#fff;border-color:var(--red);}
+.cart-item-qty{font-size:0.85rem;font-weight:700;min-width:22px;text-align:center;}
+.cart-foot{padding:20px 24px;border-top:2px solid var(--gray2);flex-shrink:0;background:var(--gray);}
+.cart-subtotal{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding:14px;background:#fff;border-radius:10px;}
+.cart-subtotal span{font-size:0.82rem;color:var(--text2);}
+.cart-subtotal strong{font-size:1.2rem;color:var(--red);}
+.btn-wa{width:100%;background:linear-gradient(135deg,#25D366,#1da851);color:#fff;border:none;padding:14px;border-radius:12px;font-family:"Poppins",sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;margin-bottom:8px;transition:all 0.25s;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(37,211,102,0.3);}
+.btn-wa:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,211,102,0.45);}
+.btn-mail{width:100%;background:var(--dark);color:#fff;border:none;padding:12px;border-radius:12px;font-family:"Poppins",sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer;margin-bottom:8px;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-mail:hover{background:var(--dark3);}
+.btn-clear{width:100%;background:none;border:1.5px solid var(--gray3);color:var(--text3);padding:9px;border-radius:10px;font-family:"Poppins",sans-serif;font-size:0.72rem;cursor:pointer;transition:all 0.2s;}
+.btn-clear:hover{border-color:var(--red);color:var(--red);}
+.reserve-note{font-size:0.7rem;color:var(--text3);text-align:center;margin-top:10px;line-height:1.5;}
+
+/* ══ HERO ══ */
+.hero{min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding-bottom:80px;}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(0.35);}
+.hero-gradient{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,10,10,0.92) 0%,rgba(200,37,26,0.2) 55%,rgba(10,10,10,0.85) 100%);}
+.hero-content{position:relative;z-index:1;padding:0 70px;max-width:820px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(212,160,23,0.15);border:1px solid rgba(212,160,23,0.35);backdrop-filter:blur(6px);padding:7px 18px;border-radius:30px;color:var(--gold-light);font-size:0.68rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:24px;animation:fadeUp 0.8s ease both;}
+.hero h1{font-family:"Playfair Display",serif;font-size:clamp(2.6rem,6vw,5.5rem);font-weight:900;color:#fff;line-height:1.05;margin-bottom:20px;animation:fadeUp 0.8s 0.15s ease both;}
+.hero h1 em{font-style:italic;color:var(--gold);}
+.hero-sub{font-size:0.95rem;color:rgba(255,255,255,0.65);line-height:1.75;margin-bottom:40px;max-width:540px;animation:fadeUp 0.8s 0.3s ease both;}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;animation:fadeUp 0.8s 0.45s ease both;}
+.hero-btn-main{background:linear-gradient(135deg,var(--red),var(--red-dark));color:#fff;padding:15px 34px;border-radius:12px;font-weight:700;font-size:0.85rem;text-decoration:none;display:inline-flex;align-items:center;gap:9px;transition:all 0.25s;box-shadow:0 6px 22px rgba(200,37,26,0.4);}
+.hero-btn-main:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(200,37,26,0.55);}
+.hero-btn-sec{background:rgba(255,255,255,0.07);color:#fff;padding:15px 30px;border-radius:12px;font-weight:600;font-size:0.82rem;text-decoration:none;display:inline-flex;align-items:center;gap:9px;border:1.5px solid rgba(255,255,255,0.2);backdrop-filter:blur(6px);transition:all 0.2s;}
+.hero-btn-sec:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.35);}
+.hero-bottom{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.55);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,0.07);display:flex;justify-content:center;z-index:1;}
+.hero-stat{padding:18px 52px;text-align:center;border-right:1px solid rgba(255,255,255,0.07);}
+.hero-stat:last-child{border-right:none;}
+.hero-stat .sn{font-size:1.5rem;font-weight:800;color:var(--gold);display:block;font-family:"Playfair Display",serif;}
+.hero-stat .sl{font-size:0.62rem;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:1.5px;margin-top:3px;}
+
+/* ══ INFO BAR ══ */
+.info-bar{background:linear-gradient(90deg,var(--red-dark),var(--red),var(--red-dark));padding:11px 0;overflow:hidden;}
+.info-track{display:flex;gap:60px;animation:marquee 24s linear infinite;white-space:nowrap;}
+.info-item{color:rgba(255,255,255,0.9);font-size:0.68rem;letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:12px;font-weight:500;}
+.info-item::before{content:"◆";color:var(--gold-light);font-size:0.45rem;}
+
+/* ══ SECTIONS ══ */
+.section{padding:90px 50px;}
+.section-alt{background:var(--gray);}
+.sec-head{text-align:center;margin-bottom:55px;}
 .sec-eye{font-size:0.63rem;letter-spacing:4px;text-transform:uppercase;color:var(--red);font-weight:700;display:block;margin-bottom:10px;}
 .sec-title{font-family:"Playfair Display",serif;font-size:clamp(1.7rem,3vw,2.6rem);font-weight:700;color:var(--dark);line-height:1.15;}
 .sec-title em{font-style:italic;color:var(--red);}
 .sec-line{width:44px;height:3px;background:linear-gradient(90deg,var(--red),var(--gold));margin:14px auto 0;border-radius:2px;}
-.sec-desc{font-size:0.87rem;color:var(--text2);margin-top:12px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.65;}
+.sec-desc{font-size:0.87rem;color:var(--text2);margin-top:12px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.65;}
 
-.filter-wrap{display:flex;align-items:center;justify-content:space-between;max-width:1300px;margin:0 auto 28px;flex-wrap:wrap;gap:14px;}
+/* ══ CATEGORY CARDS ══ */
+.cat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;max-width:1200px;margin:0 auto;}
+.cat-pill{display:flex;flex-direction:column;align-items:center;gap:10px;padding:22px 14px;border-radius:var(--radius);background:#fff;box-shadow:var(--shadow);cursor:pointer;transition:all 0.25s;border:2px solid transparent;text-align:center;}
+.cat-pill:hover{border-color:var(--red);box-shadow:0 6px 24px rgba(200,37,26,0.12);transform:translateY(-3px);}
+.cat-pill.active{border-color:var(--red);background:linear-gradient(135deg,rgba(200,37,26,0.06),rgba(200,37,26,0.02));}
+.cat-pill-img{width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid var(--gray2);transition:border-color 0.2s;}
+.cat-pill:hover .cat-pill-img,.cat-pill.active .cat-pill-img{border-color:var(--red);}
+.cat-pill-icon{width:64px;height:64px;border-radius:50%;background:var(--gray);display:flex;align-items:center;justify-content:center;font-size:1.7rem;border:2px solid var(--gray2);transition:all 0.2s;}
+.cat-pill:hover .cat-pill-icon,.cat-pill.active .cat-pill-icon{background:rgba(200,37,26,0.08);border-color:var(--red);}
+.cat-pill-name{font-size:0.72rem;font-weight:600;color:var(--text);line-height:1.3;}
+.cat-pill-count{font-size:0.62rem;color:var(--text3);}
+
+/* ══ FILTERS BAR ══ */
+.filter-wrap{display:flex;align-items:center;justify-content:space-between;max-width:1300px;margin:0 auto 36px;flex-wrap:wrap;gap:14px;}
+.filter-pills{display:flex;gap:8px;flex-wrap:wrap;}
+.fpill{background:#fff;border:1.5px solid var(--gray2);color:var(--text2);padding:8px 18px;border-radius:30px;font-family:"Poppins",sans-serif;font-size:0.71rem;font-weight:500;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;}
+.fpill:hover,.fpill.active{background:var(--red);color:#fff;border-color:var(--red);box-shadow:0 3px 12px rgba(200,37,26,0.25);}
 .prod-count-label{font-size:0.75rem;color:var(--text3);font-weight:500;}
 
-/* ══ PRODUCT GRID (idéntico a index.html) ══ */
+/* ══ PRODUCT GRID ══ */
 .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px;max-width:1300px;margin:0 auto;}
 
-/* ══ PRODUCT CARD (idéntico a index.html) ══ */
+/* ══ PRODUCT CARD (NEW DESIGN) ══ */
 .product-card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:all 0.3s;position:relative;display:flex;flex-direction:column;}
-.product-card:hover{box-shadow:var(--shadow-lg);}
+.product-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);}
+.product-card.hidden{display:none;}
 
-.product-img-wrap{position:relative;overflow:hidden;aspect-ratio:1;background:var(--gray);}
-.product-img-wrap img{width:100%;height:100%;object-fit:cover;}
+.product-img-wrap{position:relative;overflow:hidden;aspect-ratio:1;}
+.product-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform 0.45s;}
+.product-card:hover .product-img-wrap img{transform:scale(1.07);}
 
+/* BADGES */
 .product-badges{position:absolute;top:12px;left:12px;display:flex;flex-direction:column;gap:5px;z-index:2;}
 .badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:0.56rem;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;}
 .badge-new{background:#10B981;color:#fff;}
 .badge-hot{background:var(--red);color:#fff;}
 .badge-sale{background:var(--gold);color:#333;}
 
+/* WISHLIST */
+.prod-wish{position:absolute;top:10px;right:10px;width:34px;height:34px;background:rgba(255,255,255,0.92);border:none;border-radius:50%;cursor:pointer;font-size:0.95rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;backdrop-filter:blur(4px);z-index:2;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+.prod-wish:hover{transform:scale(1.12);background:#fff;}
+
+/* QUICK ADD OVERLAY */
+.prod-quick{position:absolute;bottom:-48px;left:0;right:0;background:rgba(15,15,15,0.88);backdrop-filter:blur(6px);padding:12px;display:flex;align-items:center;justify-content:center;transition:bottom 0.3s;z-index:2;}
+.product-card:hover .prod-quick{bottom:0;}
+.prod-quick-btn{background:linear-gradient(135deg,var(--red),var(--red-dark));color:#fff;border:none;padding:9px 22px;border-radius:30px;font-family:"Poppins",sans-serif;font-size:0.73rem;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:7px;width:100%;justify-content:center;}
+.prod-quick-btn:hover{transform:scale(1.03);}
+
 .product-info{padding:16px;flex:1;display:flex;flex-direction:column;}
 .product-cat{font-size:0.58rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:5px;}
-.product-name{font-size:0.93rem;font-weight:700;color:var(--dark);margin-bottom:6px;line-height:1.3;}
+.product-name{font-size:0.93rem;font-weight:700;color:var(--dark);margin-bottom:6px;line-height:1.3;flex:1;}
 .product-desc{font-size:0.74rem;color:var(--text2);line-height:1.55;margin-bottom:14px;}
-.product-footer{display:flex;justify-content:space-between;align-items:center;margin-top:auto;gap:10px;}
+.product-footer{display:flex;justify-content:space-between;align-items:center;margin-top:auto;}
 .product-price{display:flex;flex-direction:column;}
 .price-label{font-size:0.58rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px;}
-.price-value{font-size:1.15rem;font-weight:800;color:var(--dark);font-family:"Playfair Display",serif;display:flex;align-items:baseline;gap:4px;}
+.price-value{font-size:1.15rem;font-weight:800;color:var(--dark);font-family:"Playfair Display",serif;}
 .price-value .cur{font-family:"Poppins",sans-serif;font-size:0.72rem;font-weight:600;color:var(--red);}
 
-/* ══════════════════════════════════════════════════════════════
-   NUEVO (editor) — placeholders mínimos para que el documento sea
-   utilizable antes de cargar editor-visual.css en el paso 4.
-   El detalle visual completo del modo edición se define allí.
-   ══════════════════════════════════════════════════════════════ */
-[contenteditable="true"]{outline:none;cursor:text;}
-#loadingState,#emptyState{max-width:1300px;margin:0 auto;text-align:center;padding:60px 20px;color:var(--text3);font-size:0.88rem;}
-#emptyState{display:none;}
-.toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(90px);z-index:900;background:var(--dark);color:#fff;padding:12px 24px;border-radius:30px;font-size:0.8rem;font-weight:600;opacity:0;transition:all 0.35s;pointer-events:none;white-space:nowrap;box-shadow:var(--shadow-lg);}
-.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
-.toast.success{background:#0d8c69;}
-.toast.error{background:var(--red-dark);}
-</style>
+/* ADD BUTTON — NEW STYLE */
+.add-btn{background:#fff;color:var(--dark);border:2px solid var(--dark);padding:9px 16px;border-radius:30px;font-family:"Poppins",sans-serif;font-size:0.7rem;font-weight:700;cursor:pointer;transition:all 0.25s;display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.add-btn:hover{background:var(--red);color:#fff;border-color:var(--red);transform:scale(1.04);box-shadow:0 4px 14px rgba(200,37,26,0.3);}
+.add-btn svg{width:14px;height:14px;flex-shrink:0;}
 
-<!-- Estilos nuevos y exclusivos del editor (barra flotante, estados de edición, resaltado de cambios) -->
-<link rel="stylesheet" href="editor-visual.css"/>
+/* ══ DEALS SECTION ══ */
+.deals-section{background:linear-gradient(135deg,#0d0d0d 0%,#181818 40%,#0d0d0d 100%);padding:90px 50px;position:relative;overflow:hidden;}
+.deals-section::before{content:"";position:absolute;top:-30%;right:-5%;width:600px;height:600px;background:radial-gradient(circle,rgba(200,37,26,0.12) 0%,transparent 65%);pointer-events:none;}
+.deals-section::after{content:"";position:absolute;bottom:-20%;left:-5%;width:400px;height:400px;background:radial-gradient(circle,rgba(212,160,23,0.07) 0%,transparent 65%);pointer-events:none;}
+.deals-head{text-align:center;margin-bottom:52px;}
+.deals-label{display:inline-flex;align-items:center;gap:8px;background:rgba(200,37,26,0.18);border:1px solid rgba(200,37,26,0.35);padding:7px 18px;border-radius:30px;color:var(--red-light);font-size:0.63rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:16px;}
+.deals-title{font-family:"Playfair Display",serif;font-size:clamp(1.7rem,3.5vw,2.8rem);font-weight:900;color:#fff;line-height:1.1;}
+.deals-title em{color:var(--gold);}
+.deals-sub{font-size:0.85rem;color:rgba(255,255,255,0.45);margin-top:10px;}
+.deals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;max-width:1200px;margin:0 auto;}
+
+/* DEAL CARD */
+.deal-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius);overflow:hidden;transition:all 0.3s;}
+.deal-card:hover{background:rgba(255,255,255,0.07);border-color:rgba(200,37,26,0.35);transform:translateY(-4px);box-shadow:0 8px 28px rgba(0,0,0,0.3);}
+.deal-img{position:relative;aspect-ratio:1;overflow:hidden;}
+.deal-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s;filter:brightness(0.88);}
+.deal-card:hover .deal-img img{transform:scale(1.06);filter:brightness(1);}
+.deal-badge{position:absolute;top:10px;left:10px;background:var(--red);color:#fff;font-size:0.56rem;font-weight:700;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:0.8px;}
+.deal-body{padding:14px;}
+.deal-name{font-size:0.84rem;font-weight:700;color:#fff;margin-bottom:4px;line-height:1.3;}
+.deal-desc{font-size:0.68rem;color:rgba(255,255,255,0.42);margin-bottom:12px;line-height:1.4;}
+.deal-foot{display:flex;justify-content:space-between;align-items:center;}
+.deal-price{font-size:1rem;font-weight:800;color:var(--gold);font-family:"Playfair Display",serif;}
+.deal-add{background:rgba(200,37,26,0.85);color:#fff;border:none;padding:7px 14px;border-radius:20px;font-family:"Poppins",sans-serif;font-size:0.67rem;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.deal-add:hover{background:var(--red);}
+
+/* ══ ABOUT SECTION ══ */
+.about-split{display:grid;grid-template-columns:1fr 1fr;}
+.about-visual{position:relative;overflow:hidden;min-height:460px;}
+.about-visual img{width:100%;height:100%;object-fit:cover;}
+.about-visual-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(200,37,26,0.25),rgba(0,0,0,0.5));}
+.about-body{background:var(--dark);padding:72px 62px;display:flex;flex-direction:column;justify-content:center;}
+.about-eye{font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:14px;}
+.about-ttl{font-family:"Playfair Display",serif;font-size:clamp(1.6rem,2.5vw,2.4rem);font-weight:700;color:#fff;line-height:1.2;margin-bottom:18px;}
+.about-ttl em{font-style:italic;color:var(--gold);}
+.about-p{font-size:0.87rem;color:rgba(255,255,255,0.55);line-height:1.8;margin-bottom:12px;}
+.about-perks{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:26px;}
+.perk{display:flex;align-items:flex-start;gap:11px;background:rgba(255,255,255,0.04);padding:15px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);}
+.perk-i{font-size:1.3rem;flex-shrink:0;line-height:1;}
+.perk strong{display:block;font-size:0.78rem;color:#fff;margin-bottom:2px;}
+.perk span{font-size:0.68rem;color:rgba(255,255,255,0.4);}
+
+/* ══ MAP ══ */
+.map-wrap{line-height:0;}
+.map-wrap iframe{display:block;width:100%;height:380px;border:0;}
+
+/* ══ CONTACT ══ */
+.contact-section{background:var(--gray);}
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:1000px;margin:0 auto;}
+.contact-box{background:#fff;border-radius:var(--radius);padding:34px;box-shadow:var(--shadow);}
+.contact-box h3{font-size:1rem;font-weight:700;color:var(--dark);margin-bottom:22px;display:flex;align-items:center;gap:8px;}
+.ci-row{display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;}
+.ci-icon{width:42px;height:42px;background:rgba(200,37,26,0.07);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.ci-row strong{display:block;font-size:0.67rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);margin-bottom:3px;}
+.ci-row p{font-size:0.83rem;color:var(--text2);line-height:1.5;}
+.cf{display:flex;flex-direction:column;gap:11px;}
+.cf input,.cf textarea{padding:12px 16px;border:1.5px solid var(--gray2);border-radius:10px;font-family:"Poppins",sans-serif;font-size:0.83rem;color:var(--text);outline:none;transition:border-color 0.2s;width:100%;}
+.cf input:focus,.cf textarea:focus{border-color:var(--red);}
+.cf textarea{resize:vertical;}
+.cf-submit{background:linear-gradient(135deg,var(--red),var(--red-dark));color:#fff;border:none;padding:14px;border-radius:12px;font-family:"Poppins",sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;transition:all 0.25s;box-shadow:0 4px 14px rgba(200,37,26,0.3);}
+.cf-submit:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(200,37,26,0.45);}
+
+/* ══ FOOTER ══ */
+footer{background:#080808;padding:60px 50px 30px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:50px;margin-bottom:40px;}
+.f-brand .logo{font-family:"Playfair Display",serif;font-size:1.3rem;font-weight:900;color:#fff;margin-bottom:12px;display:block;}
+.f-brand .logo em{font-style:normal;color:var(--gold);}
+.f-brand p{font-size:0.8rem;color:rgba(255,255,255,0.35);line-height:1.75;}
+.f-socials{display:flex;gap:9px;margin-top:18px;}
+.f-social{width:38px;height:38px;background:rgba(255,255,255,0.06);border-radius:9px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.55);font-size:1rem;text-decoration:none;transition:all 0.2s;}
+.f-social:hover{background:var(--red);color:#fff;transform:translateY(-2px);}
+.f-col h4{font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:18px;font-weight:700;}
+.f-col ul{list-style:none;}
+.f-col ul li{margin-bottom:10px;}
+.f-col ul li a{color:rgba(255,255,255,0.4);text-decoration:none;font-size:0.8rem;transition:color 0.2s;display:flex;align-items:center;gap:6px;}
+.f-col ul li a:hover{color:#fff;}
+.f-bottom{border-top:1px solid rgba(255,255,255,0.05);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.f-bottom p{font-size:0.7rem;color:rgba(255,255,255,0.2);}
+
+/* ══ TOAST ══ */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(90px);z-index:900;background:var(--dark);color:#fff;padding:12px 24px;border-radius:30px;font-size:0.8rem;font-weight:600;opacity:0;transition:all 0.35s;pointer-events:none;white-space:nowrap;box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,0.07);}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+
+
+/* ── PRECIO VARIABLE (range) ── */
+.price-range{display:flex;flex-direction:column;}
+.price-range .range-label{font-size:0.58rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px;}
+.price-range .range-val{font-size:1.1rem;font-weight:800;color:var(--dark);font-family:"Playfair Display",serif;}
+.price-range .cur{font-family:"Poppins",sans-serif;font-size:0.7rem;font-weight:600;color:var(--red);}
+.price-range .range-max{font-size:0.65rem;color:var(--text3);font-family:"Poppins",sans-serif;font-weight:400;}
+
+/* ── PRODUCTO PERSONALIZADO (consulta) ── */
+.price-consult{font-size:0.74rem;color:var(--red);font-weight:600;line-height:1.4;}
+.btn-consult{background:linear-gradient(135deg,#25D366,#1da851);color:#fff;border:none;
+  padding:9px 14px;border-radius:30px;font-family:"Poppins",sans-serif;font-size:0.68rem;
+  font-weight:700;cursor:pointer;transition:all 0.25s;display:flex;align-items:center;
+  gap:6px;white-space:nowrap;box-shadow:0 3px 10px rgba(37,211,102,0.28);}
+.btn-consult:hover{transform:scale(1.04);box-shadow:0 5px 16px rgba(37,211,102,0.42);}
+
+/* ── FILTRO DE PRECIO ── */
+.price-filter-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:4px 0;}
+.price-filter-row label{font-size:0.7rem;color:var(--text2);font-weight:600;white-space:nowrap;}
+.price-input{width:96px;padding:7px 10px;border:1.5px solid var(--gray2);border-radius:8px;
+  font-family:"Poppins",sans-serif;font-size:0.74rem;color:var(--text);outline:none;
+  transition:border-color 0.2s;background:#fff;}
+.price-input:focus{border-color:var(--red);}
+.price-filter-sep{font-size:0.8rem;color:var(--text3);}
+.btn-price-filter{background:var(--red);color:#fff;border:none;padding:7px 14px;border-radius:8px;
+  font-family:"Poppins",sans-serif;font-size:0.72rem;font-weight:600;cursor:pointer;
+  transition:all 0.2s;white-space:nowrap;}
+.btn-price-filter:hover{background:var(--red-dark);}
+.btn-price-reset{background:none;border:1.5px solid var(--gray3);color:var(--text3);
+  padding:7px 12px;border-radius:8px;font-family:"Poppins",sans-serif;font-size:0.72rem;
+  cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.btn-price-reset:hover{border-color:var(--red);color:var(--red);}
+
+/* ══ ANIMATIONS ══ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:1100px){
+  .cat-grid{grid-template-columns:repeat(4,1fr);}
+  .nav-top{padding:7px 24px;}
+  .nav-main{padding:0 24px;}
+  .quick-nav{display:none;}
+}
+@media(max-width:900px){
+  .section{padding:60px 20px;}
+  .hero-content{padding:0 24px;}
+  .about-split{grid-template-columns:1fr;}
+  .about-visual{min-height:280px;}
+  .contact-wrap{grid-template-columns:1fr;gap:18px;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:28px;}
+  .hero-bottom{display:none;}
+  .cart-drawer{width:100%;right:-100%;}
+  .hamburger{display:flex;}
+  .mobile-menu{top:107px;}
+  .cat-grid{grid-template-columns:repeat(3,1fr);}
+}
+/* ══ SPA VIEW SYSTEM ══ */
+.spa-view{display:none;}
+.spa-view.active{display:block;}
+#inicio.spa-view.active{display:flex;}
+#nosotros.spa-view.active{display:grid;}
+
+@media(max-width:600px){
+  .hero h1{font-size:2.4rem;}
+  .hero-ctas{flex-direction:column;}
+  .hero-badge{font-size:0.58rem;}
+  .cat-grid{grid-template-columns:repeat(2,1fr);}
+  .footer-grid{grid-template-columns:1fr;}
+  .f-bottom{flex-direction:column;text-align:center;}
+  .nav-top{display:none;}
+  .mobile-menu{top:66px;}
+  .deals-section{padding:60px 16px;}
+}
+
+/* ══════════════════════════════════════════════════════
+   ══ CAPA DE ADMINISTRACIÓN — EDITOR VISUAL WYSIWYG ══
+   ══════════════════════════════════════════════════════ */
+
+/* Deja espacio para la barra de guardado flotante inferior */
+body{padding-bottom:78px;}
+
+/* ── Elementos editables (texto) ── */
+[contenteditable="true"].editable{
+  outline:1.5px dashed transparent;
+  border-radius:4px;
+  transition:outline-color .15s, background .15s;
+  cursor:text;
+  min-width:10px;
+}
+[contenteditable="true"].editable:hover{
+  outline-color:rgba(200,37,26,0.55);
+  background:rgba(200,37,26,0.06);
+}
+[contenteditable="true"].editable:focus{
+  outline:1.5px solid var(--red);
+  background:rgba(200,37,26,0.08);
+}
+[contenteditable="true"].editable.field-dirty{
+  outline:1.5px solid var(--gold);
+  background:rgba(212,160,23,0.12);
+}
+
+/* ── Imagen editable (clic para reemplazar) ── */
+.img-editable{position:relative;cursor:pointer;}
+.img-editable::after{
+  content:"📷 Cambiar foto";
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0.55);
+  color:#fff;font-size:0.72rem;font-weight:700;
+  font-family:"Poppins",sans-serif;letter-spacing:0.5px;
+  opacity:0;transition:opacity .2s;
+  z-index:3;pointer-events:none;
+}
+.img-editable:hover::after{opacity:1;}
+.img-editable.field-dirty::before{
+  content:"● editado";
+  position:absolute;top:8px;left:8px;z-index:4;
+  background:var(--gold);color:#1a1a1a;
+  font-size:0.55rem;font-weight:800;
+  padding:3px 8px;border-radius:20px;
+  letter-spacing:0.5px;pointer-events:none;
+}
+
+/* ── Botón eliminar tarjeta (🗑️) ── */
+.admin-del-btn{
+  position:absolute;z-index:5;
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(220,38,38,0.92);color:#fff;
+  border:2px solid #fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.85rem;cursor:pointer;
+  box-shadow:0 2px 10px rgba(0,0,0,0.35);
+  transition:all .18s;
+}
+.admin-del-btn:hover{background:#b91c1c;transform:scale(1.12);}
+.product-card .admin-del-btn{top:10px;right:44px;}
+.deal-card{position:relative;}
+.deal-card .admin-del-btn{top:8px;right:8px;}
+.lit-book-card{position:relative;}
+.lit-book-card .admin-del-btn{top:10px;right:10px;}
+
+/* ── Tarjeta "Añadir Nuevo" ── */
+.admin-add-card{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;min-height:220px;
+  border:2.5px dashed rgba(200,37,26,0.4);
+  border-radius:var(--radius);
+  background:rgba(200,37,26,0.03);
+  color:var(--red);font-weight:700;font-size:0.85rem;
+  cursor:pointer;transition:all .2s;text-align:center;padding:20px;
+}
+.admin-add-card:hover{background:rgba(200,37,26,0.08);border-color:var(--red);transform:translateY(-3px);}
+.admin-add-card .aa-icon{font-size:2.2rem;line-height:1;}
+.deals-grid .admin-add-card,.lit-books-grid .admin-add-card{
+  color:#fff;border-color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.03);
+}
+.deals-grid .admin-add-card:hover,.lit-books-grid .admin-add-card:hover{
+  background:rgba(255,255,255,0.08);border-color:var(--gold);color:var(--gold);
+}
+
+/* ── Precio editable (número) ── */
+.editable-price{display:inline-block;min-width:40px;}
+
+/* ── Barra flotante de guardado ── */
+#adminSaveBar{
+  position:fixed;left:0;right:0;bottom:0;z-index:2000;
+  background:linear-gradient(90deg,#0f0f0f,#1a1a1a);
+  border-top:2px solid var(--gold);
+  padding:12px 26px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;
+  box-shadow:0 -8px 30px rgba(0,0,0,0.35);
+}
+#adminSaveBar .asb-left{display:flex;align-items:center;gap:12px;color:#fff;}
+#adminSaveBar .asb-badge{
+  background:rgba(212,160,23,0.15);border:1px solid rgba(212,160,23,0.4);
+  color:var(--gold-light);font-size:0.68rem;font-weight:700;
+  padding:5px 12px;border-radius:20px;letter-spacing:0.5px;
+}
+#adminSaveBar .asb-count{
+  font-size:0.78rem;color:rgba(255,255,255,0.75);font-weight:600;
+}
+#adminSaveBar .asb-count b{color:var(--gold-light);font-size:0.95rem;}
+#adminSaveBar .asb-actions{display:flex;gap:10px;align-items:center;}
+#adminSaveBar .asb-discard{
+  background:none;border:1.5px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.65);
+  padding:11px 16px;border-radius:10px;font-family:"Poppins",sans-serif;font-size:0.75rem;
+  font-weight:600;cursor:pointer;transition:all .2s;
+}
+#adminSaveBar .asb-discard:hover{border-color:#fff;color:#fff;}
+#adminSaveBar .asb-save{
+  background:linear-gradient(135deg,var(--gold),#b8860b);color:#1a1a1a;border:none;
+  padding:13px 26px;border-radius:10px;font-family:"Poppins",sans-serif;
+  font-size:0.85rem;font-weight:800;cursor:pointer;transition:all .2s;
+  box-shadow:0 4px 16px rgba(212,160,23,0.4);
+  display:flex;align-items:center;gap:8px;
+}
+#adminSaveBar .asb-save:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 24px rgba(212,160,23,0.55);}
+#adminSaveBar .asb-save:disabled{opacity:0.45;cursor:not-allowed;}
+#adminSaveBar .asb-save.saving{animation:pulseSave 1s infinite;}
+@keyframes pulseSave{0%,100%{opacity:1;}50%{opacity:0.55;}}
+
+/* Aviso pequeño de guardado exitoso */
+.admin-toast{
+  position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:#10B981;color:#fff;padding:12px 22px;border-radius:30px;
+  font-size:0.8rem;font-weight:700;z-index:2100;opacity:0;pointer-events:none;
+  transition:all .3s;box-shadow:0 8px 24px rgba(0,0,0,0.25);
+}
+.admin-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.admin-toast.error{background:var(--red);}
+
+/* Bloque de configuración del Hero/Cabecera: leve resalte al pasar el mouse */
+.cfg-field{border-radius:4px;}
+
+@media(max-width:700px){
+  #adminSaveBar{padding:10px 14px;}
+  #adminSaveBar .asb-left{flex:1 1 100%;justify-content:space-between;}
+  #adminSaveBar .asb-actions{flex:1 1 100%;justify-content:stretch;}
+  #adminSaveBar .asb-save{flex:1;justify-content:center;}
+  #adminSaveBar .asb-discard{flex:0 0 auto;}
+}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VK1BYLVXPP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VK1BYLVXPP');
+</script>
 </head>
 <body>
 
-<!-- ══ NAV (reutilizado de index.html, sin carrito ni menú móvil: no aplican al editor) ══ -->
+<!-- ══ NAVBAR ══ -->
 <nav id="navbar">
+  <!-- Top bar -->
   <div class="nav-top">
-    <span class="nav-top-text">📍 Calle Luperón, Constanza · Al frente de EDENORTE</span>
+    <span class="nav-top-text editable cfg-field" contenteditable="true" data-cfg="navTopText">📍 Calle Luperón, Constanza · Al frente de EDENORTE</span>
     <div class="nav-top-contact">
       <a href="https://wa.me/18098502066" target="_blank">📲 +1 (809) 850-2066</a>
+      <a href="/cdn-cgi/l/email-protection#413528242f252031243334222e2f3235202f3b2001262c20282d6f222e2c">📧 <span class="__cf_email__" data-cfemail="add9c4c8c3c9ccddc8dfd8cec2c3ded9ccc3d7ccedcac0ccc4c183cec2c0">[email&#160;protected]</span></a>
       <a href="https://www.facebook.com/share/1DjGsE4Ppz/" target="_blank">📘 Facebook</a>
     </div>
   </div>
+  <!-- Main nav -->
   <div class="nav-main">
-    <a class="nav-logo" href="index.html">🇩🇴 Tienda <em class="accent">Perú</em></a>
+    <a class="nav-logo" href="#inicio">🇩🇴 Tienda <em class="accent">Perú</em></a>
+
+    <!-- QUICK NAV BUTTONS -->
+    <div class="quick-nav">
+      <a class="qnav-btn active" href="#inicio"><span class="qn-icon">🏠</span>Inicio</a>
+      <a class="qnav-btn" href="#categorias"><span class="qn-icon">📦</span>Categorías</a>
+      <a class="qnav-btn" href="#productos"><span class="qn-icon">🛍️</span>Productos</a>
+      <a class="qnav-btn" href="#ofertas"><span class="qn-icon">⚡</span>Ofertas</a>
+      <a class="qnav-btn" href="libros.html"><span class="qn-icon">📚</span>Libros</a>
+      <a class="qnav-btn" href="#nosotros"><span class="qn-icon">ℹ️</span>Quiénes Somos</a>
+      <a class="qnav-btn" href="#ubicacion"><span class="qn-icon">📍</span>Ubicación</a>
+      <a class="qnav-btn" href="#contacto"><span class="qn-icon">💬</span>Contacto</a>
+    </div>
+
     <div class="nav-right">
-      <span class="conn-status" id="connStatus"><span class="conn-dot"></span>Conectando…</span>
-      <span class="editor-tag">✏️ Editor Visual</span>
-      <a class="nav-back" href="index.html">← Volver a la tienda</a>
+      <button class="cart-btn" id="cartBtn">🛒 Carrito <span class="cart-count" id="cartCount">0</span></button>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
     </div>
   </div>
 </nav>
 
-<!-- ══ TEXTOS GENERALES — colección "configuracion", doc "general" ══ -->
-<section class="section" id="editorGeneral">
-  <div class="sec-head">
-    <span class="sec-eye">Editor Visual</span>
-    <h2 class="sec-title">Edita los <em>Textos Generales</em></h2>
-    <div class="sec-line"></div>
-    <p class="sec-desc">Estos textos aparecen en la barra superior y en la portada de la tienda. Haz clic para editarlos; se guardan junto con los productos al pulsar "Guardar cambios".</p>
-  </div>
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#inicio">🏠 Inicio</a></li>
+    <li><a href="#categorias">📦 Categorías</a></li>
+    <li><a href="#productos">🛍️ Productos</a></li>
+    <li><a href="#ofertas">⚡ Ofertas</a></li>
+    <li><a href="libros.html">📚 Libros</a></li>
+    <li><a href="#nosotros">ℹ️ Quiénes Somos</a></li>
+    <li><a href="#ubicacion">📍 Ubicación</a></li>
+    <li><a href="#contacto">💬 Contacto</a></li>
+  </ul>
+</div>
 
-  <div class="general-editor-card" id="generalEditorCard">
-    <div class="ge-row">
-      <label class="ge-label">📍 Dirección (barra superior)</label>
-      <div class="ge-field editable-field" contenteditable="true" data-field="direccion" spellcheck="false">Cargando…</div>
+<!-- ══ CART ══ -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head"><h3>🛒 Tu Carrito</h3><button class="cart-close" id="cartClose">✕</button></div>
+  <div class="cart-body" id="cartBody">
+    <div class="cart-empty"><span class="ei">🛍️</span>Tu carrito está vacío.<br/>¡Agrega algo increíble!</div>
+  </div>
+  <div class="cart-foot">
+    <div class="cart-subtotal"><span>Total de tu reserva</span><strong id="cartTotal">RD$ 0</strong></div>
+    <button class="btn-wa" id="btnWa">📲 Reservar por WhatsApp</button>
+    <button class="btn-mail" id="btnMail">📧 Reservar por Email</button>
+    <button class="btn-clear" id="btnClear">🗑 Vaciar carrito</button>
+    <p class="reserve-note">⚠️ No hacemos domicilio. Puedes reservar tu producto y retirarlo en tienda: Calle Luperón, Constanza, frente a EDENORTE.</p>
+  </div>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero spa-view" id="inicio" data-view="inicio" style="padding-top:107px;">
+  <div class="hero-bg img-editable cfg-field" id="heroBg" data-cfg-img="heroBg"></div>
+  <div class="hero-gradient"></div>
+  <div class="hero-content">
+    <div class="hero-badge editable cfg-field" contenteditable="true" data-cfg="heroBadge">📍 Constanza, República Dominicana · El Arte de los Andes</div>
+    <h1 class="editable cfg-field" contenteditable="true" data-cfg="heroTitle" id="heroTitleEl">Accesorios,<br/>Moda &<em> Mucho Más</em></h1>
+    <p class="hero-sub editable cfg-field" contenteditable="true" data-cfg="heroSub">Joyería personalizada, relojes, bolsos, moda y tecnología básica. Todo en Constanza al mejor precio. Reserva tu producto y retíralo en tienda.</p>
+    <div class="hero-ctas">
+      <a href="#productos" class="hero-btn-main">🛍️ Ver Catálogo Completo</a>
+      <a href="#ofertas" class="hero-btn-sec">⚡ Ver Ofertas del Día</a>
     </div>
-    <div class="ge-row">
-      <label class="ge-label">📲 Teléfono (barra superior)</label>
-      <div class="ge-field editable-field" contenteditable="true" data-field="telefono" spellcheck="false">Cargando…</div>
-    </div>
-    <div class="ge-row">
-      <label class="ge-label">🏷️ Eslogan de portada (badge)</label>
-      <div class="ge-field editable-field" contenteditable="true" data-field="heroBadge" spellcheck="false">Cargando…</div>
-    </div>
-    <div class="ge-row">
-      <label class="ge-label">🖋️ Título principal de portada</label>
-      <div class="ge-field ge-field-title editable-field" contenteditable="true" data-field="heroTitleMain" spellcheck="false">Cargando…</div>
-    </div>
-    <div class="ge-row">
-      <label class="ge-label">🖋️ Título principal — parte destacada</label>
-      <div class="ge-field ge-field-title ge-field-accent editable-field" contenteditable="true" data-field="heroTitleAccent" spellcheck="false">Cargando…</div>
-    </div>
-    <div class="ge-row">
-      <label class="ge-label">📝 Subtítulo de portada</label>
-      <div class="ge-field editable-field" contenteditable="true" data-field="heroSub" spellcheck="false">Cargando…</div>
-    </div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-stat"><span class="sn">500+</span><span class="sl">Clientes felices</span></div>
+    <div class="hero-stat"><span class="sn">38+</span><span class="sl">Productos</span></div>
+    <div class="hero-stat"><span class="sn">100%</span><span class="sl">Personalizable</span></div>
+    <div class="hero-stat"><span class="sn">0 🚗</span><span class="sl">Retiro en tienda</span></div>
   </div>
 </section>
 
-<!-- ══ PRODUCTOS — EDICIÓN DIRECTA SOBRE EL DISEÑO ══ -->
-<section class="section" id="editor">
+<!-- INFO BAR -->
+<div class="info-bar spa-view" data-view="inicio">
+  <div class="info-track">
+    <span class="info-item">Reserva tu producto por WhatsApp</span>
+    <span class="info-item">Retiro en tienda · Calle Luperón Constanza</span>
+    <span class="info-item">Joyería personalizada con tu foto</span>
+    <span class="info-item">Relojes & sets de regalo</span>
+    <span class="info-item">Gorras · Sombreros · Gafas</span>
+    <span class="info-item">Bolsos deportivos & pequeños</span>
+    <span class="info-item">Tecnología básica</span>
+    <span class="info-item">Reserva tu producto por WhatsApp</span>
+    <span class="info-item">Retiro en tienda · Calle Luperón Constanza</span>
+    <span class="info-item">Joyería personalizada con tu foto</span>
+    <span class="info-item">Relojes & sets de regalo</span>
+    <span class="info-item">Gorras · Sombreros · Gafas</span>
+    <span class="info-item">Bolsos deportivos & pequeños</span>
+    <span class="info-item">Tecnología básica</span>
+  </div>
+</div>
+
+<!-- ══ CATEGORÍAS ══ -->
+<section class="section spa-view" id="categorias" data-view="categorias">
   <div class="sec-head">
-    <span class="sec-eye">Editor Visual</span>
-    <h2 class="sec-title">Edita tus <em>Productos</em></h2>
+    <span class="sec-eye">Explora</span>
+    <h2 class="sec-title">Nuestras <em>Categorías</em></h2>
     <div class="sec-line"></div>
-    <p class="sec-desc">Haz clic directamente sobre el nombre, la descripción o el precio de cualquier producto para editarlo. Los cambios se guardan solo cuando pulsas "Guardar cambios".</p>
+    <p class="sec-desc">Haz clic en una categoría para filtrar los productos.</p>
   </div>
+  <div class="cat-grid" id="catGrid"></div>
+</section>
 
+<!-- ══ PRODUCTOS ══ -->
+<section class="section section-alt spa-view" id="productos" data-view="productos">
+  <div class="sec-head">
+    <span class="sec-eye">Catálogo Completo</span>
+    <h2 class="sec-title">Todos los <em>Productos</em></h2>
+    <div class="sec-line"></div>
+  </div>
   <div class="filter-wrap">
-    <span class="prod-count-label" id="prodCountLabel">Cargando productos…</span>
+    <div class="filter-pills" id="filterPills"></div>
+    <span class="prod-count-label" id="prodCountLabel"></span>
   </div>
-
-  <!-- Estado de carga (skeleton simple) -->
-  <div id="loadingState">Cargando productos desde Firestore…</div>
-
-  <!-- Estado vacío -->
-  <div id="emptyState">
-    <span style="font-size:2.4rem;display:block;margin-bottom:10px;">📦</span>
-    No hay productos en la colección "productos" todavía.
+  <!-- Filtro de precio -->
+  <div class="filter-wrap" style="margin-top:-18px;margin-bottom:28px;">
+    <div class="price-filter-row">
+      <label>💰 Precio:</label>
+      <input class="price-input" type="number" id="priceMin" placeholder="Mín RD$" min="0"/>
+      <span class="price-filter-sep">—</span>
+      <input class="price-input" type="number" id="priceMax" placeholder="Máx RD$" min="0"/>
+      <button class="btn-price-filter" id="btnPriceFilter">Filtrar</button>
+      <button class="btn-price-reset"  id="btnPriceReset">✕ Limpiar</button>
+    </div>
   </div>
-
-  <!-- Grid de productos: editor-visual.js inyecta aquí una tarjeta
-       .product-card por producto, con los campos Nombre, Descripción
-       y Precio marcados como contenteditable="true". -->
   <div class="products-grid" id="productsGrid"></div>
 </section>
 
-<!-- ══ BARRA FLOTANTE DE GUARDADO (nuevo, propio del editor) ══ -->
-<div class="editor-floatbar" id="editorFloatbar">
-  <div class="efb-stat">
-    <span class="efb-stat-num" id="statLoaded">0</span>
-    <span class="efb-stat-label">Productos cargados</span>
+<!-- ══ OFERTAS ══ -->
+<div class="deals-section spa-view" id="ofertas" data-view="ofertas">
+  <div class="deals-head">
+    <div class="deals-label">🔥 Compra impulsiva</div>
+    <h2 class="deals-title">⚡ Detallitos desde <em>RD$ 50</em></h2>
+    <p class="deals-sub">Regalos rápidos, precios accesibles. Reserva por WhatsApp y retira en tienda.</p>
   </div>
-  <div class="efb-divider"></div>
-  <div class="efb-stat">
-    <span class="efb-stat-num" id="statPending">0</span>
-    <span class="efb-stat-label">Cambios pendientes</span>
-  </div>
-  <div class="efb-spacer"></div>
-  <button class="efb-save-btn" id="btnSaveChanges" disabled>💾 Guardar cambios</button>
+  <div class="deals-grid" id="dealsGrid"></div>
 </div>
 
-<!-- TOAST (reutilizado del patrón de admin.js) -->
+<!-- ══ NOSOTROS ══ -->
+<div class="about-split spa-view" id="nosotros" data-view="nosotros">
+  <div class="about-visual">
+    <img id="aboutImg" class="img-editable cfg-field" data-cfg-img="aboutImg" alt="Tienda Perú"/>
+    <div class="about-visual-overlay"></div>
+  </div>
+  <div class="about-body">
+    <p class="about-eye">Quiénes somos</p>
+    <h2 class="about-ttl editable cfg-field" contenteditable="true" data-cfg="aboutTitle">El Arte de <em>los Andes</em><br/>en Constanza</h2>
+    <p class="about-p editable cfg-field" contenteditable="true" data-cfg="aboutP1">Somos Tienda Perú, ubicados en Constanza, República Dominicana. Ofrecemos una amplia variedad de accesorios de moda, joyería personalizada, relojes, bolsos, gorras, gafas y tecnología básica.</p>
+    <p class="about-p editable cfg-field" contenteditable="true" data-cfg="aboutP2">Llevamos años siendo el destino de confianza de la comunidad de Constanza para regalo y moda accesible.</p>
+    <div class="about-perks">
+      <div class="perk"><span class="perk-i">💎</span><div><strong>Joyería Premium</strong><span>Personalizada con tu foto</span></div></div>
+      <div class="perk"><span class="perk-i">📲</span><div><strong>Reserva fácil</strong><span>Por WhatsApp al instante</span></div></div>
+      <div class="perk"><span class="perk-i">🏪</span><div><strong>Retiro en tienda</strong><span>Calle Luperón, Constanza</span></div></div>
+      <div class="perk"><span class="perk-i">💰</span><div><strong>Precios justos</strong><span>Calidad al mejor costo</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ UBICACIÓN ══ -->
+<div class="map-wrap spa-view" id="ubicacion" data-view="ubicacion">
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.5!2d-70.7489!3d18.9077!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8eb1d3b1b1b1b1b1%3A0x1!2sCalle%20Luper%C3%B3n%2C%20Constanza!5e0!3m2!1ses!2sdo!4v1" allowfullscreen loading="lazy"></iframe>
+</div>
+
+<!-- ══ CONTACTO ══ -->
+<section class="section contact-section spa-view" id="contacto" data-view="contacto">
+  <div class="sec-head">
+    <span class="sec-eye">Escríbenos</span>
+    <h2 class="sec-title">¿Quieres <em>reservar</em> o tienes dudas?</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="contact-wrap">
+    <div class="contact-box">
+      <h3>📍 Encuéntranos</h3>
+      <div class="ci-row"><span class="ci-icon">📍</span><div><strong>Dirección</strong><p class="editable cfg-field" contenteditable="true" data-cfg="contactAddress">Calle Luperón, Constanza<br/>Al frente de EDENORTE, RD</p></div></div>
+      <div class="ci-row"><span class="ci-icon">📲</span><div><strong>WhatsApp</strong><p class="editable cfg-field" contenteditable="true" data-cfg="contactWhatsapp">+1 (809) 850-2066<br/>Reservas y consultas</p></div></div>
+      <div class="ci-row"><span class="ci-icon">📧</span><div><strong>Email</strong><p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5d29343833393c2d382f283e32332e293c33273c1d3a303c3431733e3230">[email&#160;protected]</a></p></div></div>
+      <div class="ci-row"><span class="ci-icon">📘</span><div><strong>Facebook</strong><p>Tienda Perú — El Arte de los Andes</p></div></div>
+      <div class="ci-row"><span class="ci-icon">⚠️</span><div><strong>Importante</strong><p>No hacemos domicilio. Los productos se retiran en nuestra tienda física.</p></div></div>
+    </div>
+    <div class="contact-box">
+      <h3>✉️ Envíanos un mensaje</h3>
+      <form class="cf" id="contactForm">
+        <input type="text" placeholder="Tu nombre" required/>
+        <input type="text" placeholder="Tu WhatsApp o teléfono" required/>
+        <input type="text" placeholder="¿Qué producto te interesa?"/>
+        <textarea rows="4" placeholder="Cuéntanos qué necesitas o qué deseas reservar..." required></textarea>
+        <button type="submit" class="cf-submit">Enviar mensaje ✉️</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ LITERATURA CONSTANCERA ══ -->
+<style>
+/* ── Literatura Constancera — estilos auto-contenidos ── */
+#literatura{
+  padding:90px 50px;
+  background:linear-gradient(160deg,#0f0f0f 0%,#1a1a1a 60%,#0f0f0f 100%);
+  position:relative;
+  overflow:hidden;
+}
+#literatura::before{
+  content:"";position:absolute;top:-20%;right:-5%;
+  width:520px;height:520px;
+  background:radial-gradient(circle,rgba(212,160,23,0.08) 0%,transparent 65%);
+  pointer-events:none;
+}
+#literatura::after{
+  content:"";position:absolute;bottom:-15%;left:-5%;
+  width:380px;height:380px;
+  background:radial-gradient(circle,rgba(200,37,26,0.07) 0%,transparent 65%);
+  pointer-events:none;
+}
+
+/* — Encabezado de sección — */
+.lit-head{text-align:center;margin-bottom:56px;position:relative;z-index:1;}
+.lit-eye{
+  font-size:0.63rem;letter-spacing:4px;text-transform:uppercase;
+  color:var(--gold);font-weight:700;display:block;margin-bottom:10px;
+}
+.lit-title{
+  font-family:"Playfair Display",serif;
+  font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;
+  color:#fff;line-height:1.15;
+}
+.lit-title em{font-style:italic;color:var(--gold);}
+.lit-line{
+  width:48px;height:3px;
+  background:linear-gradient(90deg,var(--red),var(--gold));
+  margin:14px auto 0;border-radius:2px;
+}
+.lit-subtitle{
+  font-size:0.87rem;color:rgba(255,255,255,0.45);
+  margin-top:12px;max-width:500px;margin-left:auto;margin-right:auto;
+  line-height:1.65;
+}
+
+/* — Autor — */
+.lit-author-card{
+  display:flex;align-items:flex-start;gap:32px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(212,160,23,0.18);
+  border-radius:var(--radius);padding:34px 36px;
+  max-width:900px;margin:0 auto 64px;
+  position:relative;z-index:1;
+}
+.lit-author-avatar{
+  flex-shrink:0;width:80px;height:80px;
+  background:linear-gradient(135deg,var(--red),var(--gold));
+  border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:2rem;
+  box-shadow:0 4px 18px rgba(212,160,23,0.25);
+}
+.lit-author-body{}
+.lit-author-label{
+  font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold);font-weight:700;margin-bottom:6px;display:block;
+}
+.lit-author-name{
+  font-family:"Playfair Display",serif;
+  font-size:1.35rem;font-weight:700;color:#fff;margin-bottom:12px;
+}
+.lit-author-bio{
+  font-size:0.84rem;color:rgba(255,255,255,0.55);
+  line-height:1.75;
+}
+.lit-author-tags{
+  display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;
+}
+.lit-tag{
+  font-size:0.62rem;letter-spacing:1px;text-transform:uppercase;
+  font-weight:600;padding:4px 12px;border-radius:20px;
+  background:rgba(212,160,23,0.12);
+  border:1px solid rgba(212,160,23,0.28);
+  color:var(--gold-light);
+}
+
+/* — Grid de libros — */
+.lit-books-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+  max-width:1100px;margin:0 auto;
+  position:relative;z-index:1;
+}
+.lit-book-card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:var(--radius);
+  overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;
+}
+.lit-book-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 16px 40px rgba(0,0,0,0.35);
+  border-color:rgba(212,160,23,0.3);
+}
+.lit-book-img-wrap{
+  position:relative;overflow:hidden;
+  aspect-ratio:2/3;background:#111;
+}
+.lit-book-img-wrap img{
+  width:100%;height:100%;object-fit:cover;
+  display:block;
+  transition:transform 0.45s;
+  filter:brightness(0.92);
+}
+.lit-book-card:hover .lit-book-img-wrap img{
+  transform:scale(1.05);filter:brightness(1);
+}
+.lit-book-badge{
+  position:absolute;top:12px;left:12px;
+  background:linear-gradient(135deg,var(--red),var(--red-dark));
+  color:#fff;font-size:0.56rem;font-weight:700;
+  padding:4px 10px;border-radius:20px;
+  text-transform:uppercase;letter-spacing:1px;
+  box-shadow:0 2px 8px rgba(200,37,26,0.4);
+}
+.lit-book-body{padding:20px;flex:1;display:flex;flex-direction:column;}
+.lit-book-series{
+  font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--gold);font-weight:700;margin-bottom:8px;
+}
+.lit-book-title{
+  font-family:"Playfair Display",serif;
+  font-size:1rem;font-weight:700;color:#fff;
+  line-height:1.3;margin-bottom:12px;
+}
+.lit-book-divider{
+  width:32px;height:2px;
+  background:linear-gradient(90deg,var(--red),var(--gold));
+  border-radius:2px;margin-bottom:12px;
+}
+.lit-book-synopsis{
+  font-size:0.77rem;color:rgba(255,255,255,0.48);
+  line-height:1.65;flex:1;
+}
+.lit-book-footer{
+  margin-top:18px;padding-top:16px;
+  border-top:1px solid rgba(255,255,255,0.06);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.lit-book-author-mini{
+  font-size:0.65rem;color:rgba(255,255,255,0.35);
+  font-style:italic;
+}
+.lit-book-wa{
+  background:linear-gradient(135deg,#25D366,#1da851);
+  color:#fff;border:none;padding:7px 14px;border-radius:20px;
+  font-family:"Poppins",sans-serif;font-size:0.67rem;font-weight:700;
+  cursor:pointer;transition:all 0.2s;
+  display:flex;align-items:center;gap:5px;
+  box-shadow:0 3px 10px rgba(37,211,102,0.25);
+}
+.lit-book-wa:hover{transform:scale(1.05);box-shadow:0 5px 16px rgba(37,211,102,0.4);}
+
+/* — Responsive — */
+@media(max-width:900px){
+  #literatura{padding:60px 20px;}
+  .lit-author-card{flex-direction:column;align-items:center;text-align:center;padding:26px 20px;}
+  .lit-author-tags{justify-content:center;}
+  .lit-books-grid{grid-template-columns:1fr;}
+  .lit-book-img-wrap{aspect-ratio:3/2;}
+}
+@media(min-width:600px) and (max-width:900px){
+  .lit-books-grid{grid-template-columns:repeat(2,1fr);}
+  .lit-book-img-wrap{aspect-ratio:2/3;}
+}
+</style>
+
+<section id="literatura" class="spa-view" data-view="contacto">
+
+  <!-- Encabezado -->
+  <div class="lit-head">
+    <span class="lit-eye">Colección Especial</span>
+    <h2 class="lit-title">Literatura <em>Constancera</em></h2>
+    <div class="lit-line"></div>
+    <p class="lit-subtitle">Obras literarias que narran la realidad social, cultural y espiritual de nuestra República Dominicana.</p>
+  </div>
+
+  <!-- Biografía del autor -->
+  <div class="lit-author-card">
+    <div class="lit-author-avatar">✍️</div>
+    <div class="lit-author-body">
+      <span class="lit-author-label">Sobre el Autor</span>
+      <div class="lit-author-name">Johnny Martínez Quispe</div>
+      <p class="lit-author-bio">
+        Nacido el 02 de marzo de 1969 en Huancayo, Perú. Con estudios en Perú, Ecuador y República Dominicana, es Licenciado en Filosofía y Letras (UASD) y posee una Maestría en Gestión Académica (UCATECI). Se ha destacado como un valioso recurso educativo y cultural en el municipio de Constanza, desempeñándose como maestro de Lengua Española, fundador del grupo musical "Caribe Andino" y de "Constanza Cultural", además de productor de televisión y empresario.
+      </p>
+      <div class="lit-author-tags">
+        <span class="lit-tag">📚 Escritor</span>
+        <span class="lit-tag">🎓 Filosofía & Letras</span>
+        <span class="lit-tag">🎵 Caribe Andino</span>
+        <span class="lit-tag">🏛️ Constanza Cultural</span>
+        <span class="lit-tag">📺 Productor TV</span>
+        <span class="lit-tag">🇵🇪 🇩🇴 Perú–RD</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Catálogo de libros (renderizado dinámicamente desde Firestore por editor-visual.js) -->
+  <div class="lit-books-grid" id="librosGrid"></div>
+</section>
+<!-- ══ /LITERATURA CONSTANCERA ══ -->
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-grid">
+    <div class="f-brand">
+      <span class="logo">🇩🇴 Tienda <em>Perú</em></span>
+      <p>El Arte de los Andes · Accesorios, Moda & Más. Calle Luperón, Constanza, República Dominicana. Reserva tu producto y retíralo en tienda.</p>
+      <div class="f-socials">
+        <a class="f-social" href="https://wa.me/18098502066" target="_blank">📲</a>
+        <a class="f-social" href="https://www.facebook.com/share/1DjGsE4Ppz/" target="_blank">📘</a>
+        <a class="f-social" href="/cdn-cgi/l/email-protection#5d29343833393c2d382f283e32332e293c33273c1d3a303c3431733e3230">📧</a>
+      </div>
+    </div>
+    <div class="f-col">
+      <h4>Categorías</h4>
+      <ul>
+        <li><a href="#categorias">💎 Joyería & Bisutería</a></li>
+        <li><a href="#categorias">⌚ Relojes</a></li>
+        <li><a href="#categorias">👒 Moda & Accesorios</a></li>
+        <li><a href="#categorias">👜 Bolsos</a></li>
+        <li><a href="#categorias">🔌 Tecnología</a></li>
+        <li><a href="#ofertas">⚡ Ofertas del Día</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4>Información</h4>
+      <ul>
+        <li><a href="#nosotros">ℹ️ Quiénes somos</a></li>
+        <li><a href="#ubicacion">📍 Ubicación</a></li>
+        <li><a href="#contacto">💬 Contacto</a></li>
+        <li><a href="https://wa.me/18098502066">📲 Reservar por WhatsApp</a></li>
+        <li><a href="https://www.facebook.com/share/1DjGsE4Ppz/" target="_blank">📘 Síguenos en Facebook</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="f-bottom">
+    <p>© 2026 Tienda Perú · El Arte de los Andes · Constanza, República Dominicana 🇩🇴</p>
+    <p>📲 +1 (809) 850-2066 · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8cf8e5e9e2e8edfce9fef9efe3e2fff8ede2f6edccebe1ede5e0a2efe3e1">[email&#160;protected]</a></p>
+  </div>
+</footer>
+
 <div class="toast" id="toast"></div>
 
-<!--
-  editor-visual.js (paso 3) se encargará de:
-   - Importar { db } desde ./firebase-config.js
-   - onSnapshot(collection(db,"productos")) para cargar y escuchar productos
-   - Renderizar cada producto reutilizando la estructura .product-card
-   - Escuchar "input"/"blur" en los campos contenteditable para detectar cambios
-   - Actualizar los contadores de la barra flotante
-   - Al pulsar "Guardar cambios", hacer updateDoc() solo de los productos
-     y campos modificados
--->
+
+<!-- ══ BARRA DE ADMINISTRACIÓN — GUARDADO FLOTANTE ══ -->
+<div id="adminSaveBar">
+  <div class="asb-left">
+    <span class="asb-badge">🛠️ Editor Visual</span>
+    <span class="asb-count">Cambios pendientes: <b id="asbCount">0</b></span>
+  </div>
+  <div class="asb-actions">
+    <button class="asb-discard" id="asbDiscard" title="Descarta todos los cambios locales sin guardar">↩️ Descartar cambios</button>
+    <button class="asb-save" id="asbSave" disabled>💾 Guardar Cambios en Firebase</button>
+  </div>
+</div>
+
+<!-- Input oculto para subir imágenes -->
+<input type="file" id="imgUploadInput" accept="image/*" style="display:none"/>
+
+<div class="admin-toast" id="adminToast"></div>
+
 <script type="module" src="editor-visual.js"></script>
 </body>
 </html>

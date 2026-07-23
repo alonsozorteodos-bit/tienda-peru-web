@@ -2,14 +2,24 @@
 //  PANEL ADMIN · Tienda Perú
 //  Autenticación + CRUD + Subida de imágenes a Firebase Storage
 // ════════════════════════════════════════════════════════════
-import {
-  db, auth,
-  collection, doc, getDocs, getDoc,
-  addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy,
-  signInWithEmailAndPassword, signOut, onAuthStateChanged,
-  storageRef, uploadBytes, getDownloadURL
-} from "./firebase-config.js";
+import { db, auth, storage } from "./firebase-config.js";
 
+import { 
+  signInWithEmailAndPassword, 
+  signOut, 
+  onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+import { 
+  collection, doc, getDocs, getDoc, 
+  addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy 
+} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+import { 
+  ref as storageRef, 
+  uploadBytes, 
+  getDownloadURL 
+} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js";
 // ── ESTADO ──
 let PRODUCTS = [];
 let CATS = [];

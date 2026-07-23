@@ -991,7 +991,11 @@ function filterBycat(cat) {
 }
 
 // ── PRODUCTS ──
-const PRODUCTS = [
+// NOTA: este array queda como catálogo de arranque/fallback. En cuanto
+// Firestore responda (ver <script type="module"> al final del archivo),
+// PRODUCTS se reemplaza con los productos reales de la colección
+// "productos" y se vuelve a renderizar automáticamente.
+let PRODUCTS = [
 
   // ════════════════════════════════
   // 💎 JOYERÍA — Personalizadas (consulta)
@@ -1192,27 +1196,36 @@ function buildPriceBlock(p) {
     </button>`;
 }
 
+// Resuelve la imagen de un producto: soporta tanto las claves cortas del
+// catálogo original (p.img="p1" → IMGS.p1) como URLs/paths completos que
+// guarda el editor visual o el panel admin directamente en Firestore.
+function resolveImg(p) {
+  return IMGS[p.img] || p.img || IMGS.local || "";
+}
+
 function renderProducts() {
   document.getElementById("productsGrid").innerHTML = PRODUCTS.map(p => {
     const ep = effectivePrice(p);
+    const badges = p.badges || [];
+    const name = p.name || "";
     // Quick overlay: consulta en price===0; carrito normal en los demás
     const quickInner = p.price === 0
-      ? `<button class="btn-consult" data-wa-name="${p.name.replace(/"/g,"&quot;")}">📲 Consultar por WhatsApp</button>`
-      : `<button class="prod-quick-btn" data-id="${p.id}" data-name="${p.name}" data-price="${(p.priceType==="range"||(p.priceMin!=null&&p.priceMax!=null))?(p.priceMin??p.minPrice):p.price}" data-img="${p.img}">🛒 Agregar al carrito</button>`;
+      ? `<button class="btn-consult" data-wa-name="${name.replace(/"/g,"&quot;")}">📲 Consultar por WhatsApp</button>`
+      : `<button class="prod-quick-btn" data-id="${p.id}" data-name="${name}" data-price="${(p.priceType==="range"||(p.priceMin!=null&&p.priceMax!=null))?(p.priceMin??p.minPrice):p.price}" data-img="${p.img||""}">🛒 Agregar al carrito</button>`;
     return `
-    <div class="product-card" data-cat="${p.cat}" data-id="${p.id}" data-price="${ep}">
+    <div class="product-card" data-cat="${p.cat||""}" data-id="${p.id}" data-price="${ep}">
       <div class="product-img-wrap">
-        <img src="${IMGS[p.img]}" alt="${p.name}" loading="lazy"/>
+        <img src="${resolveImg(p)}" alt="${name}" loading="lazy"/>
         <div class="product-badges">
-          ${p.badges.map(b => `<span class="badge ${BADGE_MAP[b][0]}">${BADGE_MAP[b][1]}</span>`).join("")}
+          ${badges.map(b => BADGE_MAP[b] ? `<span class="badge ${BADGE_MAP[b][0]}">${BADGE_MAP[b][1]}</span>` : "").join("")}
         </div>
         <button class="prod-wish" title="Guardar">🤍</button>
         <div class="prod-quick">${quickInner}</div>
       </div>
       <div class="product-info">
-        <div class="product-cat">${p.cat}</div>
-        <div class="product-name">${p.name}</div>
-        <div class="product-desc">${p.desc}</div>
+        <div class="product-cat">${p.cat || "sin categoría"}</div>
+        <div class="product-name">${name}</div>
+        <div class="product-desc">${p.desc || ""}</div>
         <div class="product-footer">
           ${buildPriceBlock(p)}
         </div>
@@ -1220,7 +1233,7 @@ function renderProducts() {
     </div>`;
   }).join("");
 
-  document.getElementById("prodCountLabel").textContent = `${PRODUCTS.length} productos`;
+  document.getElementById("prodCountLabel").textContent = `${PRODUCTS.length} producto${PRODUCTS.length !== 1 ? "s" : ""}`;
   attachCardEvents();
   animateCards();
 }
@@ -1244,7 +1257,7 @@ function renderDeals() {
   `).join("");
   document.querySelectorAll(".deal-add").forEach(btn => {
     btn.addEventListener("click", () => {
-      addToCart({ id:parseInt(btn.dataset.id), name:btn.dataset.name, price:parseFloat(btn.dataset.price), img:btn.dataset.img });
+      addToCart({ id:btn.dataset.id, name:btn.dataset.name, price:parseFloat(btn.dataset.price), img:btn.dataset.img });
       btn.textContent = "✓ Listo!";
       btn.style.background = "#10B981";
       setTimeout(() => { btn.textContent = "+ Reservar"; btn.style.background = ""; }, 1600);
@@ -1256,7 +1269,7 @@ function attachCardEvents() {
   // Reservar (precio fijo y range)
   document.querySelectorAll(".add-btn, .prod-quick-btn").forEach(btn => {
     btn.addEventListener("click", () => {
-      addToCart({ id:parseInt(btn.dataset.id), name:btn.dataset.name, price:parseFloat(btn.dataset.price), img:btn.dataset.img });
+      addToCart({ id:btn.dataset.id, name:btn.dataset.name, price:parseFloat(btn.dataset.price), img:btn.dataset.img });
       const isQuick = btn.classList.contains("prod-quick-btn");
       if (!isQuick) {
         btn.innerHTML = "✓ Reservado";
@@ -1308,7 +1321,7 @@ function renderCart() {
   body.innerHTML = cart.map((item, idx) => {
     t += item.price * item.qty; q += item.qty;
     return `<div class="cart-item">
-      <img src="${IMGS[item.img]}" alt="${item.name}"/>
+      <img src="${IMGS[item.img] || item.img || IMGS.local}" alt="${item.name}"/>
       <div class="cart-item-info">
         <div class="cart-item-name">${item.name}</div>
         <div class="cart-item-price">RD$ ${(item.price * item.qty).toLocaleString()}</div>
@@ -1515,6 +1528,36 @@ document.getElementById("btnPriceReset").addEventListener("click", () => {
     });
   }, err => {
     console.error("Error cargando configuración general desde Firestore:", err);
+  });
+</script>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PRODUCTOS · lectura en vivo desde Firestore (colección "productos")
+     Reemplaza el catálogo hardcodeado en cuanto llegan datos reales, y
+     vuelve a pintar el grid en cada cambio (alta, edición o borrado)
+     hecho desde editor-visual.html o el panel admin.
+     Si Firestore no responde o la colección está vacía, se conserva
+     el catálogo de arranque que ya está en el HTML (no rompe nada).
+     ══════════════════════════════════════════════════════════════ -->
+<script type="module">
+  import { db } from "./firebase-config.js";
+  import { collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+  const productsQuery = query(collection(db, "productos"), orderBy("name", "asc"));
+
+  onSnapshot(productsQuery, snap => {
+    if (snap.empty) return; // colección vacía todavía: se conserva el catálogo de arranque
+
+    // El id del documento de Firestore reemplaza el id numérico hardcodeado.
+    PRODUCTS = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+    renderProducts();
+    // Mantiene el filtro de categoría/precio que el usuario tuviera activo
+    if (typeof getCurrentCat === "function" && typeof applyFilter === "function") {
+      applyFilter(getCurrentCat());
+    }
+  }, err => {
+    console.error("Error cargando productos desde Firestore:", err);
   });
 </script>
 </body>

@@ -1483,41 +1483,6 @@ document.getElementById("btnPriceReset").addEventListener("click", () => {
     if (e.key === "Enter") applyFilter(getCurrentCat());
   });
 });
-// ── CARGAR TIENDA DESDE FIREBASE ──
-  import { db } from "./firebase-config.js";
-  import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-
-  async function cargarTiendaEnVivo() {
-    try {
-      const catSnapshot = await getDocs(collection(db, "categorias"));
-      const contenedorCats = document.getElementById("categoriasContainer");
-      if (contenedorCats && !catSnapshot.empty) {
-        contenedorCats.innerHTML = catSnapshot.docs.map(doc => {
-          const c = doc.data();
-          return `<div class="cat-card"><span>${c.icon || "📦"}</span> <h3>${c.name}</h3></div>`;
-        }).join("");
-      }
-
-      const prodSnapshot = await getDocs(collection(db, "productos"));
-      const contenedorProds = document.getElementById("productosContainer");
-      if (contenedorProds && !prodSnapshot.empty) {
-        contenedorProds.innerHTML = prodSnapshot.docs.map(doc => {
-          const p = doc.data();
-          return `
-            <div class="product-card">
-              <img src="${p.img || ''}" alt="${p.name}">
-              <h3>${p.name}</h3>
-              <p>${p.desc || ""}</p>
-              <span class="price">RD$ ${(p.price || 0).toLocaleString()}</span>
-            </div>`;
-        }).join("");
-      }
-    } catch (error) {
-      console.error("Error al cargar la tienda:", error);
-    }
-  }
-
-  window.addEventListener("DOMContentLoaded", cargarTiendaEnVivo);
 </script>
 </body>
 </html>

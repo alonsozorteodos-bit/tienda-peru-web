@@ -2,24 +2,14 @@
 //  PANEL ADMIN · Tienda Perú
 //  Autenticación + CRUD + Subida de imágenes a Firebase Storage
 // ════════════════════════════════════════════════════════════
-import { db, auth, storage } from "./firebase-config.js";
+import {
+  db, auth,
+  collection, doc, getDocs, getDoc,
+  addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy,
+  signInWithEmailAndPassword, signOut, onAuthStateChanged,
+  storageRef, uploadBytes, getDownloadURL
+} from "./firebase-config.js";
 
-import { 
-  signInWithEmailAndPassword, 
-  signOut, 
-  onAuthStateChanged 
-} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-
-import { 
-  collection, doc, getDocs, getDoc, 
-  addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy 
-} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-
-import { 
-  ref as storageRef, 
-  uploadBytes, 
-  getDownloadURL 
-} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js";
 // ── ESTADO ──
 let PRODUCTS = [];
 let CATS = [];
@@ -203,7 +193,7 @@ function openProductModal(id) {
     <div class="form-group">
       <label>Imagen del producto</label>
       <div class="upload-area" id="uploadArea">
-        ${p && p.img ? `<img src="${p.img}" alt=""/>` : `<span class="upload-icon">📷</span><div class="upload-text">Haz clic para subir una imagen</div><div class="upload-hint">JPG, PNG · máx 20MB</div>`}
+        ${p && p.img ? `<img src="${p.img}" alt=""/>` : `<span class="upload-icon">📷</span><div class="upload-text">Haz clic para subir una imagen</div><div class="upload-hint">JPG, PNG · máx 2MB</div>`}
       </div>
       <input type="file" id="imgFile" accept="image/*" style="display:none;"/>
       <div class="upload-progress" id="uploadProgress"><div class="upload-progress-bar" id="uploadBar"></div></div>
@@ -276,11 +266,12 @@ function openProductModal(id) {
     $("priceRangeRow").style.display = v === "range" ? "grid" : "none";
   }
   priceTypeSel.addEventListener("change", togglePriceRows);
+  // Inicializa estado correcto
   if (p && p.priceType === "range") priceTypeSel.value = "range";
   if (p && p.price === 0) priceTypeSel.value = "consult";
   togglePriceRows();
 
-  // Upload de imagen (Límite 20 MB)
+  // Upload de imagen
   const uploadArea = $("uploadArea");
   const imgFile = $("imgFile");
   let uploadedUrl = p ? p.img : "";
@@ -289,7 +280,7 @@ function openProductModal(id) {
   imgFile.addEventListener("change", async e => {
     const file = e.target.files[0];
     if (!file) return;
-    if (file.size > 20 * 1024 * 1024) { showToast("La imagen pesa más de 20MB", "error"); return; }
+    if (file.size > 2 * 1024 * 1024) { showToast("La imagen pesa más de 2MB", "error"); return; }
     try {
       $("uploadProgress").classList.add("show");
       $("uploadBar").style.width = "30%";
@@ -403,14 +394,14 @@ function openCatModal(id) {
     <button class="btn-save" id="btnSaveCat">${c?"Guardar cambios":"Crear categoría"}</button>
   `;
 
-  // Upload (Límite 20 MB)
+  // Upload
   const uploadArea = $("uploadArea");
   const imgFile = $("imgFile");
   uploadArea.addEventListener("click", () => imgFile.click());
   imgFile.addEventListener("change", async e => {
     const file = e.target.files[0];
     if (!file) return;
-    if (file.size > 20 * 1024 * 1024) { showToast("La imagen pesa más de 20MB", "error"); return; }
+    if (file.size > 2 * 1024 * 1024) { showToast("La imagen pesa más de 2MB", "error"); return; }
     try {
       $("uploadProgress").classList.add("show");
       $("uploadBar").style.width = "30%";
@@ -453,6 +444,7 @@ async function saveCat(id) {
       await updateDoc(doc(db, "categorias", id), data);
       showToast("Categoría actualizada", "success");
     } else {
+      // Verifica que no exista
       const existing = await getDoc(doc(db, "categorias", slug));
       if (existing.exists()) { showToast("Ya existe una categoría con ese ID", "error"); $("btnSaveCat").disabled = false; return; }
       await setDoc(doc(db, "categorias", slug), data);
@@ -509,14 +501,14 @@ function openDealModal(id) {
     <button class="btn-save" id="btnSaveDeal">${d?"Guardar cambios":"Crear oferta"}</button>
   `;
 
-  // Upload (Límite 20 MB)
+  // Upload
   const uploadArea = $("uploadArea");
   const imgFile = $("imgFile");
   uploadArea.addEventListener("click", () => imgFile.click());
   imgFile.addEventListener("change", async e => {
     const file = e.target.files[0];
     if (!file) return;
-    if (file.size > 20 * 1024 * 1024) { showToast("La imagen pesa más de 20MB", "error"); return; }
+    if (file.size > 2 * 1024 * 1024) { showToast("La imagen pesa más de 2MB", "error"); return; }
     try {
       $("uploadProgress").classList.add("show");
       $("uploadBar").style.width = "30%";
@@ -624,60 +616,3 @@ function esc(str) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 }
-// ════════════════════════════════════════════════════════════
-//  INYECCIÓN AUTOMÁTICA DE DATOS INICIALES (MIGRACIÓN)
-// ════════════════════════════════════════════════════════════
-import { setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-
-async function autoMigrarDatos() {
-  try {
-    // Verificar si ya existen categorías para no duplicarlas
-    const catsRef = collection(db, "categorias");
-    const snapshot = await getDocs(catsRef);
-    
-    if (snapshot.empty) {
-      console.log("Base de datos vacía. Inyectando datos iniciales...");
-      
-      // Categorías
-      const cats = [
-        { id: "joyeria", name: "Joyería", icon: "💎", img: "" },
-        { id: "relojes", name: "Relojes", icon: "⌚", img: "" },
-        { id: "accesorios", name: "Accesorios", icon: "🕶️", img: "" },
-        { id: "libros", name: "Libros & Recursos", icon: "📚", img: "" }
-      ];
-      for (const c of cats) {
-        const { id, ...data } = c;
-        await setDoc(doc(db, "categorias", id), data);
-      }
-
-      // Producto de prueba inicial
-      await addDoc(collection(db, "productos"), {
-        name: "Reloj Clásico Dorado (Ejemplo)",
-        desc: "Reloj elegante para toda ocasión.",
-        price: 1200,
-        cat: "relojes",
-        badges: ["new"],
-        img: ""
-      });
-
-      console.log("¡Datos iniciales cargados con éxito!");
-    }
-  } catch (e) {
-    console.error("Error en auto-migración: ", e);
-  }
-}
-
-// Ejecutar al iniciar sesión con éxito en el admin
-onAuthStateChanged(auth, user => {
-  if (user) {
-    loginScreen.classList.add("hidden");
-    dashboard.classList.add("show");
-    $("userEmail").textContent = user.email;
-    initSubscriptions();
-    autoMigrarDatos(); // <-- Lanza la migración automática al entrar
-  } else {
-    loginScreen.classList.remove("hidden");
-    dashboard.classList.remove("show");
-    $("loginForm").reset();
-  }
-});

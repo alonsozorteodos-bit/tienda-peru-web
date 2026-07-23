@@ -4,14 +4,15 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 import { getStorage } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js";
 
-// TU CONFIGURACIÓN DE FIREBASE (reemplaza con tus datos reales)
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "TU_API_KEY",
-  authDomain: "TU_PROYECTO.firebaseapp.com",
-  projectId: "TU_PROYECTO",
-  storageBucket: "TU_PROYECTO.appspot.com",
-  messagingSenderId: "TUS_DATOS",
-  appId: "TUS_DATOS"
+  apiKey: "AIzaSyCfac-HDMwrLyOURWhQQ3cMnugkRB13Ufo",
+  authDomain: "tienda-peru-constanza.firebaseapp.com",
+  projectId: "tienda-peru-constanza",
+  storageBucket: "tienda-peru-constanza.firebasestorage.app",
+  messagingSenderId: "613245426769",
+  appId: "1:613245426769:web:99df3dd599f240af2aac70",
+  measurementId: "G-09XTFW0ETT"
 };
 
 // Inicializar Firebase

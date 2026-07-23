@@ -4,11 +4,44 @@
    Todo lo que ya existía en index.html (variables, navbar, grid,
    .product-card) vive en el <style> de editor-visual.html y NO se
    toca aquí. Este archivo solo cubre lo que el editor agrega:
+     0. Lienzo oscuro de la herramienta (identidad visual de admin)
      1. Estados de los campos contenteditable (hover/focus/dirty)
      2. Resaltado de tarjetas con cambios sin guardar
      3. Barra flotante de guardado
      4. Estados de carga / vacío / toast (pulido visual)
+     7. Panel de Textos Generales (tema oscuro)
    ══════════════════════════════════════════════════════════════ */
+
+/* ── 0. LIENZO OSCURO ──
+   Las tarjetas de producto y el panel de textos generales se quedan
+   con colores claros (para que el WYSIWYG sea fiel a la tienda real),
+   pero flotan sobre un fondo oscuro de "mesa de trabajo", como en
+   cualquier herramienta de edición visual moderna. */
+body{
+  background:
+    radial-gradient(circle at 12% 0%, rgba(200,37,26,0.14), transparent 42%),
+    radial-gradient(circle at 88% 8%, rgba(212,160,23,0.10), transparent 38%),
+    linear-gradient(180deg, #0b0b0d 0%, #131316 55%, #0b0b0d 100%);
+  min-height:100vh;
+}
+.sec-eye{color:var(--gold-light);}
+.sec-title{color:#fff;}
+.sec-title em{color:var(--red-light);}
+.sec-line{opacity:0.9;}
+.sec-desc{color:rgba(255,255,255,0.42);}
+.prod-count-label{color:rgba(255,255,255,0.38);}
+
+/* Indicador de conexión a Firestore, junto al tag "Editor Visual" */
+.conn-status{
+  display:flex;align-items:center;gap:6px;
+  font-size:0.65rem;font-weight:600;letter-spacing:0.3px;
+  color:rgba(255,255,255,0.55);
+  padding:8px 14px;border-radius:30px;
+  border:1px solid rgba(255,255,255,0.12);
+}
+.conn-dot{width:7px;height:7px;border-radius:50%;background:#666;flex-shrink:0;transition:background 0.2s;}
+.conn-status.is-live .conn-dot{background:#10B981;box-shadow:0 0 0 3px rgba(16,185,129,0.2);}
+.conn-status.is-error .conn-dot{background:var(--red-light);box-shadow:0 0 0 3px rgba(200,37,26,0.2);}
 
 /* ── 1. CAMPOS EDITABLES ── */
 .editable-field{
@@ -91,21 +124,23 @@
   justify-content:center;
   gap:10px;
   font-weight:500;
+  color:rgba(255,255,255,0.45);
 }
 #loadingState::before{
   content:"";
   width:16px;height:16px;
-  border:2.5px solid var(--gray2);
-  border-top-color:var(--red);
+  border:2.5px solid rgba(255,255,255,0.15);
+  border-top-color:var(--red-light);
   border-radius:50%;
   animation:efb-spin 0.8s linear infinite;
 }
 @keyframes efb-spin{to{transform:rotate(360deg);}}
 
 #emptyState{
-  background:var(--gray);
+  background:rgba(255,255,255,0.03);
   border-radius:var(--radius);
-  border:1.5px dashed var(--gray3);
+  border:1.5px dashed rgba(255,255,255,0.15);
+  color:rgba(255,255,255,0.4);
 }
 
 /* ── 4. BARRA FLOTANTE DE GUARDADO ── */
@@ -212,44 +247,46 @@
   .efb-stat{min-width:auto;flex:1;}
 }
 
-/* ── 7. PANEL DE TEXTOS GENERALES ("configuracion/general") ── */
+/* ── 7. PANEL DE TEXTOS GENERALES ("configuracion/general") — tema oscuro ── */
 .general-editor-card{
   max-width:760px;
   margin:0 auto;
-  background:var(--gray);
-  border:1px solid var(--gray2);
+  background:linear-gradient(160deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015));
+  border:1px solid rgba(255,255,255,0.09);
   border-radius:var(--radius);
   padding:28px 30px;
   display:flex;
   flex-direction:column;
   gap:20px;
+  backdrop-filter:blur(6px);
 }
 .ge-row{display:flex;flex-direction:column;gap:6px;}
 .ge-label{
   font-size:0.68rem;
   font-weight:700;
   letter-spacing:0.5px;
-  color:var(--text2);
+  color:rgba(255,255,255,0.4);
   text-transform:uppercase;
 }
 .ge-field{
-  background:#fff;
-  border:1px solid var(--gray3);
+  background:rgba(255,255,255,0.045);
+  border:1px solid rgba(255,255,255,0.12);
   border-radius:var(--radius-sm);
   padding:11px 14px;
   font-size:0.88rem;
   line-height:1.5;
   min-height:20px;
+  color:#fff;
 }
 .ge-field-title{
   font-family:"Playfair Display",serif;
   font-size:1.3rem;
   font-weight:700;
-  color:var(--dark);
+  color:#fff;
 }
-.ge-field-accent{color:var(--red);font-style:italic;}
+.ge-field-accent{color:var(--red-light);font-style:italic;}
 .ge-field.field-dirty{
   border-color:var(--gold);
-  background:#FFFBEF;
+  background:rgba(212,160,23,0.12);
   box-shadow:0 0 0 3px rgba(212,160,23,0.15);
 }

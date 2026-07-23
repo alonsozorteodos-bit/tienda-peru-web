@@ -20,6 +20,21 @@ const statPending   = $("statPending");
 const btnSave       = $("btnSaveChanges");
 const floatbar      = $("editorFloatbar");
 const generalCard   = $("generalEditorCard");
+const connStatus    = $("connStatus");
+
+function setConnStatus(state) {
+  if (!connStatus) return;
+  connStatus.classList.remove("is-live", "is-error");
+  if (state === "live") {
+    connStatus.classList.add("is-live");
+    connStatus.innerHTML = `<span class="conn-dot"></span>Conectado a Firestore`;
+  } else if (state === "error") {
+    connStatus.classList.add("is-error");
+    connStatus.innerHTML = `<span class="conn-dot"></span>Error de conexión`;
+  } else {
+    connStatus.innerHTML = `<span class="conn-dot"></span>Conectando…`;
+  }
+}
 
 // ── BADGES (reutilizado de index.html) ──
 const BADGE_MAP = { new:["badge-new","Nuevo"], hot:["badge-hot","🔥 Popular"], sale:["badge-sale","Oferta"] };
@@ -56,9 +71,11 @@ onSnapshot(productsQuery, snap => {
 
   emptyState.style.display = products.length ? "none" : "block";
   updateFloatbar(products.length);
+  setConnStatus("live");
 }, err => {
   console.error("Error cargando productos:", err);
   loadingState.textContent = "❌ No se pudieron cargar los productos. Revisa la consola.";
+  setConnStatus("error");
 });
 
 // ════════════════════════════════════════════════════════════
@@ -78,6 +95,7 @@ onSnapshot(doc(db, "configuracion", "general"), snap => {
 }, err => {
   console.error("Error cargando textos generales:", err);
   showToast("❌ No se pudieron cargar los textos generales", "error");
+  setConnStatus("error");
 });
 
 // Pinta el valor guardado (o "" si el campo aún no existe) en cada campo editable

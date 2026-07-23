@@ -624,3 +624,60 @@ function esc(str) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 }
+// ════════════════════════════════════════════════════════════
+//  INYECCIÓN AUTOMÁTICA DE DATOS INICIALES (MIGRACIÓN)
+// ════════════════════════════════════════════════════════════
+import { setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+async function autoMigrarDatos() {
+  try {
+    // Verificar si ya existen categorías para no duplicarlas
+    const catsRef = collection(db, "categorias");
+    const snapshot = await getDocs(catsRef);
+    
+    if (snapshot.empty) {
+      console.log("Base de datos vacía. Inyectando datos iniciales...");
+      
+      // Categorías
+      const cats = [
+        { id: "joyeria", name: "Joyería", icon: "💎", img: "" },
+        { id: "relojes", name: "Relojes", icon: "⌚", img: "" },
+        { id: "accesorios", name: "Accesorios", icon: "🕶️", img: "" },
+        { id: "libros", name: "Libros & Recursos", icon: "📚", img: "" }
+      ];
+      for (const c of cats) {
+        const { id, ...data } = c;
+        await setDoc(doc(db, "categorias", id), data);
+      }
+
+      // Producto de prueba inicial
+      await addDoc(collection(db, "productos"), {
+        name: "Reloj Clásico Dorado (Ejemplo)",
+        desc: "Reloj elegante para toda ocasión.",
+        price: 1200,
+        cat: "relojes",
+        badges: ["new"],
+        img: ""
+      });
+
+      console.log("¡Datos iniciales cargados con éxito!");
+    }
+  } catch (e) {
+    console.error("Error en auto-migración: ", e);
+  }
+}
+
+// Ejecutar al iniciar sesión con éxito en el admin
+onAuthStateChanged(auth, user => {
+  if (user) {
+    loginScreen.classList.add("hidden");
+    dashboard.classList.add("show");
+    $("userEmail").textContent = user.email;
+    initSubscriptions();
+    autoMigrarDatos(); // <-- Lanza la migración automática al entrar
+  } else {
+    loginScreen.classList.remove("hidden");
+    dashboard.classList.remove("show");
+    $("loginForm").reset();
+  }
+});

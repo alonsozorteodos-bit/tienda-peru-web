@@ -211,3 +211,45 @@
 @media (max-width:480px){
   .efb-stat{min-width:auto;flex:1;}
 }
+
+/* ── 7. PANEL DE TEXTOS GENERALES ("configuracion/general") ── */
+.general-editor-card{
+  max-width:760px;
+  margin:0 auto;
+  background:var(--gray);
+  border:1px solid var(--gray2);
+  border-radius:var(--radius);
+  padding:28px 30px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+.ge-row{display:flex;flex-direction:column;gap:6px;}
+.ge-label{
+  font-size:0.68rem;
+  font-weight:700;
+  letter-spacing:0.5px;
+  color:var(--text2);
+  text-transform:uppercase;
+}
+.ge-field{
+  background:#fff;
+  border:1px solid var(--gray3);
+  border-radius:var(--radius-sm);
+  padding:11px 14px;
+  font-size:0.88rem;
+  line-height:1.5;
+  min-height:20px;
+}
+.ge-field-title{
+  font-family:"Playfair Display",serif;
+  font-size:1.3rem;
+  font-weight:700;
+  color:var(--dark);
+}
+.ge-field-accent{color:var(--red);font-style:italic;}
+.ge-field.field-dirty{
+  border-color:var(--gold);
+  background:#FFFBEF;
+  box-shadow:0 0 0 3px rgba(212,160,23,0.15);
+}

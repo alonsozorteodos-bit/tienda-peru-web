@@ -363,9 +363,9 @@ footer{background:#080808;padding:60px 50px 30px;}
 <nav id="navbar">
   <!-- Top bar -->
   <div class="nav-top">
-    <span class="nav-top-text">📍 Calle Luperón, Constanza · Al frente de EDENORTE</span>
+    <span class="nav-top-text" id="cfgDireccion">📍 Calle Luperón, Constanza · Al frente de EDENORTE</span>
     <div class="nav-top-contact">
-      <a href="https://wa.me/18098502066" target="_blank">📲 +1 (809) 850-2066</a>
+      <a href="https://wa.me/18098502066" target="_blank">📲 <span id="cfgTelefono">+1 (809) 850-2066</span></a>
       <a href="/cdn-cgi/l/email-protection#413528242f252031243334222e2f3235202f3b2001262c20282d6f222e2c">📧 <span class="__cf_email__" data-cfemail="add9c4c8c3c9ccddc8dfd8cec2c3ded9ccc3d7ccedcac0ccc4c183cec2c0">[email&#160;protected]</span></a>
       <a href="https://www.facebook.com/share/1DjGsE4Ppz/" target="_blank">📘 Facebook</a>
     </div>
@@ -428,9 +428,9 @@ footer{background:#080808;padding:60px 50px 30px;}
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-gradient"></div>
   <div class="hero-content">
-    <div class="hero-badge">📍 Constanza, República Dominicana · El Arte de los Andes</div>
-    <h1>Accesorios,<br/>Moda &<em> Mucho Más</em></h1>
-    <p class="hero-sub">Joyería personalizada, relojes, bolsos, moda y tecnología básica. Todo en Constanza al mejor precio. Reserva tu producto y retíralo en tienda.</p>
+    <div class="hero-badge" id="cfgHeroBadge">📍 Constanza, República Dominicana · El Arte de los Andes</div>
+    <h1><span id="cfgHeroTitleMain">Accesorios, Moda &</span><em id="cfgHeroTitleAccent"> Mucho Más</em></h1>
+    <p class="hero-sub" id="cfgHeroSub">Joyería personalizada, relojes, bolsos, moda y tecnología básica. Todo en Constanza al mejor precio. Reserva tu producto y retíralo en tienda.</p>
     <div class="hero-ctas">
       <a href="#productos" class="hero-btn-main">🛍️ Ver Catálogo Completo</a>
       <a href="#ofertas" class="hero-btn-sec">⚡ Ver Ofertas del Día</a>
@@ -1483,6 +1483,39 @@ document.getElementById("btnPriceReset").addEventListener("click", () => {
     if (e.key === "Enter") applyFilter(getCurrentCat());
   });
 });
+</script>
+
+<!-- ══════════════════════════════════════════════════════════════
+     TEXTOS GENERALES · lectura en vivo desde Firestore
+     (colección "configuracion", documento "general")
+     Si el documento no existe o falla la carga, se conserva el
+     texto que ya está escrito arriba en el HTML (no rompe nada).
+     ══════════════════════════════════════════════════════════════ -->
+<script type="module">
+  import { db } from "./firebase-config.js";
+  import { doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+  // Mapa: campo en Firestore -> id del elemento que se actualiza
+  const CFG_FIELD_MAP = {
+    direccion:       "cfgDireccion",
+    telefono:        "cfgTelefono",
+    heroBadge:       "cfgHeroBadge",
+    heroTitleMain:   "cfgHeroTitleMain",
+    heroTitleAccent: "cfgHeroTitleAccent",
+    heroSub:         "cfgHeroSub",
+  };
+
+  onSnapshot(doc(db, "configuracion", "general"), snap => {
+    if (!snap.exists()) return; // no hay overrides todavía: se queda el texto por defecto
+    const data = snap.data();
+    Object.entries(CFG_FIELD_MAP).forEach(([field, elId]) => {
+      if (data[field] == null) return; // campo no editado: se respeta el texto actual
+      const el = document.getElementById(elId);
+      if (el) el.textContent = data[field];
+    });
+  }, err => {
+    console.error("Error cargando configuración general desde Firestore:", err);
+  });
 </script>
 </body>
 </html>

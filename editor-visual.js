@@ -6,7 +6,7 @@
 // ════════════════════════════════════════════════════════════
 import { db } from "./firebase-config.js";
 import {
-  collection, doc, onSnapshot, updateDoc, query, orderBy
+  collection, doc, onSnapshot, updateDoc, setDoc, query, orderBy
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 // ── SHORTCUTS DOM (mismo patrón que admin.js) ──
@@ -19,6 +19,7 @@ const statLoaded    = $("statLoaded");
 const statPending   = $("statPending");
 const btnSave       = $("btnSaveChanges");
 const floatbar      = $("editorFloatbar");
+const generalCard   = $("generalEditorCard");
 
 // ── BADGES (reutilizado de index.html) ──
 const BADGE_MAP = { new:["badge-new","Nuevo"], hot:["badge-hot","🔥 Popular"], sale:["badge-sale","Oferta"] };
@@ -27,6 +28,11 @@ const BADGE_MAP = { new:["badge-new","Nuevo"], hot:["badge-hot","🔥 Popular"],
 let firstLoad = true;
 let originalData = {};   // id -> copia del documento tal cual está en Firestore
 let pendingChanges = {}; // id -> { campoFirestore: nuevoValor, ... } (solo campos modificados)
+
+// ── ESTADO · TEXTOS GENERALES ("configuracion/general") ──
+let generalFirstLoad = true;
+let generalOriginal = {};  // copia tal cual está en Firestore (o {} si el doc no existe aún)
+let generalPending = {};   // { campoFirestore: nuevoValor, ... } (solo campos modificados)
 
 // ════════════════════════════════════════════════════════════
 //  CARGA EN TIEMPO REAL DESDE FIRESTORE (colección "productos")
@@ -54,6 +60,72 @@ onSnapshot(productsQuery, snap => {
   console.error("Error cargando productos:", err);
   loadingState.textContent = "❌ No se pudieron cargar los productos. Revisa la consola.";
 });
+
+// ════════════════════════════════════════════════════════════
+//  CARGA EN TIEMPO REAL DESDE FIRESTORE (configuracion/general)
+// ════════════════════════════════════════════════════════════
+onSnapshot(doc(db, "configuracion", "general"), snap => {
+  const data = snap.exists() ? snap.data() : {};
+
+  if (generalFirstLoad) {
+    generalFirstLoad = false;
+    generalOriginal = clone(data);
+    renderGeneralFields(data);
+    attachGeneralListeners();
+  } else {
+    syncGeneralFields(data);
+  }
+}, err => {
+  console.error("Error cargando textos generales:", err);
+  showToast("❌ No se pudieron cargar los textos generales", "error");
+});
+
+// Pinta el valor guardado (o "" si el campo aún no existe) en cada campo editable
+function renderGeneralFields(data) {
+  generalCard.querySelectorAll("[data-field]").forEach(el => {
+    el.textContent = data[el.dataset.field] ?? "";
+  });
+}
+
+// Igual que syncGrid: refresca solo lo que el usuario no está editando ni tiene pendiente
+function syncGeneralFields(data) {
+  generalCard.querySelectorAll("[data-field]").forEach(el => {
+    const field = el.dataset.field;
+    const isDirty = Object.prototype.hasOwnProperty.call(generalPending, field);
+    const isFocused = document.activeElement === el;
+    const incoming = data[field] ?? "";
+    if (!isDirty && !isFocused && el.textContent.trim() !== String(incoming)) {
+      el.textContent = incoming;
+    }
+  });
+  generalOriginal = clone(data);
+}
+
+function attachGeneralListeners() {
+  generalCard.addEventListener("input", e => {
+    if (!e.target.matches("[data-field]")) return;
+    handleGeneralFieldChange(e.target);
+  });
+  generalCard.addEventListener("focusout", e => {
+    if (!e.target.matches("[data-field]")) return;
+    handleGeneralFieldChange(e.target);
+  });
+}
+
+function handleGeneralFieldChange(el) {
+  const field = el.dataset.field;
+  const newVal = el.textContent.trim();
+  const originalVal = String(generalOriginal[field] ?? "").trim();
+
+  if (newVal === originalVal) {
+    delete generalPending[field];
+  } else {
+    generalPending[field] = newVal;
+  }
+
+  el.classList.toggle("field-dirty", Object.prototype.hasOwnProperty.call(generalPending, field));
+  updateFloatbar();
+}
 
 // ════════════════════════════════════════════════════════════
 //  RENDER INICIAL DEL GRID
@@ -298,7 +370,7 @@ function updateCardDirtyState(id) {
 // ════════════════════════════════════════════════════════════
 function updateFloatbar(totalLoaded) {
   const total = totalLoaded ?? Object.keys(originalData).length;
-  const pendingCount = Object.keys(pendingChanges).length;
+  const pendingCount = Object.keys(pendingChanges).length + (Object.keys(generalPending).length ? 1 : 0);
 
   statLoaded.textContent = total;
   statPending.textContent = pendingCount;
@@ -315,7 +387,8 @@ btnSave.addEventListener("click", saveChanges);
 
 async function saveChanges() {
   const ids = Object.keys(pendingChanges);
-  if (!ids.length) return;
+  const hasGeneralChanges = Object.keys(generalPending).length > 0;
+  if (!ids.length && !hasGeneralChanges) return;
 
   btnSave.disabled = true;
   const originalLabel = btnSave.textContent;
@@ -339,11 +412,26 @@ async function saveChanges() {
     }
   }
 
+  // Textos generales: un solo documento, se guarda con setDoc(merge:true)
+  // por si el documento "configuracion/general" todavía no existe en Firestore.
+  if (hasGeneralChanges) {
+    try {
+      await setDoc(doc(db, "configuracion", "general"), generalPending, { merge: true });
+      generalOriginal = { ...generalOriginal, ...generalPending };
+      generalCard.querySelectorAll("[data-field].field-dirty").forEach(el => el.classList.remove("field-dirty"));
+      generalPending = {};
+      okCount++;
+    } catch (err) {
+      console.error("Error guardando textos generales:", err);
+      errCount++;
+    }
+  }
+
   btnSave.textContent = originalLabel;
   updateFloatbar();
 
   if (errCount === 0) {
-    showToast(`✅ ${okCount} producto${okCount !== 1 ? "s" : ""} actualizado${okCount !== 1 ? "s" : ""}`, "success");
+    showToast(`✅ ${okCount} cambio${okCount !== 1 ? "s" : ""} guardado${okCount !== 1 ? "s" : ""}`, "success");
   } else if (okCount === 0) {
     showToast(`❌ No se pudo guardar (${errCount} error${errCount !== 1 ? "es" : ""})`, "error");
   } else {

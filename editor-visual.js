@@ -69,13 +69,13 @@ import {
    ══════════════════════════════════════════════════════ */
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBV31eRHUcpQFpQ1xx7VnwGsGqymyy7VhY",
-  authDomain: "pangea-clasharch.firebaseapp.com",
-  projectId: "pangea-clasharch",
-  storageBucket: "pangea-clasharch.firebasestorage.app",
-  messagingSenderId: "587653225006",
-  appId: "1:587653225006:web:3a00bec7440dd1af839dbf",
-  measurementId: "G-PVDZXJJN3C"
+  apiKey: "AIzaSyCfac-HDMwrLyOURWhQQ3cMnugkRB13Ufo",
+  authDomain: "tienda-peru-constanza.firebaseapp.com",
+  projectId: "tienda-peru-constanza",
+  storageBucket: "tienda-peru-constanza.firebasestorage.app",
+  messagingSenderId: "613245426769",
+  appId: "1:613245426769:web:99df3dd599f240af2aac70",
+  measurementId: "G-09XTFW0ETT"
 };
 
 const app = initializeApp(firebaseConfig);

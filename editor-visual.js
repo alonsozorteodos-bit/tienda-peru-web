@@ -1026,12 +1026,11 @@ async function bootstrapData() {
   initGeneralUI();
   initSpaNav();
   await bootstrapData();
-
-  // 👇 TRUCO PARA MIGRAR TODO EL CATÁLOGO A FIREBASE 👇
+// 👇 TRUCO CORREGIDO PARA CREAR TODO EN FIREBASE 👇
   window.subirTodoAFirebase = () => {
-     PRODUCTS.forEach(p => markUpdated("productos", String(p.id), p));
-     DEALS.forEach(d => markUpdated("ofertas", String(d.id), d));
-     LIBROS.forEach(l => markUpdated("libros", String(l.id), l));
+     PRODUCTS.forEach(p => markAdded("productos", String(p.id), p));
+     DEALS.forEach(d => markAdded("ofertas", String(d.id), d));
+     LIBROS.forEach(l => markAdded("libros", String(l.id), l));
      Object.keys(CONFIG).forEach(k => markConfigField(k, CONFIG[k]));
      alert("¡Catálogo preparado! Ahora haz clic en el botón amarillo 'Guardar Cambios en Firebase'.");
   };

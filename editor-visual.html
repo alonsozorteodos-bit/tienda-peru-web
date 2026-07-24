@@ -496,6 +496,63 @@ body{padding-bottom:78px;}
   #adminSaveBar .asb-save{flex:1;justify-content:center;}
   #adminSaveBar .asb-discard{flex:0 0 auto;}
 }
+
+/* ══ LOGIN GATE — barrera de acceso del editor ══ */
+body.locked { overflow: hidden; }
+body.locked > *:not(#loginOverlay) {
+  filter: blur(4px);
+  pointer-events: none;
+  user-select: none;
+}
+
+#loginOverlay {
+  position: fixed; inset: 0; z-index: 99999;
+  background: rgba(15,15,15,0.94);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity .35s ease, visibility .35s ease;
+}
+#loginOverlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.login-box {
+  background: var(--dark2);
+  border: 1px solid rgba(212,160,23,0.25);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 40px 36px;
+  width: min(360px, 90vw);
+  text-align: center;
+}
+.login-icon { font-size: 2.2rem; margin-bottom: 10px; }
+.login-title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 4px;
+}
+.login-sub {
+  font-size: .78rem; color: rgba(255,255,255,.45);
+  margin-bottom: 22px; letter-spacing: .5px;
+}
+.login-input {
+  width: 100%; padding: 12px 14px; border-radius: 10px;
+  border: 1.5px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.05); color: #fff;
+  font-family: "Poppins", sans-serif; font-size: .88rem;
+  outline: none; margin-bottom: 10px; transition: border-color .2s;
+  text-align: center;
+}
+.login-input:focus { border-color: var(--gold); }
+.login-input.input-error { animation: shakeInput .35s; border-color: var(--red); }
+@keyframes shakeInput { 25%{transform:translateX(-6px);} 75%{transform:translateX(6px);} }
+.login-error { min-height: 1.1em; font-size: .78rem; color: var(--red-light); margin-bottom: 14px; }
+.login-btn {
+  width: 100%;
+  background: linear-gradient(135deg,var(--red),var(--red-dark));
+  color: #fff; border: none; padding: 12px; border-radius: 10px;
+  font-family: "Poppins", sans-serif; font-weight: 700; font-size: .85rem;
+  cursor: pointer; box-shadow: 0 4px 14px rgba(200,37,26,.35);
+  transition: transform .2s;
+}
+.login-btn:hover { transform: translateY(-2px); }
 </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VK1BYLVXPP"></script>
@@ -507,7 +564,22 @@ body{padding-bottom:78px;}
   gtag('config', 'G-VK1BYLVXPP');
 </script>
 </head>
-<body>
+<body class="locked">
+
+<!-- ══════════════════════════════════════════
+     🔒 BARRERA DE ACCESO — Editor Visual
+════════════════════════════════════════ -->
+<div id="loginOverlay">
+  <div class="login-box">
+    <div class="login-icon">🔒</div>
+    <h2 class="login-title">Editor Visual</h2>
+    <p class="login-sub">Tienda Perú — acceso restringido</p>
+    <input type="password" id="loginTokenInput" class="login-input"
+           placeholder="Token de acceso" autocomplete="off"/>
+    <p class="login-error" id="loginError"></p>
+    <button type="button" id="loginSubmitBtn" class="login-btn">Entrar</button>
+  </div>
+</div>
 
 <!-- ══ NAVBAR ══ -->
 <nav id="navbar">

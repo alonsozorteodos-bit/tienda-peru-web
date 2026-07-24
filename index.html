@@ -774,76 +774,9 @@ footer{background:#080808;padding:60px 50px 30px;}
     </div>
   </div>
 
-  <!-- Catálogo de libros -->
-  <div class="lit-books-grid">
+  <!-- Catálogo de libros (renderizado dinámicamente) -->
+  <div class="lit-books-grid" id="librosGrid"></div>
 
-    <!-- Libro 1 -->
-    <div class="lit-book-card">
-      <div class="lit-book-img-wrap">
-        <img src="img/maestro_espiritista.jpg" alt="De los Santos, el Maestro Espiritista Cibaeño" loading="lazy"/>
-        <span class="lit-book-badge">📖 Disponible</span>
-      </div>
-      <div class="lit-book-body">
-        <div class="lit-book-series">En las Arterias de la República II</div>
-        <div class="lit-book-title">De los Santos, el Maestro Espiritista Cibaeño</div>
-        <div class="lit-book-divider"></div>
-        <p class="lit-book-synopsis">
-          El autor conjuga lo sentimental con lo jocoso y lo subliminal con lo increíble. A través de relatos magistrales como "La Abuela" y "El Mercader de la Fe", nos sumerge en el panorama del espiritismo cibaeño, las creencias locales y ofrece una crítica a las realidades sociales y religiosas, demostrando que a veces la ficción parece ser realidad.
-        </p>
-        <div class="lit-book-footer">
-          <span class="lit-book-author-mini">Johnny Martínez Quispe</span>
-          <button class="lit-book-wa" onclick="window.open('https://wa.me/18098502066?text='+encodeURIComponent('Hola, quiero información sobre el libro: De los Santos, el Maestro Espiritista Cibaeño'),'_blank')">
-            📲 Consultar
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Libro 2 -->
-    <div class="lit-book-card">
-      <div class="lit-book-img-wrap">
-        <img src="img/tormentos_de_sandra.jpg" alt="Los Tormentos de Sandra" loading="lazy"/>
-        <span class="lit-book-badge">📖 Disponible</span>
-      </div>
-      <div class="lit-book-body">
-        <div class="lit-book-series">En las Arterias de la República</div>
-        <div class="lit-book-title">Los Tormentos de Sandra</div>
-        <div class="lit-book-divider"></div>
-        <p class="lit-book-synopsis">
-          Un profundo grito social que narra la cruda historia de Sandra, una joven de barrio marginado que anhela tener su propia familia en medio de la miseria. A través de sus vivencias, la obra expone realidades palpables de la sociedad: ayuntamientos, dueños de tierras, la prensa, la salud pública y la corrupción. Un relato realista que cautivará la atención.
-        </p>
-        <div class="lit-book-footer">
-          <span class="lit-book-author-mini">Johnny Martínez Quispe</span>
-          <button class="lit-book-wa" onclick="window.open('https://wa.me/18098502066?text='+encodeURIComponent('Hola, quiero información sobre el libro: Los Tormentos de Sandra'),'_blank')">
-            📲 Consultar
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Libro 3 -->
-    <div class="lit-book-card">
-      <div class="lit-book-img-wrap">
-        <img src="img/juana_del_valle.jpg" alt="Juana del Valle" loading="lazy"/>
-        <span class="lit-book-badge">📖 Disponible</span>
-      </div>
-      <div class="lit-book-body">
-        <div class="lit-book-series">En las Arterias de la República III</div>
-        <div class="lit-book-title">Juana del Valle</div>
-        <div class="lit-book-divider"></div>
-        <p class="lit-book-synopsis">
-          Una joya literaria que narra la gran realidad de cualquier jovencita en una comunidad rural. Incluye relatos impactantes como "El Crimen Perfecto" y "Crimen y Duelo con Machete", además de agudas reflexiones sobre la explotación social y la moralidad de la clase media en cuentos como "Lill en Europa" y "Hombres Ejecutivos".
-        </p>
-        <div class="lit-book-footer">
-          <span class="lit-book-author-mini">Johnny Martínez Quispe</span>
-          <button class="lit-book-wa" onclick="window.open('https://wa.me/18098502066?text='+encodeURIComponent('Hola, quiero información sobre el libro: Juana del Valle'),'_blank')">
-            📲 Consultar
-          </button>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /lit-books-grid -->
 </section>
 <!-- ══ /LITERATURA CONSTANCERA ══ -->
 
@@ -953,6 +886,10 @@ const IMGS = {
   pasa_mont_barato:   "img/pasa_mont_barato.jpg",
   pasa_montanas:      "img/pasa_montañas.jpg",
   poncho_peruano:     "img/poncho_peruano.jpg",
+  // ── Libros ──
+  maestro_espiritista: "img/maestro_espiritista.jpg",
+  tormentos_de_sandra: "img/tormentos_de_sandra.jpg",
+  juana_del_valle: "img/juana_del_valle.jpg"
 };
 
 // Hero & About images
@@ -991,15 +928,7 @@ function filterBycat(cat) {
 }
 
 // ── PRODUCTS ──
-// NOTA: este array queda como catálogo de arranque/fallback. En cuanto
-// Firestore responda (ver <script type="module"> al final del archivo),
-// PRODUCTS se reemplaza con los productos reales de la colección
-// "productos" y se vuelve a renderizar automáticamente.
 let PRODUCTS = [
-
-  // ════════════════════════════════
-  // 💎 JOYERÍA — Personalizadas (consulta)
-  // ════════════════════════════════
   { id:1,  name:"Collar Corazón con Alas + Foto",      price:0,   cat:"joyeria",  badges:["hot"],  img:"p1",   desc:"Medallón corazón con alas. Tu foto personalizada. 2 colores." },
   { id:2,  name:"Colgante con Foto + Nombre Dorado",   price:0,   cat:"joyeria",  badges:["new"],  img:"p2",   desc:"Tu foto y nombre en letras doradas. Cadena incluida." },
   { id:3,  name:"Toalla Personalizada Bordada",        price:0,   cat:"joyeria",  badges:[],       img:"p3",   desc:"Toalla premium con tu nombre bordado. 4 colores." },
@@ -1007,8 +936,6 @@ let PRODUCTS = [
   { id:8,  name:"Collar Dog Tag con Foto",             price:0,   cat:"joyeria",  badges:[],       img:"p8",   desc:"Estilo militar con tu foto en alta definición." },
   { id:14, name:"Set Argollas + Collar con Nombre",    price:0,   cat:"joyeria",  badges:["hot"],  img:"p14",  desc:"Set completo: aretes argolla y collar con nombre dorado." },
   { id:15, name:"Collar Nombre en Cursiva",            price:0,   cat:"joyeria",  badges:[],       img:"p15",  desc:"Delicado collar dorado con tu nombre en cursiva." },
-
-  // 💎 JOYERÍA — Precio fijo
   { id:18, name:"Cadenas de Mujer Variadas",           price:145, cat:"joyeria",  badges:["new"],  img:"cadenas_mujer",   desc:"Hermosas cadenas variadas para mujer. Diseños modernos y elegantes." },
   { id:19, name:"Cadenas Variadas de Hombre",          price:145, priceType:"range", priceMin:145, priceMax:480, cat:"joyeria", badges:["hot"], img:"cadenas_hombre", desc:"Cadenas de hombre: cruces, medallones y más. Dorado y plateado." },
   { id:20, name:"Hermosa Cadena de Mujer",             price:480, cat:"joyeria",  badges:[],       img:"collar_mujer",    desc:"Cadena brillante con cristales. Ideal para ocasiones especiales." },
@@ -1019,26 +946,14 @@ let PRODUCTS = [
   { id:43, name:"Cadenas Variadas",                    price:380, cat:"joyeria",  badges:["sale"], img:"cadenas_380",     desc:"Variedad de cadenas con dijes: calaveras, corazones y cruces. Dorado y plateado." },
   { id:44, name:"Collar de Cuarzo Azul",               price:145, cat:"joyeria",  badges:["new"],  img:"cuarzo",          desc:"Collar de cuarzo lapis lazuli con aretes de regalo. Joyería D'Jessy Perú." },
   { id:45, name:"Brillo de Labios Chap·Lip",           price:60,  cat:"joyeria",  badges:["sale"], img:"brilla_labios",   desc:"Set de brillos labiales hidratantes Chap·Lip. 12 sabores y colores disponibles." },
-
-  // ════════════════════════════════
-  // 👂 ARETES
-  // ════════════════════════════════
   { id:12, name:"Aretes Trepadores con Nombre",        price:0,   cat:"aretes",   badges:["new"],  img:"p12",             desc:"Aretes trepadores 3D con tu nombre. Plateado." },
   { id:13, name:"Aretes Mariposa con Nombre",          price:0,   cat:"aretes",   badges:[],       img:"p13",             desc:"Mariposa de oro con nombre personalizado." },
   { id:33, name:"Aretes y Argollas Variados",          price:85,  cat:"aretes",   badges:["new"],  img:"aretes",          desc:"Gran variedad de aretes dorados y plateados. Diseños elegantes para toda ocasión." },
   { id:40, name:"Aretes de Acero Variados",            price:95,  cat:"aretes",   badges:["new"],  img:"aretesacero",     desc:"Set de aretes de acero inoxidable: triángulos, anclas, flores y más. Dorado y plateado." },
   { id:41, name:"Argollas de Cruz Negras",             price:120, cat:"aretes",   badges:["new"],  img:"argolla_de_cruz", desc:"Argollas con colgante de cruz en negro mate. Set x18 pares. Estilo urbano y elegante." },
-
-  // ════════════════════════════════
-  // ⌚ RELOJES
-  // ════════════════════════════════
   { id:22, name:"Set de Reloj + Pulseras Dorado",      price:580, cat:"relojes",  badges:["hot"],  img:"reloj_pulseras",  desc:"Set premium: reloj dorado + 2 pulseras. El regalo perfecto." },
   { id:23, name:"Relojes Variados",                    price:380, cat:"relojes",  badges:["new"],  img:"relojes",         desc:"Gran variedad de relojes para hombre y mujer." },
   { id:24, name:"Set de Reloj con Pulseras — Caja",    price:580, cat:"relojes",  badges:["sale"], img:"relojes_pulseras",desc:"Set de lujo en caja de regalo. Reloj + pulseras + collar." },
-
-  // ════════════════════════════════
-  // 💫 PULSERAS & ANILLOS
-  // ════════════════════════════════
   { id:5,  name:"Pulsera Redonda con Foto",            price:0,   cat:"pulseras", badges:[],       img:"p5",              desc:"Pulsera plateada con dije circular y tu foto." },
   { id:6,  name:"Pulsera Bebé Cruz con Nombre",        price:0,   cat:"pulseras", badges:["new"],  img:"p6",              desc:"Para bebé: cruz con nombre grabado. 3 colores." },
   { id:7,  name:"Pulsera Ajustable Nombre + Corazón",  price:0,   cat:"pulseras", badges:[],       img:"p7",              desc:"Nombre en cursiva con corazón. Dorado y plateado." },
@@ -1047,30 +962,18 @@ let PRODUCTS = [
   { id:16, name:"Anillo Infinito con Nombre",          price:0,   cat:"pulseras", badges:["new"],  img:"p16",             desc:"Anillo dorado con símbolo infinito y nombre grabado." },
   { id:28, name:"Set de Pulseras Variadas",            price:100, cat:"pulseras", badges:["sale"], img:"pulseras_set",    desc:"Hermoso set de pulseras combinadas para regalar. (Cada paquete)" },
   { id:29, name:"Pulseras de Hilo Coloridas",          price:50,  cat:"pulseras", badges:["sale"], img:"pulseras_hilo",   desc:"Pulseras de hilo en 12+ colores disponibles. (Cada una)" },
-
-  // ════════════════════════════════
-  // 👒 MODA & ACCESORIOS
-  // ════════════════════════════════
   { id:25, name:"Gafas de Sol Variadas",               price:130, priceType:"range", priceMin:130, priceMax:380, cat:"moda", badges:["hot"], img:"gafas", desc:"Más de 20 estilos. Para él, para ella, para todos." },
   { id:26, name:"Gorras de Pico Aquatic Sports",       price:280, cat:"moda",     badges:["new"],  img:"gorras",          desc:"Gorras deportivas Aquatic Sports. Negra y blanca." },
   { id:27, name:"Sombreros Variados",                  price:380, cat:"moda",     badges:[],       img:"sombreros",       desc:"Sombrero panamá y estilo cowboy. Con mucho estilo." },
   { id:34, name:"Boina Francesa Estilo Vintage",       price:280, cat:"moda",     badges:["new"],  img:"boina_frances",   desc:"Boina negra estilo francés. Elegante y moderna. Talla única." },
   { id:35, name:"Boinas para el Frío",                 price:250, cat:"moda",     badges:["new"],  img:"boinas_frio",     desc:"Boinas tejidas con pompón. 3 colores: blanco, azul y rosa." },
   { id:50, name:"Boina Francesa para Mujer",           price:280, cat:"moda",     badges:["new"],  img:"boina_francesa_mujer", desc:"Boina tejida de mujer en negro y rojo. Elegante y abrigadora." },
-
-  // ════════════════════════════════
-  // 👜 BOLSOS & MOCHILAS
-  // ════════════════════════════════
   { id:36, name:"Bulto Deportivo Grande Nike",         price:580, cat:"bolsos",   badges:["new"],  img:"bulto_grande",    desc:"Bolso deportivo grande con doble bolsillo. Correa ajustable incluida." },
   { id:37, name:"Bulto Pequeño Nike",                  price:480, cat:"bolsos",   badges:["hot"],  img:"bulto_pequeno",   desc:"Bolso pequeño resistente. Compacto, ligero y con estilo." },
   { id:46, name:"Bolsa de Mujer Decorada",             price:380, cat:"bolsos",   badges:["new"],  img:"bolsa_mujer",     desc:"Bolsa tote estampada con lentejuelas y diseño artístico. Ideal para salidas diarias." },
   { id:47, name:"Cartapacio / Maletín de Trabajo",     price:680, cat:"bolsos",   badges:["new"],  img:"cartapasio",      desc:"Maletín ejecutivo resistente. Compartimento para laptop. Correa cruzada incluida." },
   { id:48, name:"Mochila de Tiros (Drawstring)",       price:150, cat:"bolsos",   badges:["new"],  img:"mochila_de_tiros",desc:"Mochila de cuerdas ligera con estampado anime. Perfecta para el día a día." },
   { id:49, name:"Mochilas Escolares Variadas",         price:680, cat:"bolsos",   badges:["hot"],  img:"mochilas",        desc:"Mochilas escolares resistentes para niños y adultos. Varios colores y tamaños." },
-
-  // ════════════════════════════════
-  // 🧥 ROPA & FRÍO
-  // ════════════════════════════════
   { id:51, name:"Pasamontañas Air Flow",               price:380, cat:"ropa",     badges:["new"],  img:"pasa_montanas",   desc:"Pasamontañas deportivo Air Flow con ventilación. Ideal para motociclistas y montañismo." },
   { id:52, name:"Pasamontañas para Moto",              price:145, cat:"ropa",     badges:["sale"], img:"pasa_mont_barato",desc:"Pasamontañas tejido, abrigador y económico. 3 colores disponibles: beige, rojo y negro." },
   { id:53, name:"Guantes para Adulto",                 price:195, cat:"ropa",     badges:["new"],  img:"guantes_adulto",  desc:"Guantes tejidos para adulto. Suaves, elásticos y cálidos. Color negro." },
@@ -1078,13 +981,9 @@ let PRODUCTS = [
   { id:55, name:"Guantes para Bebé",                   price:160, cat:"ropa",     badges:["new"],  img:"guantes_bebe",    desc:"Guantes pequeños para bebé. Ultra suaves y cálidos. Color oscuro." },
   { id:56, name:"Pañuelos / Bandanas Variados",        price:85,  cat:"ropa",     badges:["sale"], img:"panuelos",        desc:"Pañuelos y bandanas estampados. Varios colores: amarillo, azul, rojo y blanco." },
   { id:57, name:"Poncho Peruano Tejido",               price:0,   cat:"ropa",     badges:["hot"],  img:"poncho_peruano",  desc:"Poncho peruano tejido con diseños andinos. 100% artesanal. Consultar colores disponibles." },
-
-  // ════════════════════════════════
-  // 🔌 TECNOLOGÍA
-  // ════════════════════════════════
   { id:30, name:"Cargador Rápido Tipo A — 2.4A",       price:240, cat:"tecnologia",badges:["new"],  img:"cargador_a",      desc:"Cargador Meidou 2.4A con cable. Compatible con Android." },
-  { id:31, name:"Cargador 2 en 1 Tipo C — 2.1A",       price:240, cat:"tecnologia",badges:[],       img:"cargador_c",      desc:"Cargador de viaje 2 en 1. Rápido, compacto y confiable." },
-  { id:38, name:"Audífonos Estéreo con Cable",          price:145, cat:"tecnologia",badges:["sale"], img:"audifonos",       desc:"Audífonos estéreo M-914 con micrófono. Alta calidad de sonido." },
+  { id:"31", name:"Cargador 2 en 1 Tipo C — 2.1A",       price:240, cat:"tecnologia",badges:[],       img:"cargador_c",      desc:"Cargador de viaje 2 en 1. Rápido, compacto y confiable." },
+  { id:"38", name:"Audífonos Estéreo con Cable",          price:145, cat:"tecnologia",badges:["sale"], img:"audifonos",       desc:"Audífonos estéreo M-914 con micrófono. Alta calidad de sonido." },
 ];
 
 const DEALS = [
@@ -1096,6 +995,12 @@ const DEALS = [
   { id:206, name:"Aretes Variados",         price:85,  img:"aretes",         badge:"Popular",      desc:"Dorado y plateado" },
   { id:207, name:"Gafas de Sol",            price:145,  img:"gafas",          badge:"Oferta",       desc:"20+ estilos" },
   { id:208, name:"Boina Francesa",          price:280,  img:"boina_frances",  badge:"Nuevo",        desc:"Estilo vintage" },
+];
+
+const LIBROS = [
+  { id:"lib1", series:"En las Arterias de la República II", title:"De los Santos, el Maestro Espiritista Cibaeño", img:"maestro_espiritista", author:"Johnny Martínez Quispe", synopsis:"El autor conjuga lo sentimental con lo jocoso y lo subliminal con lo increíble. A través de relatos magistrales como \"La Abuela\" y \"El Mercader de la Fe\", nos sumerge en el panorama del espiritismo cibaeño, las creencias locales y ofrece una crítica a las realidades sociales y religiosas, demostrando que a veces la ficción parece ser realidad." },
+  { id:"lib2", series:"En las Arterias de la República", title:"Los Tormentos de Sandra", img:"tormentos_de_sandra", author:"Johnny Martínez Quispe", synopsis:"Un profundo grito social que narra la cruda historia de Sandra, una joven de barrio marginado que anhela tener su propia familia en medio de la miseria. A través de sus vivencias, la obra expone realidades palpables de la sociedad: ayuntamientos, dueños de tierras, la prensa, la salud pública y la corrupción. Un relato realista que cautivará la atención." },
+  { id:"lib3", series:"En las Arterias de la República III", title:"Juana del Valle", img:"juana_del_valle", author:"Johnny Martínez Quispe", synopsis:"Una joya literaria que narra la gran realidad de cualquier jovencita en una comunidad rural. Incluye relatos impactantes como \"El Crimen Perfecto\" y \"Crimen y Duelo con Machete\", además de agudas reflexiones sobre la explotación social y la moralidad de la clase media en cuentos como \"Lill en Europa\" y \"Hombres Ejecutivos\"." }
 ];
 
 // ── FILTER PILLS ──
@@ -1149,30 +1054,23 @@ function applyFilter(cat) {
 // ── RENDER PRODUCTS ──
 const BADGE_MAP = { new:["badge-new","Nuevo"], hot:["badge-hot","🔥 Popular"], sale:["badge-sale","Oferta"] };
 
-/* Precio efectivo para filtrado:
-   - priceType "range" → minPrice
-   - price === 0 (consulta) → "" (se excluye del filtro)
-   - normal → price */
+/* Precio efectivo para filtrado */
 function effectivePrice(p) {
-  // soporta priceType:"range" con minPrice, y también priceMin/priceMax directo
   if (p.priceType === "range" || (p.priceMin != null && p.priceMax != null)) return p.priceMin ?? p.minPrice;
   if (p.price === 0) return "";
   return p.price;
 }
 
-/* Bloque HTML de precio + botón según tipo de producto */
 function buildPriceBlock(p) {
-  // CASO 2: Producto personalizado — solo consulta por WhatsApp
-  if (p.price === 0) {
+  if (p.price === 0 && p.priceType !== "range") {
     return `
       <div class="product-price">
         <span class="price-consult">👉 Consultar por WhatsApp</span>
       </div>
-      <button class="btn-consult" data-wa-name="${p.name.replace(/"/g,"&quot;")}">
+      <button class="btn-consult" data-wa-name="${(p.name || '').replace(/"/g,"&quot;")}">
         📲 Consultar
       </button>`;
   }
-  // CASO 3: Precio variable — soporta priceType:"range" O priceMin/priceMax directo
   if (p.priceType === "range" || (p.priceMin != null && p.priceMax != null)) {
     return `
       <div class="price-range">
@@ -1184,7 +1082,6 @@ function buildPriceBlock(p) {
         Reservar
       </button>`;
   }
-  // CASO 1: Precio normal
   return `
     <div class="product-price">
       <span class="price-label">Precio</span>
@@ -1196,9 +1093,6 @@ function buildPriceBlock(p) {
     </button>`;
 }
 
-// Resuelve la imagen de un producto: soporta tanto las claves cortas del
-// catálogo original (p.img="p1" → IMGS.p1) como URLs/paths completos que
-// guarda el editor visual o el panel admin directamente en Firestore.
 function resolveImg(p) {
   return IMGS[p.img] || p.img || IMGS.local || "";
 }
@@ -1208,8 +1102,7 @@ function renderProducts() {
     const ep = effectivePrice(p);
     const badges = p.badges || [];
     const name = p.name || "";
-    // Quick overlay: consulta en price===0; carrito normal en los demás
-    const quickInner = p.price === 0
+    const quickInner = p.price === 0 && p.priceType !== "range"
       ? `<button class="btn-consult" data-wa-name="${name.replace(/"/g,"&quot;")}">📲 Consultar por WhatsApp</button>`
       : `<button class="prod-quick-btn" data-id="${p.id}" data-name="${name}" data-price="${(p.priceType==="range"||(p.priceMin!=null&&p.priceMax!=null))?(p.priceMin??p.minPrice):p.price}" data-img="${p.img||""}">🛒 Agregar al carrito</button>`;
     return `
@@ -1242,7 +1135,7 @@ function renderDeals() {
   document.getElementById("dealsGrid").innerHTML = DEALS.map(d => `
     <div class="deal-card">
       <div class="deal-img">
-        <img src="${IMGS[d.img]}" alt="${d.name}" loading="lazy"/>
+        <img src="${IMGS[d.img] || d.img || IMGS.local}" alt="${d.name}" loading="lazy"/>
         <span class="deal-badge">${d.badge}</span>
       </div>
       <div class="deal-body">
@@ -1265,8 +1158,40 @@ function renderDeals() {
   });
 }
 
+function renderLibros() {
+  const grid = document.getElementById("librosGrid");
+  if(!grid) return;
+  grid.innerHTML = LIBROS.map(b => `
+    <div class="lit-book-card" data-id="${b.id}">
+      <div class="lit-book-img-wrap">
+        <img src="${IMGS[b.img] || b.img || IMGS.local}" alt="${(b.title || '').replace(/"/g, '&quot;')}" loading="lazy"/>
+        <span class="lit-book-badge">📖 Disponible</span>
+      </div>
+      <div class="lit-book-body">
+        <div class="lit-book-series">${b.series}</div>
+        <div class="lit-book-title">${b.title}</div>
+        <div class="lit-book-divider"></div>
+        <p class="lit-book-synopsis">${b.synopsis}</p>
+        <div class="lit-book-footer">
+          <span class="lit-book-author-mini">${b.author}</span>
+          <button class="lit-book-wa" data-title="${(b.title || '').replace(/"/g, '&quot;')}">
+            📲 Consultar
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+
+  document.querySelectorAll(".lit-book-wa").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const msg = `Hola, quiero información sobre el libro: ${btn.dataset.title}`;
+      window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank");
+    });
+  });
+}
+
 function attachCardEvents() {
-  // Reservar (precio fijo y range)
+  // Reservar
   document.querySelectorAll(".add-btn, .prod-quick-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       addToCart({ id:btn.dataset.id, name:btn.dataset.name, price:parseFloat(btn.dataset.price), img:btn.dataset.img });
@@ -1282,7 +1207,7 @@ function attachCardEvents() {
     });
   });
 
-  // Consultar por WhatsApp (productos personalizados, price === 0)
+  // Consultar por WhatsApp
   document.querySelectorAll(".btn-consult").forEach(btn => {
     btn.addEventListener("click", () => {
       const nombre = btn.dataset.waName || btn.dataset.name || "este producto";
@@ -1384,32 +1309,16 @@ document.querySelectorAll(".mobile-menu a").forEach(a => {
   a.addEventListener("click", () => document.getElementById("mobileMenu").classList.remove("open"));
 });
 
-// ══════════════════════════════════════════
-// ── SISTEMA DE VISTAS SPA (sin recargar página) ──
-// ══════════════════════════════════════════
+// ── SPA VIEW SYSTEM ──
 const VIEWS = ["inicio","categorias","productos","ofertas","nosotros","ubicacion","contacto"];
 const viewEls = document.querySelectorAll(".spa-view");
 const navBtns = document.querySelectorAll(".qnav-btn");
 
 function showView(viewId) {
   if (!VIEWS.includes(viewId)) viewId = "inicio";
-
-  // Oculta todas las vistas y muestra únicamente la solicitada
-  viewEls.forEach(el => {
-    el.classList.toggle("active", el.dataset.view === viewId);
-  });
-
-  // Resalta el botón de navegación correspondiente (Navbar / Quick Nav)
-  navBtns.forEach(btn => {
-    btn.classList.toggle("active", btn.getAttribute("href") === `#${viewId}`);
-  });
-
-  // Sincroniza el hash de la URL sin disparar un salto de scroll nativo
-  if (location.hash !== `#${viewId}`) {
-    history.replaceState(null, "", `#${viewId}`);
-  }
-
-  // Scroll instantáneo hacia arriba, simulando la carga de una página nueva
+  viewEls.forEach(el => el.classList.toggle("active", el.dataset.view === viewId));
+  navBtns.forEach(btn => btn.classList.toggle("active", btn.getAttribute("href") === `#${viewId}`));
+  if (location.hash !== `#${viewId}`) history.replaceState(null, "", `#${viewId}`);
   window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 }
 
@@ -1418,30 +1327,19 @@ function handleHashChange() {
   showView(viewId);
 }
 
-// Intercepta clics en cualquier enlace interno (#vista) del Navbar, Quick Nav,
-// Mobile Menu, botones del Hero y del Footer. Los enlaces reales (como
-// "libros.html") no empiezan con "#" y por lo tanto navegan con normalidad.
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   const href = link.getAttribute("href");
   if (!href || href === "#") return;
   link.addEventListener("click", e => {
     e.preventDefault();
     const viewId = href.slice(1);
-    if (location.hash === href) {
-      // Mismo hash: forzamos el cambio de vista igualmente (p. ej. clic repetido)
-      showView(viewId);
-    } else {
-      location.hash = href; // dispara "hashchange" → handleHashChange()
-    }
+    if (location.hash === href) showView(viewId);
+    else location.hash = href;
     document.getElementById("mobileMenu").classList.remove("open");
   });
 });
 
 window.addEventListener("hashchange", handleHashChange);
-
-// ── VISTA INICIAL ──
-// Por defecto se muestra únicamente el Hero (Inicio), salvo que la URL
-// ya incluya un hash válido (enlace directo / recarga en una vista concreta).
 handleHashChange();
 
 // ── SCROLL ANIMATION ──
@@ -1473,12 +1371,6 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove("show"), 3000);
 }
 
-// ── INIT ──
-renderCats();
-renderFilters();
-renderProducts();
-renderDeals();
-
 // ── LISTENERS FILTRO DE PRECIO ──
 function getCurrentCat() {
   return document.querySelector(".fpill.active")?.dataset.cat ?? "todos";
@@ -1496,19 +1388,23 @@ document.getElementById("btnPriceReset").addEventListener("click", () => {
     if (e.key === "Enter") applyFilter(getCurrentCat());
   });
 });
+
+// ── INIT ──
+renderCats();
+renderFilters();
+renderProducts();
+renderDeals();
+renderLibros();
 </script>
 
 <!-- ══════════════════════════════════════════════════════════════
-     TEXTOS GENERALES · lectura en vivo desde Firestore
-     (colección "configuracion", documento "general")
-     Si el documento no existe o falla la carga, se conserva el
-     texto que ya está escrito arriba en el HTML (no rompe nada).
+     SISTEMA DE SINCRONIZACIÓN EN TIEMPO REAL CON FIRESTORE
      ══════════════════════════════════════════════════════════════ -->
 <script type="module">
   import { db } from "./firebase-config.js";
-  import { doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+  import { doc, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-  // Mapa: campo en Firestore -> id del elemento que se actualiza
+  // ── TEXTOS GENERALES ──
   const CFG_FIELD_MAP = {
     direccion:       "cfgDireccion",
     telefono:        "cfgTelefono",
@@ -1519,46 +1415,50 @@ document.getElementById("btnPriceReset").addEventListener("click", () => {
   };
 
   onSnapshot(doc(db, "configuracion", "general"), snap => {
-    if (!snap.exists()) return; // no hay overrides todavía: se queda el texto por defecto
+    if (!snap.exists()) return; 
     const data = snap.data();
     Object.entries(CFG_FIELD_MAP).forEach(([field, elId]) => {
-      if (data[field] == null) return; // campo no editado: se respeta el texto actual
+      if (data[field] == null) return;
       const el = document.getElementById(elId);
       if (el) el.textContent = data[field];
     });
   }, err => {
-    console.error("Error cargando configuración general desde Firestore:", err);
+    console.error("Error cargando configuración general:", err);
   });
-</script>
 
-<!-- ══════════════════════════════════════════════════════════════
-     PRODUCTOS · lectura en vivo desde Firestore (colección "productos")
-     Reemplaza el catálogo hardcodeado en cuanto llegan datos reales, y
-     vuelve a pintar el grid en cada cambio (alta, edición o borrado)
-     hecho desde editor-visual.html o el panel admin.
-     Si Firestore no responde o la colección está vacía, se conserva
-     el catálogo de arranque que ya está en el HTML (no rompe nada).
-     ══════════════════════════════════════════════════════════════ -->
-<script type="module">
-  import { db } from "./firebase-config.js";
-  import { collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-
+  // ── PRODUCTOS ──
   const productsQuery = query(collection(db, "productos"), orderBy("name", "asc"));
-
   onSnapshot(productsQuery, snap => {
-    if (snap.empty) return; // colección vacía todavía: se conserva el catálogo de arranque
-
-    // El id del documento de Firestore reemplaza el id numérico hardcodeado.
+    if (snap.empty) return; 
     PRODUCTS = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-
     renderProducts();
-    // Mantiene el filtro de categoría/precio que el usuario tuviera activo
     if (typeof getCurrentCat === "function" && typeof applyFilter === "function") {
       applyFilter(getCurrentCat());
     }
   }, err => {
-    console.error("Error cargando productos desde Firestore:", err);
+    console.error("Error cargando productos:", err);
   });
+
+  // ── OFERTAS ──
+  onSnapshot(collection(db, "ofertas"), snap => {
+    if (snap.empty) return;
+    DEALS.length = 0;
+    DEALS.push(...snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    renderDeals();
+  }, err => {
+    console.error("Error cargando ofertas:", err);
+  });
+
+  // ── LIBROS (LITERATURA CONSTANCERA) ──
+  onSnapshot(collection(db, "libros"), snap => {
+    if (snap.empty) return;
+    LIBROS.length = 0;
+    LIBROS.push(...snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    renderLibros();
+  }, err => {
+    console.error("Error cargando libros:", err);
+  });
+
 </script>
 </body>
 </html>

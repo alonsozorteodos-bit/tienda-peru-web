@@ -5,6 +5,58 @@
    con edición en línea y conexión real a Firebase Firestore.
    ══════════════════════════════════════════════════════════════ */
 
+/* ══════════════════════════════════════════════════════
+   🔒 0. LOGIN — TOKEN DE ACCESO
+   ⚠️ IMPORTANTE: esto es una barrera de INTERFAZ, no seguridad real.
+   El token vive en el código fuente, así que cualquiera con acceso
+   a este archivo .js puede leerlo. NO uses esto como única protección
+   de tus datos: para seguridad real, configura Firebase Authentication
+   + Reglas de Seguridad de Firestore que exijan un usuario autenticado
+   para escribir en "productos", "ofertas", "libros" y "configuracion".
+   ══════════════════════════════════════════════════════ */
+const ADMIN_TOKEN = "ghp_mi_token_secreto_123"; // 👈 cámbialo por tu propio token
+const TOKEN_STORAGE_KEY = "tiendaPeruEditorToken";
+
+function initLoginGate() {
+  const overlay = document.getElementById("loginOverlay");
+  const input = document.getElementById("loginTokenInput");
+  const btn = document.getElementById("loginSubmitBtn");
+  const errorEl = document.getElementById("loginError");
+
+  function unlock() {
+    document.body.classList.remove("locked");
+    overlay.classList.add("hidden");
+  }
+
+  function tryLogin() {
+    const value = input.value.trim();
+    if (value.length > 0 && value === ADMIN_TOKEN) {
+      localStorage.setItem(TOKEN_STORAGE_KEY, value);
+      errorEl.textContent = "";
+      input.classList.remove("input-error");
+      unlock();
+    } else {
+      errorEl.textContent = "❌ Token incorrecto. Verifica e intenta de nuevo.";
+      input.classList.add("input-error");
+      input.value = "";
+      input.focus();
+      setTimeout(() => input.classList.remove("input-error"), 400);
+    }
+  }
+
+  // ¿Ya había un token válido guardado de una sesión anterior?
+  const saved = localStorage.getItem(TOKEN_STORAGE_KEY);
+  if (saved === ADMIN_TOKEN) {
+    unlock();
+  } else {
+    localStorage.removeItem(TOKEN_STORAGE_KEY); // limpia tokens viejos/incorrectos
+    input.focus();
+  }
+
+  btn.addEventListener("click", tryLogin);
+  input.addEventListener("keydown", e => { if (e.key === "Enter") tryLogin(); });
+}
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getFirestore, collection, getDocs, doc, setDoc, updateDoc, deleteDoc
@@ -658,8 +710,17 @@ function bindDeleteButtons(container, collectionName, list, rerender) {
    ➕ 11. AÑADIR NUEVOS ELEMENTOS
    ══════════════════════════════════════════════════════ */
 function addNewProduct() {
+  const usarPrecioFijo = confirm(
+    "¿Deseas que el producto tenga un PRECIO FIJO?\n\n" +
+    "Aceptar = Precio Fijo (editable, ej. RD$100)\n" +
+    "Cancelar = Botón \"Consultar por WhatsApp\" (precio a consultar)"
+  );
+
   const id = makeTempId("prod");
-  const item = { id, name:"Nuevo Producto", desc:"Descripción del producto…", price:0, cat:"joyeria", badges:[], img:"local" };
+  const item = usarPrecioFijo
+    ? { id, name:"Nuevo Producto", desc:"Descripción del producto…", price:100, priceType:"normal", cat:"joyeria", badges:[], img:"local" }
+    : { id, name:"Nuevo Producto", desc:"Descripción del producto…", price:0,   priceType:"normal", cat:"joyeria", badges:[], img:"local" };
+
   PRODUCTS.push(item);
   markAdded("productos", id, item);
   renderProducts();
@@ -961,6 +1022,7 @@ async function bootstrapData() {
 }
 
 (async function init() {
+  initLoginGate();
   initGeneralUI();
   initSpaNav();
   await bootstrapData();

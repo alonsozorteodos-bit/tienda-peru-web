@@ -380,7 +380,7 @@ footer{background:#080808;padding:60px 50px 30px;}
       <a class="qnav-btn" href="#categorias"><span class="qn-icon">📦</span>Categorías</a>
       <a class="qnav-btn" href="#productos"><span class="qn-icon">🛍️</span>Productos</a>
       <a class="qnav-btn" href="#ofertas"><span class="qn-icon">⚡</span>Ofertas</a>
-      <a class="qnav-btn" href="libros.html"><span class="qn-icon">📚</span>Libros</a>
+      <a class="qnav-btn" href="#literatura"><span class="qn-icon">📚</span>Libros</a>
       <a class="qnav-btn" href="#nosotros"><span class="qn-icon">ℹ️</span>Quiénes Somos</a>
       <a class="qnav-btn" href="#ubicacion"><span class="qn-icon">📍</span>Ubicación</a>
       <a class="qnav-btn" href="#contacto"><span class="qn-icon">💬</span>Contacto</a>
@@ -400,7 +400,7 @@ footer{background:#080808;padding:60px 50px 30px;}
     <li><a href="#categorias">📦 Categorías</a></li>
     <li><a href="#productos">🛍️ Productos</a></li>
     <li><a href="#ofertas">⚡ Ofertas</a></li>
-    <li><a href="libros.html">📚 Libros</a></li>
+    <li><a href="#literatura">📚 Libros</a></li>
     <li><a href="#nosotros">ℹ️ Quiénes Somos</a></li>
     <li><a href="#ubicacion">📍 Ubicación</a></li>
     <li><a href="#contacto">💬 Contacto</a></li>
@@ -511,7 +511,7 @@ footer{background:#080808;padding:60px 50px 30px;}
 </div>
 
 <!-- ══ NOSOTROS ══ -->
-<div class="about-split spa-view" id="nosotros" data-view="nosotros">
+<div class="about-split spa-view" id="nosotros" data-view="inicio">
   <div class="about-visual">
     <img id="aboutImg" alt="Tienda Perú"/>
     <div class="about-visual-overlay"></div>
@@ -531,7 +531,7 @@ footer{background:#080808;padding:60px 50px 30px;}
 </div>
 
 <!-- ══ UBICACIÓN ══ -->
-<div class="map-wrap spa-view" id="ubicacion" data-view="ubicacion">
+<div class="map-wrap spa-view" id="ubicacion" data-view="inicio">
   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.5!2d-70.7489!3d18.9077!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8eb1d3b1b1b1b1b1%3A0x1!2sCalle%20Luper%C3%B3n%2C%20Constanza!5e0!3m2!1ses!2sdo!4v1" allowfullscreen loading="lazy"></iframe>
 </div>
 
@@ -744,7 +744,7 @@ footer{background:#080808;padding:60px 50px 30px;}
 }
 </style>
 
-<section id="literatura" class="spa-view" data-view="contacto">
+<section id="literatura" class="spa-view" data-view="literatura">
 
   <!-- Encabezado -->
   <div class="lit-head">
@@ -1310,16 +1310,38 @@ document.querySelectorAll(".mobile-menu a").forEach(a => {
 });
 
 // ── SPA VIEW SYSTEM ──
-const VIEWS = ["inicio","categorias","productos","ofertas","nosotros","ubicacion","contacto"];
+const VIEWS = ["inicio","categorias","productos","ofertas","contacto","literatura"];
+// Anclas que ya no son vistas propias: viven dentro de "inicio" y solo requieren scroll.
+const SCROLL_ANCHORS = ["nosotros","ubicacion"];
+const HEADER_OFFSET = 110;
 const viewEls = document.querySelectorAll(".spa-view");
 const navBtns = document.querySelectorAll(".qnav-btn");
 
 function showView(viewId) {
-  if (!VIEWS.includes(viewId)) viewId = "inicio";
-  viewEls.forEach(el => el.classList.toggle("active", el.dataset.view === viewId));
+  let actualView = viewId;
+  let targetEl = null;
+
+  if (SCROLL_ANCHORS.includes(viewId)) {
+    // "nosotros" y "ubicacion" se fusionaron con "inicio": mostramos inicio y hacemos scroll al ancla.
+    targetEl = document.getElementById(viewId);
+    actualView = "inicio";
+  } else if (!VIEWS.includes(viewId)) {
+    actualView = "inicio";
+  }
+
+  viewEls.forEach(el => el.classList.toggle("active", el.dataset.view === actualView));
   navBtns.forEach(btn => btn.classList.toggle("active", btn.getAttribute("href") === `#${viewId}`));
   if (location.hash !== `#${viewId}`) history.replaceState(null, "", `#${viewId}`);
-  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+  if (targetEl) {
+    // Esperamos un frame para que la vista "inicio" esté visible antes de calcular la posición del scroll.
+    requestAnimationFrame(() => {
+      const top = targetEl.getBoundingClientRect().top + window.pageYOffset - HEADER_OFFSET;
+      window.scrollTo({ top, left: 0, behavior: "smooth" });
+    });
+  } else {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }
 }
 
 function handleHashChange() {

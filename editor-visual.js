@@ -965,13 +965,36 @@ function showToast(msg) {
 }
 
 /* ── SISTEMA DE VISTAS SPA ── */
-const VIEWS = ["inicio","categorias","productos","ofertas","nosotros","ubicacion","contacto"];
+const VIEWS = ["inicio","categorias","productos","ofertas","contacto","literatura"];
+// Anclas que ya no son vistas propias: viven dentro de "inicio" y solo requieren scroll.
+const SCROLL_ANCHORS = ["nosotros","ubicacion"];
+const HEADER_OFFSET = 110;
+
 function showView(viewId) {
-  if (!VIEWS.includes(viewId)) viewId = "inicio";
-  document.querySelectorAll(".spa-view").forEach(el => el.classList.toggle("active", el.dataset.view === viewId));
+  let actualView = viewId;
+  let targetEl = null;
+
+  if (SCROLL_ANCHORS.includes(viewId)) {
+    // "nosotros" y "ubicacion" se fusionaron con "inicio": mostramos inicio y hacemos scroll al ancla.
+    targetEl = document.getElementById(viewId);
+    actualView = "inicio";
+  } else if (!VIEWS.includes(viewId)) {
+    actualView = "inicio";
+  }
+
+  document.querySelectorAll(".spa-view").forEach(el => el.classList.toggle("active", el.dataset.view === actualView));
   document.querySelectorAll(".qnav-btn").forEach(btn => btn.classList.toggle("active", btn.getAttribute("href") === `#${viewId}`));
   if (location.hash !== `#${viewId}`) history.replaceState(null, "", `#${viewId}`);
-  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+  if (targetEl) {
+    // Esperamos un frame para que la vista "inicio" esté visible antes de calcular la posición del scroll.
+    requestAnimationFrame(() => {
+      const top = targetEl.getBoundingClientRect().top + window.pageYOffset - HEADER_OFFSET;
+      window.scrollTo({ top, left: 0, behavior: "smooth" });
+    });
+  } else {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }
 }
 function handleHashChange() {
   const viewId = location.hash.replace("#", "") || "inicio";
